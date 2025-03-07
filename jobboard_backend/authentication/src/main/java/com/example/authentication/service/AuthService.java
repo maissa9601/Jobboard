@@ -1,5 +1,7 @@
 package com.example.authentication.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.example.authentication.dto.AuthRequest;
 import com.example.authentication.dto.AuthResponse;
 import com.example.authentication.model.Role;
@@ -17,12 +19,15 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.transaction.reactive.TransactionalOperator;
+
 @Service
 public class AuthService {
 
@@ -39,6 +44,7 @@ public class AuthService {
     private JwtUtil jwtUtil;
     @Autowired
     private JavaMailSender mailSender;
+
 
     /**
      * Sign Up
@@ -83,21 +89,22 @@ public class AuthService {
 
             // html
             String htmlContent = """
-                <html>
-                    <body>
-                        <h2>Bienvenue sur JobBoard !</h2>
-                        <p>Merci de vous être inscrit. Cliquez sur le bouton ci-dessous pour activer votre compte :</p>
-                        <p style="text-align: center;">
-                            <a href="%s" style="display: inline-block; padding: 10px 20px; font-size: 16px; 
-                                color: white; background-color: #007bff; text-decoration: none; border-radius: 5px;">
-                                🔓 Activer mon compte
-                            </a>
-                        </p>
-                        <p>Si vous n'avez pas demandé cette inscription, ignorez simplement cet e-mail.</p>
-                        <br/>
-                        <p>Cordialement, <br/> <strong>L'équipe JobBoard</strong></p>
-                    </body>
-                </html>
+                    <html>
+                        <body>
+                            <h2>Welcome to JobBoard!</h2>
+                            <p>Thank you for signing up. Click the button below to activate your account:</p>
+                            <p style="text-align: center;">
+                                <a href="%s" style="display: inline-block; padding: 10px 20px; font-size: 16px;\s
+                                    color: white; background-color: #007bff; text-decoration: none; border-radius: 5px;">
+                                    🔓 Activate My Account
+                                </a>
+                            </p>
+                            <p>If you did not request this registration, simply ignore this email.</p>
+                            <br/>
+                            <p>Best regards, <br/> <strong>The JobBoard Team</strong></p>
+                        </body>
+                    </html>
+                
                 """.formatted(activationUrl);
 
             helper.setText(htmlContent, true);
@@ -116,6 +123,7 @@ public class AuthService {
         }
 
         user.setRole(Role.CANDIDAT);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(false); // désactivé tant qu'il n'a pas confirmé
 
         //  générer un token d'activation
@@ -126,7 +134,7 @@ public class AuthService {
         //envoi de mail
         sendActivationEmail(user.getEmail(), token);
 
-        return "✅ Un lien d'activation a été envoyé à votre adresse e-mail.";
+        return " Un lien d'activation a été envoyé à votre adresse e-mail.";
     }
 
 
@@ -170,17 +178,17 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
-        // Vérifier si le compte est activé
+        // compte est activé?
         if (!user.isEnabled()) {
             throw new RuntimeException("Compte non activé. Veuillez activer votre compte.");
         }
 
-        // Vérifier si le mot de passe est correct
+        //  mot de passe est correct?
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Mot de passe incorrect");
         }
 
-        // Générer un token JWT
+        // générer un token JWT
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
         String token = jwtUtil.generateToken(user.getEmail(), authorities);
 
@@ -219,6 +227,35 @@ public class AuthService {
         userRepository.save(user);
 
         return "Mot de passe mis à jour !";
+    }
+
+
+
+
+    public String googleLogin(OAuth2User oAuth2User) {
+        String email = oAuth2User.getAttribute("email");
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        User user;
+        if (existingUser.isPresent()) {
+            user = existingUser.get();
+
+        } else {
+
+            user = new User();
+            user.setEmail(email);
+            user.setRole(Role.CANDIDAT);
+            user.setEnabled(true);
+            user.setPassword(UUID.randomUUID().toString());
+
+            user = userRepository.save(user);
+
+
+
+        }
+
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
+        return jwtUtil.generateToken(email, authorities);
     }
 
 }

@@ -9,7 +9,10 @@ import com.example.authentication.model.User;
 import com.example.authentication.repository.UserRepository;
 import com.example.authentication.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -73,8 +76,19 @@ public class AuthController {
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
         return ResponseEntity.ok(authService.resetPassword(request.getToken(), request.getNewPassword()));
     }
+    @GetMapping("/oauth2/success")
+    public ResponseEntity<String> googleLogin(OAuth2AuthenticationToken authToken) {
+        OAuth2User user = authToken.getPrincipal();
+        String jwt = authService.googleLogin(user);
+        return ResponseEntity.ok("Authentifié avec Google. Token JWT : " + jwt);
+    }
 
 
+
+    @GetMapping("/oauth2/failure")
+    public ResponseEntity<String> oauth2Failure() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification avec Google.");
+    }
 
 
 
