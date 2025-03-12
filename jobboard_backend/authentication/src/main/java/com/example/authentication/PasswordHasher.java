@@ -5,10 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordHasher {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "maissamaissa";
+        String rawPassword = "adminmaissa";
         String hashedPassword = encoder.encode(rawPassword);
 
-        System.out.println("Mot de passe haché : " + hashedPassword);
+        System.out.println( hashedPassword);
     }
 }
 

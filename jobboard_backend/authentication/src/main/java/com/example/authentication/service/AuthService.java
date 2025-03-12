@@ -1,7 +1,6 @@
 package com.example.authentication.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import com.example.authentication.dto.AuthRequest;
 import com.example.authentication.dto.AuthResponse;
 import com.example.authentication.model.Role;
@@ -10,11 +9,7 @@ import com.example.authentication.repository.UserRepository;
 import com.example.authentication.Security.JwtUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,15 +19,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.transaction.reactive.TransactionalOperator;
+
 
 @Service
 public class AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+
 
     @Autowired
     private UserRepository userRepository;
@@ -45,40 +38,9 @@ public class AuthService {
     @Autowired
     private JavaMailSender mailSender;
 
-
-    /**
-     * Sign Up
-     */
-    /*public User register(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Cet email est déjà utilisé.");
-        }
-
-        //role candidat
-        if (user.getRole() == null) {
-            user.setRole(Role.CANDIDAT);
-        }
-
-        // hachage
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        return userRepository.save(user);
-    }*/
-    /*private void sendActivationEmail(String email, String token) {
-        String activationUrl = "http://localhost:8080/auth/confirm?token=" + token;
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Confirmez votre inscription");
-        message.setText("Cliquez sur le lien pour activer votre compte : " + activationUrl);
-
-        mailSender.send(message);
-    }
-    */
-
-
+    //activation de compte
     public void sendActivationEmail(String email, String token) {
-        String activationUrl = "http://localhost:8080/auth/confirm?token=" + token;
+        String activationUrl = "http://localhost:4200/activate?token=" + token;
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -117,33 +79,29 @@ public class AuthService {
         }
     }
 
-    public String register(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
+
+    public String register(AuthRequest authRequest) {
+        if (userRepository.existsByEmail(authRequest.getEmail())) {
             throw new RuntimeException("Cet email est déjà utilisé.");
         }
-
+        User user = new User();
+        user.setEmail(authRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(authRequest.getPassword()));
         user.setRole(Role.CANDIDAT);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(false); // désactivé tant qu'il n'a pas confirmé
-
-        //  générer un token d'activation
+        user.setEnabled(false);
+        // token d'activation
         String token = UUID.randomUUID().toString();
         user.setActivationToken(token);
         userRepository.save(user);
-
-        //envoi de mail
+        // mail d'activation
         sendActivationEmail(user.getEmail(), token);
-
-        return " Un lien d'activation a été envoyé à votre adresse e-mail.";
+        return "Un lien d'activation a été envoyé à votre adresse e-mail.";
     }
-
-
-
-    public String confirmAccount(String token) {
+    public boolean confirmAccount(String token) {
         Optional<User> userOptional = userRepository.findByActivationToken(token);
 
         if (userOptional.isEmpty()) {
-            return "Lien d'activation invalide ou expiré.";
+            return false;
         }
 
         User user = userOptional.get();
@@ -151,49 +109,33 @@ public class AuthService {
         user.setActivationToken(null);
         userRepository.save(user);
 
-        return "Votre compte est activé !";
+        return true;
     }
 
-    /**
-     *  Sign In
-     */
-    /*public AuthResponse login(AuthRequest request) {
-        // existe ou non
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-
-        // mdp correspond
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Mot de passe incorrect");
-        }
-
-        //générer token
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
-        String token = jwtUtil.generateToken(user.getEmail(), authorities);
-
-        return new AuthResponse(user.getId(), user.getEmail(), user.getRole(), token);
-    }*/
     public AuthResponse login(AuthRequest request) {
-        // Vérifier si l'utilisateur existe
+        // existe?
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new RuntimeException("utilisateur non trouvé"));
 
         // compte est activé?
         if (!user.isEnabled()) {
-            throw new RuntimeException("Compte non activé. Veuillez activer votre compte.");
+            throw new RuntimeException("compte non activé");
         }
 
         //  mot de passe est correct?
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Mot de passe incorrect");
         }
-
         // générer un token JWT
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
         String token = jwtUtil.generateToken(user.getEmail(), authorities);
 
-        return new AuthResponse(user.getId(), user.getEmail(), user.getRole(), token);
-    }
+        //token velide ou non
+        if (jwtUtil.isTokenValid(token)) {
+            return new AuthResponse(user.getId(), user.getEmail(), user.getRole(), token);
+        } else {
+            throw new RuntimeException("Token invalide !");
+        }}
 
     public void sendResetPasswordEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -204,21 +146,43 @@ public class AuthService {
             user.setResetToken(token);
             userRepository.save(user);
 
-            String resetUrl = "http://localhost:8080/auth/reset-password?token=" + token;
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(email);
-            message.setSubject("Réinitialisation de votre mot de passe");
-            message.setText("Cliquez ici pour réinitialiser votre mot de passe : " + resetUrl);
+            // link
+            String resetUrl = "http://localhost:4200/reset?token=" + token;
 
-            mailSender.send(message);
+            // html
+            String emailContent = "<div style='font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; max-width: 500px; margin: auto;'>" +
+                    "<h2 style='color: #4CAF50;'>Password Reset Request</h2>" +
+                    "<p>Hello,</p>" +
+                    "<p>We received a request to reset your password. If you did not request this, please ignore this email.</p>" +
+                    "<p>Click the button below to reset your password:</p>" +
+                    "<p style='text-align: center;'>" +
+                    "<a href='" + resetUrl + "' style='background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;'>Reset Password</a>" +
+                    "</p>" +
+                    "<p>This link is valid for a limited time.</p>" +
+                    "<p>Thank you,<br>JobBoard Team</p>" +
+                    "</div>";
+
+            // creation
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            try {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                helper.setTo(email);
+                helper.setSubject("🔑 Reset Your Password");
+                helper.setText(emailContent, true);//enable html
+
+                mailSender.send(mimeMessage);
+            } catch (MessagingException e) {
+                throw new RuntimeException("error lors de l'envoi de l'email", e);
+            }
         }
     }
+
     @Transactional
     public String resetPassword(String token, String newPassword) {
         Optional<User> userOptional = userRepository.findByResetToken(token);
 
         if (userOptional.isEmpty()) {
-            return "Token invalide ou expiré.";
+            throw new RuntimeException("Token invalide ou expiré.");
         }
 
         User user = userOptional.get();
@@ -228,9 +192,6 @@ public class AuthService {
 
         return "Mot de passe mis à jour !";
     }
-
-
-
 
     public String googleLogin(OAuth2User oAuth2User) {
         String email = oAuth2User.getAttribute("email");
@@ -249,8 +210,6 @@ public class AuthService {
             user.setPassword(UUID.randomUUID().toString());
 
             user = userRepository.save(user);
-
-
 
         }
 

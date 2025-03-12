@@ -47,12 +47,4 @@ public class JwtUtil {
         }
     }
 
-    public String extractEmail(String token) {
-        return Jwts.parser()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
 }
