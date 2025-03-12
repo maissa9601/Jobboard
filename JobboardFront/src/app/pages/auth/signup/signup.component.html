@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="box">
+    <div class="left">
+      <img src="assets/job.jpg" alt="Job" class="job">
+    </div>
+    <div class="right">
+      <div class="title">Sign up with Jobboard!</div>
+
+      <div class="social-login">
+        <button class="google-button" (click)="signInWithGoogle()">
+          <img src="assets/google-icon.jpg" alt="Google" class="google-icon"> Connect with Google
+        </button>
+      </div>
+
+      <p class="or-text">or</p>
+
+      <form class="formulaire" [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Email Field -->
+
+        <input id="email" type="email" formControlName="email" placeholder="Email" class="input-field">
+        <small *ngIf="submitted && f['email'].errors?.['required']" class="error-text">
+          Email is required
+        </small>
+        <small *ngIf="submitted && f['email'].errors?.['email']" class="error-text">
+          Invalid email format
+        </small>
+
+        <!-- Password Field -->
+
+        <input id="password" type="password" formControlName="password" placeholder="Password" class="input-field">
+        <small *ngIf="submitted && f['password'].errors?.['required']" class="error-text">
+          Password is required
+        </small>
+        <small *ngIf="submitted && f['password'].errors?.['minlength']" class="error-text">
+          Password must be at least 6 characters
+        </small>
+
+
+
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Confirm your Password" class="input-field">
+        <small *ngIf="submitted && f['confirmPassword'].errors?.['required']" class="error-text">
+          Confirm Password is required
+        </small>
+        <small *ngIf="submitted && signupForm.errors?.['mismatch']" class="error-text">
+          Passwords do not match
+        </small>
+
+        <button type="submit" class="btn" >Sign up</button>
+      </form>
+
+      <p class="little-text">Already have an account? <a routerLink="/login" class="switch">Sign in</a></p>
+    </div>
+  </div>
+</div>

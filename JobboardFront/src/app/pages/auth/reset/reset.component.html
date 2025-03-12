@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="box">
+    <div class="left">
+      <img src="/assets/job.jpg" alt="Job" class="job" width="500" height="500">
+    </div>
+    <div class="right">
+      <div class="title">
+        A link has been sent to your email. Please check it and set a new password!
+      </div>
+      <form class="formulaire" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+
+        <input type="password" formControlName="password" placeholder="Password" class="input-field">
+        <small *ngIf="submitted && resetForm.controls['password'].errors?.['minlength']" class="error-text">
+          Password must be at least 6 characters
+        </small>
+
+        <input type="password" formControlName="confirmPassword" placeholder="Confirm your Password" class="input-field">
+        <small *ngIf="submitted && resetForm.errors?.['mismatch']" class="error-text">
+          Passwords do not match
+        </small>
+
+        <button type="submit"  class="btn">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

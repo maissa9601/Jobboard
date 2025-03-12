@@ -1,0 +1,146 @@
+
+
+.container {
+  background: linear-gradient(to bottom, #595AC0, #9a9ae4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+
+}
+.box {
+  background-color: white; /* Fond blanc */
+  padding: 40px;
+  border-radius: 12px; /* Coins arrondis */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  width: 1000px; /* Largeur fixe */
+  height: 500px;
+  max-width: 90%; /* Pour éviter que ça dépasse sur mobile */
+  text-align: center;
+  display: flex;
+}
+.job{
+  margin-top: 45px;
+  height: 400px;
+  width: 500px;
+}
+
+
+.right {
+  width: 400px;
+
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 25px;
+  color: #4C4BB4;
+  font-family: 'Josefin Sans', sans-serif ;
+  margin-bottom: 30px;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+}
+
+.google-button {
+  display: flex;
+  color: #4C4BB4;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #f40909;
+  padding: 10px;
+  width: 90%;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.google-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+
+}
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.or-text {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #4C4BB4;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-field {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #4C4BB4 ;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.btn {
+  width: 90%;
+  padding: 12px;
+  background: #E74C3C;
+  color: white;
+  font-size: 16px;
+  border: 2px solid;
+  border-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 2px 4px rgba(9, 9, 9, 0.1);
+}
+
+.btn:hover {
+  background: #c0392b;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.little-text {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #4C4BB4;
+}
+
+.switch {
+  color: #E74C3C;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 10px;
+  transition: transform 0.2s ease, color 0.2s ease;
+
+}
+.switch:hover {
+  font-size: 24px;
+}
+.error-text {
+  color: #4C4BB4 ;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+
+
