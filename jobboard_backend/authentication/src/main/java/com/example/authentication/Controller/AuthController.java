@@ -4,14 +4,22 @@ import com.example.authentication.dto.AuthRequest;
 import com.example.authentication.dto.AuthResponse;
 import com.example.authentication.dto.ForgotPasswordRequest;
 import com.example.authentication.dto.ResetPasswordRequest;
+
+import java.io.IOException;
 import java.util.Collections;
 import com.example.authentication.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -77,19 +85,21 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("message", result));
     }
 
-    @GetMapping("/oauth2/success")
-    public ResponseEntity<String> googleLogin(OAuth2AuthenticationToken authToken) {
+    @GetMapping("/google")
+    public void googleLogin(OAuth2AuthenticationToken authToken, HttpServletResponse response) throws IOException {
         OAuth2User user = authToken.getPrincipal();
-        String jwt = authService.googleLogin(user);
-        return ResponseEntity.ok("Authentifié avec Google.");
-    }
 
+        response.sendRedirect(authService.googleLogin(user));
+    }
 
 
     @GetMapping("/oauth2/failure")
     public ResponseEntity<String> oauth2Failure() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Échec de l'authentification avec Google.");
     }
+
+
+
 
 
 

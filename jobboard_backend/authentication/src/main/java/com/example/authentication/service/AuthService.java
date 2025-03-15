@@ -214,7 +214,8 @@ public class AuthService {
         }
 
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
-        return jwtUtil.generateToken(email, authorities);
+
+         return "http://localhost:4200/callback?token=" + jwtUtil.generateToken(email, authorities);
     }
 
 }
