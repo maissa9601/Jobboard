@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 const authConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
-  redirectUri: window.location.origin + '/login/oauth2/code/google',
+  redirectUri: 'http://localhost:8080/oauth2/authorization/google',
   clientId: '1063839859750-8mhuftg0m4k8o3ao0u9r79b5uu9j1s0s.apps.googleusercontent.com',
   scope: 'openid profile email',
   strictDiscoveryDocumentValidation: false,
@@ -31,10 +31,8 @@ export class AuthService {
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
-  //login avec google
-  googleLogin() {
-    this.oauthService.initLoginFlow();
-  }
+
+
 
   //register
   register(email: string, password: string): Observable<any> {
@@ -53,7 +51,7 @@ export class AuthService {
         this.redirectUser(response.role);
       }),
       catchError(error => {
-        console.error('❌ Erreur de connexion', error);
+        console.error(' Erreur de connexion', error);
         return throwError(error);
       })
     );
@@ -79,7 +77,7 @@ export class AuthService {
     return this.http.post<{ message: string }>(`${this.API_URL}/reset-password`, { token, newPassword });
   }
 
- //connecté?
+  //connecté?
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
@@ -101,10 +99,17 @@ export class AuthService {
       })
     );
   }
-  //dcnx
-  logout(): void {
-    localStorage.clear();
-    this.roleSubject.next(null);
-    this.router.navigate(['/login']);
+
+
+  private TOKEN_KEY = 'authToken';
+
+  storeToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
+  //login avec google
+  googleLogin() {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  }
+
+
 }

@@ -10,10 +10,12 @@ import {AuthGuard} from './service/auth.guard';
 import {AdminGuard} from './service/admin.guard';
 import {ActivationComponent} from './pages/auth/activation/activation.component';
 import {CandidatComponent} from './pages/dash/candidat/candidat.component';
+import {AuthCallbackComponent} from './pages/auth/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
 
   { path: 'signup', component: SignupComponent },
+  {path: 'callback', component: AuthCallbackComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetComponent },
   { path: 'activate', component: ActivationComponent },
