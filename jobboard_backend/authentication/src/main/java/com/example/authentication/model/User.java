@@ -32,11 +32,5 @@ public class User {
     @Column(nullable = false)
     private boolean enabled = false;
 
-    @Column(unique = true)
-    private String activationToken;
-
-
-    @Column(unique = true)
-    private String resetToken;
 
 }
