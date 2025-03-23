@@ -1,7 +1,7 @@
 
 
 .container {
-  background: linear-gradient(to bottom, #595AC0, #9a9ae4);
+  background: linear-gradient(to bottom, #9C9CE0, #cfd6fb);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,13 +10,13 @@
 
 }
 .box {
-  background-color: white; /* Fond blanc */
+  background-color: white;
   padding: 40px;
-  border-radius: 12px; /* Coins arrondis */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
-  width: 1000px; /* Largeur fixe */
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 1000px;
   height: 500px;
-  max-width: 90%; /* Pour éviter que ça dépasse sur mobile */
+  max-width: 90%;
   text-align: center;
   display: flex;
 }
@@ -65,8 +65,6 @@
 .google-button:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-
 }
 .google-icon {
   width: 20px;
@@ -115,6 +113,11 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
 }
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
 
 
 .little-text {
@@ -136,8 +139,8 @@
   font-size: 24px;
 }
 .error-text {
-  color: #4C4BB4 ;
-  font-size: 12px;
+  color:#E74C3C;
+  font-size: 20px;
   margin-top: 5px;
   display: block;
 }

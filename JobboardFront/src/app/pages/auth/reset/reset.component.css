@@ -1,7 +1,7 @@
 
 
 .container {
-  background: linear-gradient(to bottom, #595AC0, #9a9ae4);
+  background: linear-gradient(to bottom, #9C9CE0, #cfd6fb);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,8 +99,8 @@ formulaire {
 
 
 .error-text {
-  color: #4C4BB4 ;
-  font-size: 12px;
+  color: #E74C3C ;
+  font-size: 20px;
   margin-top: 5px;
   display: block;
 }

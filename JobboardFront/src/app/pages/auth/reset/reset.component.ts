@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../service/service';
+import {AuthService} from '../../../service/auth.service';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-reset',
@@ -23,7 +25,8 @@ export class ResetComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) {
     this.resetForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -46,7 +49,9 @@ export class ResetComponent {
     }
     return null;
   }
-
+  public hasError(field: string, error: string): boolean {
+    return this.f[field].touched && this.f[field].hasError(error);
+  }
   onSubmit() {
     this.submitted = true; //active les erreurs
 
@@ -59,13 +64,17 @@ export class ResetComponent {
 
     this.authService.resetPassword(this.token, password).subscribe({
       next: (response) => {
-        alert(response.message);
-        this.router.navigate(['/candidat']);
+        this.toastr.success('Your password has been changed successfully', 'Success');
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error("Erreur lors de la réinitialisation :", err);
-        alert(err?.error?.message || "Une erreur est survenue lors de la réinitialisation.");
-      }
+        this.toastr.error("Error while reseting");}
+
     });
+  }
+  // controle de formulaire
+  get f() {
+    return this.resetForm.controls;
   }
 }

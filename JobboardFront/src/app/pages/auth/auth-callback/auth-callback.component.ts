@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AuthService} from '../../../service/service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-auth-callback',
@@ -18,7 +18,7 @@ export class AuthCallbackComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
 
-      console.log("🔹 Token reçu:", token); // Debug
+      console.log("🔹 Token received:", token); // Debug
 
       if (token) {
         this.authService.storeToken(token);

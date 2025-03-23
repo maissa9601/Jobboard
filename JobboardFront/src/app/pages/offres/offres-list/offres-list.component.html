@@ -1,0 +1,48 @@
+<img src="/background.png" class="background-image" alt="background">
+
+<div class="job-container">
+
+    <div class="search-bar">
+        <input type="text" [(ngModel)]="searchKeyword" placeholder="Keywords">
+        <input type="text" [(ngModel)]="searchLocation" placeholder="Location">
+        <button class="search" (click)="searchJobs()" >
+
+            Search</button>
+    </div>
+
+
+    <div class="content">
+
+        <div class="filters">
+            <h3>Filter</h3>
+            <ul>
+                <li *ngFor="let type of ['CDD', 'CDI', 'Internship', 'Freelance', 'SIVP', 'ContratKarama']"
+                    [ngClass]="{'selected': selectedType === type}"
+                    (click)="filterByType(type)"
+                    (keyup.enter)="filterByType(type)"
+                    role="button"
+                    tabindex="0">
+                    {{ type }}
+                </li>
+            </ul>
+        </div>
+
+
+      <div class="job-list">
+        <div *ngFor="let job of filteredJobs" class="job-card">
+          <h3>{{ job.title }}</h3>
+          <p *ngIf="!job.showMore">{{ job.description | slice:0:20 }}...</p>
+
+
+          <p><i class="fas fa-building"></i> {{ job.company }}</p>
+
+
+          <p><i class="fas fa-map-marker-alt"></i> {{ job.location }}</p>
+
+          <button [routerLink]="['/offer', job.id]" class="see">See more</button>
+        </div>
+      </div>
+
+    </div>
+</div>
+

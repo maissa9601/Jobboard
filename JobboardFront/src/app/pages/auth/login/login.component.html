@@ -1,15 +1,23 @@
 <div class="container">
   <div class="box">
     <div class="left">
-      <img src="assets/job.jpg" alt="Job" class="job" >
+      <img src="/job.jpg" alt="Job" class="job" >
     </div>
   <div class="right">
     <div class="title">Welcome again to Jobboard!</div>
 
     <form  class="formulaire" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <input type="email" formControlName="email" placeholder="Email" class="input-field">
-
+      <small *ngIf="hasError('email', 'required')" class="error-text">
+        Email is required
+      </small>
+      <small *ngIf="hasError('email', 'email')" class="error-text">
+        Invalid email format
+      </small>
       <input type="password" formControlName="password" placeholder="Password" class="input-field">
+      <small *ngIf="hasError('password', 'required')" class="error-text">
+        Password is required
+      </small>
 
       <button type="submit" class="btn">Sign in</button>
     </form>

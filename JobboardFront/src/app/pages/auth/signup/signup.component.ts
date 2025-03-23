@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../service/service';
+import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -17,64 +18,58 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  signupForm!: FormGroup;
-  submitted = false;
+  signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
-    }, { validator: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator });
+
+
   }
 
-  // mdp correspond?
+  // Vérification si les mots de passe correspondent
   passwordMatchValidator(group: FormGroup) {
-    const password = group.get('password');
-    const confirmPassword = group.get('confirmPassword');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ mismatch: true });
-      return { mismatch: true };
-    } else {
-      return null;
-    }
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
   }
 
-
-
-  // cnx google
+  // Connexion avec Google
   signInWithGoogle() {
     this.authService.googleLogin();
   }
+  public hasError(field: string, error: string): boolean {
+    return this.f[field].touched && this.f[field].hasError(error);
+  }
 
-  // soumission de formulaire
+
+  // Soumission du formulaire
   onSubmit(): void {
-    this.submitted = true;
     if (this.signupForm.invalid) {
-
-      return;
-    }
+    this.toastr.error('Form invalid', 'Error');
+    return;
+  }
 
     const { email, password } = this.signupForm.value;
     this.authService.register(email, password).subscribe({
       next: (response) => {
-        alert(response.message);
-        this.router.navigate(['/login']);
+        this.toastr.info('A confirmation email has been sent. Please check your inbox.', 'Info');
+
       },
       error: (err) => {
+        this.toastr.error('Error while registering.', 'Error');
         console.error(err);
-        alert('Erreur lors de l’inscription.');
       },
     });
   }
 
-
   // controle de formulaire
-
-
   get f() {
     return this.signupForm.controls;
   }
+
 
 }

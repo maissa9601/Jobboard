@@ -51,7 +51,7 @@ export class AuthService {
         this.redirectUser(response.role);
       }),
       catchError(error => {
-        console.error(' Erreur de connexion', error);
+        console.error(' connexion error', error);
         return throwError(error);
       })
     );
@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   private redirectUser(role: string) {
-    console.log('🔍 Rôle détecté :', role);  // Debugging
+
 
     if (role === 'ADMIN') {
       this.router.navigate(['/admin']);
@@ -87,14 +87,14 @@ export class AuthService {
     return this.http.get<{ activated: boolean }>(`${this.API_URL}/confirm?token=${token}`).pipe(
       tap(response => {
         if (response.activated) {
-          console.log('compte activé avec succès !');
+          console.log('account is activated successfully.');
         } else {
-          console.error('activation échouée.');
+          console.error('failed to activate account.');
         }
       }),
       map(response => response.activated),
       catchError(error => {
-        console.error('erreur lors de la confirmation du compte', error);
+        console.error('error while confirming the account', error);
         return throwError(() => error);
       })
     );

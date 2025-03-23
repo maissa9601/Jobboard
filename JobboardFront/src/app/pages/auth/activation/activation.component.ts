@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../service/service';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-activation',
@@ -24,20 +24,20 @@ export class ActivationComponent implements OnInit {
         this.authService.confirmAccount(token).subscribe({
           next: (isActivated) => {
             if (isActivated) {
-              this.message = 'Compte activé avec succès ! Redirection...';
+              this.message = 'Account is activated successfully.redirecting ';
               setTimeout(() => {
                 this.router.navigate(['/login']);
               }, 3000);
             } else {
-              this.message = ' Lien d’activation invalide ou expiré.';
+              this.message = ' Link of activation expired or invalid';
             }
           },
           error: () => {
-            this.message = ' Erreur lors de l’activation du compte.';
+            this.message = ' Error while activation of the account';
           }
         });
       } else {
-        this.message = 'Aucun token trouvé.';
+        this.message = 'Cant found token.';
       }
     });
   }
