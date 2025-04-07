@@ -9,6 +9,7 @@ import {AuthGuard} from './service/auth.guard';
 import {AdminGuard} from './service/admin.guard';
 import {provideToastr} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
+import {FilterPipe} from './service/filter.pipe';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideOAuthClient(),
     AuthGuard,
     AdminGuard,
+    FilterPipe,
     provideToastr({
       positionClass: 'toast-center-custom',
       timeOut: 5000,

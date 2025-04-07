@@ -17,16 +17,16 @@ export interface JobOffer {
   providedIn: 'root'
 })
 export class OfferService {
-  private apiUrl = 'http://localhost:8080/offers';
+  private apiUrl = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) {}
 
   getJobOffers(): Observable<JobOffer[]> {
-    return this.http.get<JobOffer[]>(this.apiUrl);
+    return this.http.get<JobOffer[]>(this.apiUrl + 'offers');
   }
 
   getJobById(id: string) {
-    return this.http.get<any>(`http://localhost:8080/offer/${id}`);
+    return this.http.get<any>(`${this.apiUrl}offer/${id}`);
   }
 
 }

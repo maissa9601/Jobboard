@@ -45,10 +45,10 @@ export class OffersListComponent implements OnInit {
 
   applyFilters(): void {
     this.filteredJobs = this.jobs.filter(job =>
-        (!this.selectedType || job.contractype?.trim().toLowerCase() === this.selectedType.trim().toLowerCase()) &&
-        (this.searchKeyword === '' || job.title.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
-            job.description.toLowerCase().includes(this.searchKeyword.toLowerCase())) &&
-        (this.searchLocation === '' || job.location.toLowerCase().includes(this.searchLocation.toLowerCase()))
+      (!this.selectedType || job.contractype?.trim().toLowerCase() === this.selectedType.trim().toLowerCase()) &&
+      (this.searchKeyword === '' || job.title.trim().toLowerCase().includes(this.searchKeyword.trim().toLowerCase()) ||
+        job.description.trim().toLowerCase().includes(this.searchKeyword.trim().toLowerCase())) &&
+      (this.searchLocation === '' || job.location.trim().toLowerCase().includes(this.searchLocation.trim().toLowerCase()))
     );
   }
 

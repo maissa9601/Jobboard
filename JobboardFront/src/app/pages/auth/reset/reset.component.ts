@@ -23,7 +23,6 @@ export class ResetComponent {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
@@ -33,10 +32,7 @@ export class ResetComponent {
       confirmPassword: ['', [Validators.required]]
     }, { validator: this.passwordMatchValidator });
 
-    // 🔹récupération de token
-    this.route.queryParams.subscribe(params => {
-      this.token = params['token'] || '';
-    });
+
   }
 
   passwordMatchValidator(group: FormGroup) {

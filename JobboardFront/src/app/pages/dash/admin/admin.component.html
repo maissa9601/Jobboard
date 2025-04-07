@@ -1,1 +1,84 @@
-<p>admin works!</p>
+<div class="container">
+  <div class="dashboard">
+    <div class="sidebar">
+      <h1>Jobboard</h1>
+      <div class="buttons">
+        <button (click)="activeTab = 'admins'">Admins</button>
+        <button (click)="activeTab = 'candidats'">Candidats</button>
+        <button (click)="activeTab = 'offres'">Offers</button>
+      </div>
+    </div>
+    <div class="main">
+      <!-- Admins -->
+      <div *ngIf="activeTab === 'admins'">
+        <h3>Admin list</h3>
+        <table>
+          <tr>
+            <th></th>
+            <th>Email</th>
+          </tr>
+          <tr *ngFor="let admin of admins">
+            <td>{{ admin.id }}</td>
+            <td>{{ admin.email }}</td>
+          </tr>
+        </table>
+
+        <h3>Add admin</h3>
+        <input [(ngModel)]="newAdmin.email" placeholder="Email" />
+        <input [(ngModel)]="newAdmin.password" type="password" placeholder="Password" />
+        <button (click)="ajouterAdmin()" class="btn">Add</button>
+      </div>
+
+      <!-- Candidats -->
+      <div *ngIf="activeTab === 'candidats'">
+        <h3>Candidats list</h3>
+
+        <input [(ngModel)]="searchEmail" placeholder="Filter by email" class="filter" />
+
+
+        <ul>
+          <li *ngFor="let candidat of candidats | filter:searchEmail">
+            {{ candidat.email }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Offres -->
+      <div *ngIf="activeTab === 'offres'">
+        <h3>Offer list</h3>
+        <input [(ngModel)]="searchOffreTitre" placeholder="Filter by title" class="filter" />
+
+
+        <div class="offres-table-container">
+          <table>
+            <tr>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Contract</th>
+              <th>Location</th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let o of offres | filter:searchOffreTitre">
+              <td>{{ o.title }}</td>
+              <td>{{ o.company }}</td>
+              <td>{{ o.contractype }}</td>
+              <td>{{ o.location }}</td>
+              <td><button (click)="deleteOffre(o.id)" class="btn">Delete</button></td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Add offer</h3>
+        <input [(ngModel)]="newOffre.title" placeholder="Title" />
+        <input [(ngModel)]="newOffre.contractype" placeholder="Type of contract" />
+        <input [(ngModel)]="newOffre.description" placeholder="Description" />
+        <input [(ngModel)]="newOffre.company" placeholder="Company" />
+        <input [(ngModel)]="newOffre.location" placeholder="Lieu" />
+        <input [(ngModel)]="newOffre.salary" placeholder="Salary" type="number" />
+        <input [(ngModel)]="newOffre.source" placeholder="Source" />
+        <button (click)="ajouterOffre()" class="btn">Add</button>
+      </div>
+
+  </div>
+  </div>
+</div>
