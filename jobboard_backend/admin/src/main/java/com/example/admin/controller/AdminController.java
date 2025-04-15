@@ -19,12 +19,6 @@ import java.util.List;
         }
 
 
-        @PostMapping("/create")
-        public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
-            return ResponseEntity.ok(adminService.createAdmin(admin));
-        }
-
-
         @GetMapping("/admins")
         public ResponseEntity<List<Admin>> getAllAdmins() {
             return ResponseEntity.ok(adminService.getAllAdmins());
