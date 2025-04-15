@@ -1,7 +1,7 @@
 
 
 .container {
-  background: linear-gradient(to bottom, #9C9CE0, #cfd6fb);
+  background: linear-gradient(to bottom, #CF95D9, #455A64);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,39 +10,79 @@
 
 }
 .box {
-  background-color: white; /* Fond blanc */
+  background-color: white;
   padding: 40px;
-  border-radius: 12px; /* Coins arrondis */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
-  width: 1000px; /* Largeur fixe */
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 1000px;
   height: 500px;
-  max-width: 90%; /* Pour éviter que ça dépasse sur mobile */
+  max-width: 90%;
   text-align: center;
   display: flex;
 }
 .job{
-  margin-top: 45px;
-  height: 400px;
-  width: 500px;
+  margin-top: 35px;
+  margin-bottom: 45px;
+  height: 450px;
+  width: 450px;
+
 }
 
 
 .right {
+  margin-top: 100px;
+  margin-left: 50px;
   width: 400px;
-
   padding: 20px;
   border-radius: 10px;
-  margin-top: 100px;
+
   text-align: center;
 }
 
 .title {
   font-size: 25px;
-  color: #4C4BB4;
+  color: #74417D;
   font-family: 'Josefin Sans', sans-serif ;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
+
 }
-formulaire {
+
+.social-login {
+  display: flex;
+  justify-content: center;
+}
+
+.google-button {
+  display: flex;
+  color: #455A64;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #CF95D9;
+  padding: 10px;
+  width: 90%;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.google-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.or-text {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #74417D;
+}
+
+.formulaire {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +92,7 @@ formulaire {
   width: 90%;
   padding: 10px;
   margin: 8px 0;
-  border: 1px solid #4C4BB4 ;
+  border: 1px solid #455A64;
   border-radius: 5px;
   font-size: 14px;
 }
@@ -60,11 +100,10 @@ formulaire {
 .btn {
   width: 90%;
   padding: 12px;
-  background: #E74C3C;
+  background: #B16668;
   color: white;
   font-size: 16px;
-  border: 2px solid;
-  border-color: white;
+  border: 2px solid white;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 15px;
@@ -72,20 +111,26 @@ formulaire {
 }
 
 .btn:hover {
-  background: #c0392b;
+  background: #74417D;
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
 }
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 
 .little-text {
   margin-top: 25px;
   font-size: 14px;
-  color: #4C4BB4;
+  color: #455A64;
 }
 
 .switch {
-  color: #E74C3C;
+  color: #74417D;
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;
@@ -97,10 +142,29 @@ formulaire {
   font-size: 24px;
 }
 .error-text {
-  color:#E74C3C;
+  color: #f40909;
   font-size: 15px;
   margin-top: 5px;
   display: block;
 }
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 
 

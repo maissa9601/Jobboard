@@ -6,6 +6,7 @@ import {NgIf} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, NgIf],
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isLoading:boolean = false;
 
 
   constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService) {
@@ -28,19 +30,24 @@ export class LoginComponent {
       this.toastr.error('Fill the form correctly.', 'Error');
       return;
     }
+    this.isLoading=true;
 
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
-      next: (response) => {
+      next: () => {
         this.toastr.success('Login successful!', 'Success');
+        this.isLoading = false;
+
 
       },
       error: (err) => {
         console.error(err);
         this.toastr.error('Incorrect email or password.', 'Error');
+        this.isLoading = false;
       }
     });
   }
+
   public hasError(field: string, error: string): boolean {
     return this.f[field].touched && this.f[field].hasError(error);
   }

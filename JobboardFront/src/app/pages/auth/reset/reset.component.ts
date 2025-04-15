@@ -20,6 +20,7 @@ export class ResetComponent {
   resetForm: FormGroup;
   token: string = '';
   submitted: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -55,17 +56,20 @@ export class ResetComponent {
 
       return;
     }
+    this.isLoading =true;
 
     const password = this.resetForm.value.password;
 
     this.authService.resetPassword(this.token, password).subscribe({
-      next: (response) => {
+      next: () => {
         this.toastr.success('Your password has been changed successfully', 'Success');
+        this.isLoading =false;
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error("Erreur lors de la réinitialisation :", err);
-        this.toastr.error("Error while reseting");}
+        this.toastr.error("Error while reseting");
+        this.isLoading = false;}
 
     });
   }

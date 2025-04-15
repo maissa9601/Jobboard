@@ -26,10 +26,20 @@ export class AuthService {
     private oauthService: OAuthService,
     private http: HttpClient,
     private router: Router
+
   ) {
     this.oauthService.configure(authConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
+  private redirectUser(role: string) {
+
+    setTimeout(() => {
+      if (role === 'ADMIN') {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/candidat']);
+      }
+    },3500)}
 
 
 
@@ -48,7 +58,8 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role);
         this.roleSubject.next(response.role);
-        this.redirectUser(response.role);
+        this.redirectUser(response.role,);
+
       }),
       catchError(error => {
         console.error(' connexion error', error);
@@ -61,15 +72,7 @@ export class AuthService {
     return localStorage.getItem('role');
   }
 
-  private redirectUser(role: string) {
 
-
-    if (role === 'ADMIN') {
-      this.router.navigate(['/admin']);
-    } else {
-      this.router.navigate(['/candidat']);
-    }
-  }
   forgotPassword(email: string) {
     return this.http.post(`${this.API_URL}/forgot-password`, { email });
   }

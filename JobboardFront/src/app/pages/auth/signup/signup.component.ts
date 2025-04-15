@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -12,13 +12,16 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    CommonModule
+    CommonModule,
+
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  isLoading: boolean = false;
+
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.signupForm = this.fb.group({
@@ -49,25 +52,29 @@ export class SignupComponent {
   // Soumission du formulaire
   onSubmit(): void {
     if (this.signupForm.invalid) {
-    this.toastr.error('Form invalid', 'Error');
-    return;
-  }
+      this.toastr.error('Form invalid', 'Error');
+      return;
+    }
+
+    this.isLoading = true;
 
     const { email, password } = this.signupForm.value;
     this.authService.register(email, password).subscribe({
-      next: (response) => {
+      next: () => {
         this.toastr.info('A confirmation email has been sent. Please check your inbox.', 'Info');
-
+        this.isLoading = false;
       },
       error: (err) => {
         this.toastr.error('Error while registering.', 'Error');
+        this.isLoading = false;
         console.error(err);
       },
     });
   }
 
+
   // controle de formulaire
-  get f() {
+  public get f() {
     return this.signupForm.controls;
   }
 

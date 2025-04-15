@@ -9,12 +9,12 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  getAdmins() {
-    return this.http.get<any[]>(`${this.baseUrl}/admins`);
+  updateCandidat(id: number) {
+    return this.http.post(`${this.baseUrl}/candidats/${id}`, null); // null car pas de body
   }
 
-  addAdmin(admin: any) {
-    return this.http.post(`${this.baseUrl}/create`, admin);
+  deleteCandidat(id: number) {
+    return this.http.delete(`${this.baseUrl}/candidats/${id}`);
   }
 
   getCandidats() {
@@ -31,5 +31,10 @@ export class AdminService {
 
   deleteOffre(id: number) {
     return this.http.delete(`${this.baseUrl}/offers/${id}`);
+  }
+
+  getAdmins() {
+    return this.http.get<any[]>(`${this.baseUrl}/admins`);
+
   }
 }

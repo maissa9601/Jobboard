@@ -13,7 +13,6 @@ import {RouterLink} from "@angular/router";
 export class OffersListComponent implements OnInit {
   jobs: any[] = [];
   filteredJobs: any[] = [];
-
   searchKeyword: string = '';
   searchLocation: string = '';
   selectedType: string | null = null;
@@ -29,10 +28,6 @@ export class OffersListComponent implements OnInit {
     });
   }
 
-  searchJobs(): void {
-    this.applyFilters();
-  }
-
   filterByType(type: string | null): void {
     if (type === null) {
       this.selectedType = null;
@@ -41,8 +36,6 @@ export class OffersListComponent implements OnInit {
     }
     this.applyFilters();
   }
-
-
   applyFilters(): void {
     this.filteredJobs = this.jobs.filter(job =>
       (!this.selectedType || job.contractype?.trim().toLowerCase() === this.selectedType.trim().toLowerCase()) &&

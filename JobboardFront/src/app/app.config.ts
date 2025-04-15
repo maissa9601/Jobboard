@@ -7,9 +7,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideOAuthClient } from 'angular-oauth2-oidc';
 import {AuthGuard} from './service/auth.guard';
 import {AdminGuard} from './service/admin.guard';
-import {provideToastr} from 'ngx-toastr';
+import {provideToastr, ToastrModule} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
-import {FilterPipe} from './service/filter.pipe';
+import {FilterByFieldPipe} from './service/filter.pipe';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -18,10 +18,10 @@ export const appConfig: ApplicationConfig = {
     provideOAuthClient(),
     AuthGuard,
     AdminGuard,
-    FilterPipe,
+    FilterByFieldPipe,
     provideToastr({
       positionClass: 'toast-center-custom',
-      timeOut: 5000,
+      timeOut: 3000,
       closeButton: true,
       progressBar: true,
 

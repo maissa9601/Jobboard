@@ -1,17 +1,19 @@
 <div class="job-details">
-  <div class="left">
-    <h2>{{ job?.title }}</h2>
-    <p><strong>Company:</strong> {{ job?.company }}</p>
-    <p><strong>Location:</strong> {{ job?.location }}</p>
-    <p><strong>Contract Type:</strong> {{ job?.contractype }}</p>
-    <p><strong>Salary:</strong> {{ job?.salary }} €</p>
-    <p><strong>Description:</strong> {{ job?.description }}</p>
-    <div class="btns">
-    <button routerLink="/offers" class="btn-off">Back to Jobs</button>
-    <button routerLink="" class="save">Save</button>
-  </div>
-  </div>
-  <div class="right">
-    <img src="/offer.png" class="offer">
+  <div class="content">
+    <div class="left">
+      <h2>{{ job?.title }}</h2>
+      <p><strong>Company:</strong> {{ job?.company }}</p>
+      <p><strong>Location:</strong> {{ job?.location }}</p>
+      <p><strong>Contract Type:</strong> {{ job?.contractype }}</p>
+      <p><strong>Salary:</strong> {{ job?.salary }} €</p>
+      <p><strong>Description:</strong> {{ job?.description }}</p>
+      <div class="btns">
+        <button routerLink="/offers" class="btn-off">Back to Jobs</button>
+        <button class="save">Save</button>
+      </div>
+    </div>
+    <div class="right">
+      <img src="/offer.gif" class="offer" />
+    </div>
   </div>
 </div>

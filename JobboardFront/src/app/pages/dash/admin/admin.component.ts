@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../service/admin.service';
 import { FormsModule } from '@angular/forms';
-import { FilterPipe } from '../../../service/filter.pipe';
+import {FilterByFieldPipe} from '../../../service/filter.pipe';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin',
+  standalone: true,
+  imports: [CommonModule, FormsModule, FilterByFieldPipe],
   templateUrl: './admin.component.html',
-  imports: [CommonModule, FormsModule, FilterPipe],
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  activeTab = 'admins';
-
-  admins: any[] = [];
+  activeTab = 'dashboard';
+  active= 'admin' ;
+  showAddModal=false;
   candidats: any[] = [];
   offres: any[] = [];
-
-  newAdmin = { nom: '', email: '', password: '' };
-
-
+  admins: any[] = [];
   newOffre = {
     title: '',
     contractype: '',
@@ -29,28 +27,33 @@ export class AdminComponent implements OnInit {
     salary: null,
     source: ''
   };
-
   searchEmail = '';
-  searchOffreTitre=''
+  searchOffreTitre = '';
+
+
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.getAdmins();
     this.getCandidats();
     this.getOffres();
+    this.getAdmins();
   }
 
-  getAdmins() {
-    this.adminService.getAdmins().subscribe(data => this.admins = data);
-  }
-
-  ajouterAdmin() {
-    this.adminService.addAdmin(this.newAdmin).subscribe(() => {
-      this.getAdmins();
-      this.newAdmin = { nom: '', email: '', password: '' };
+  updateCandidat(id: number) {
+    this.adminService.updateCandidat(id).subscribe(() => {
+      this.getCandidats();
     });
   }
 
+  deleteCandidat(id: number) {
+    this.adminService.deleteCandidat(id).subscribe(() => {
+      this.getCandidats();
+    });
+  }
+  getAdmins(){
+    this.adminService.getAdmins().subscribe(data => this.admins = data);
+
+  }
   getCandidats() {
     this.adminService.getCandidats().subscribe(data => this.candidats = data);
   }
@@ -62,8 +65,6 @@ export class AdminComponent implements OnInit {
   ajouterOffre() {
     this.adminService.addOffre(this.newOffre).subscribe(() => {
       this.getOffres();
-
-      // Réinitialise tous les champs du formulaire
       this.newOffre = {
         title: '',
         contractype: '',
@@ -79,5 +80,4 @@ export class AdminComponent implements OnInit {
   deleteOffre(id: number) {
     this.adminService.deleteOffre(id).subscribe(() => this.getOffres());
   }
-
 }

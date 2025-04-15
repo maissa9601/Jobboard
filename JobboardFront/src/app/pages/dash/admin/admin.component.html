@@ -1,84 +1,147 @@
-<div class="container">
-  <div class="dashboard">
-    <div class="sidebar">
-      <h1>Jobboard</h1>
-      <div class="buttons">
-        <button (click)="activeTab = 'admins'">Admins</button>
-        <button (click)="activeTab = 'candidats'">Candidats</button>
-        <button (click)="activeTab = 'offres'">Offers</button>
+
+<nav class="navbar">
+  <i class="fas fa-briefcase logo-icon"></i>
+  <div class="navbar-logo">Jobboard Admin</div>
+
+  <div class="buttons">
+    <button class="activeTab" (click)="activeTab = 'dashboard'">Dashboard</button>
+    <button class="activeTab"   (click)="activeTab = 'admins'">Admins</button>
+    <button class="activeTab" (click)="activeTab = 'candidats'">Candidats</button>
+    <button class="activeTab"  (click)="activeTab = 'offres'"> Job Offers</button>
+    <button class="activeTab"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</nav>
+<div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
+  <h1>Dashboard</h1>
+  <div class="card-container">
+    <div class="dashboard-card">
+      <i class="fas fa-user-shield icon"></i>
+      <h2>Admin Management</h2>
+      <p>Manage administrators and promote candidates to admin role</p>
+    </div>
+    <div class="dashboard-card">
+      <i class="fas fa-users icon"></i>
+      <h2>Candidate Management</h2>
+      <p>View and manage candidate profiles and applications</p>
+    </div>
+    <div class="dashboard-card">
+      <i class="fas fa-briefcase icon"></i>
+      <h2>Job Offers</h2>
+      <p>Create, view, update and delete job offers</p>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div  class="card" *ngIf="activeTab === 'admins'">
+    <div class="buttons">
+
+      <button class="btn" (click)="active = 'admin'">Admins</button>
+      <button class="btn" (click)="active = 'candidat'">Candidats</button>
+
+    </div>
+    <div  *ngIf="active === 'admin'">
+
+    <h3>Admin</h3>
+    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
+
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+      </tr>
+      <tr *ngFor="let admin of admins | filterByField: searchEmail : 'email'">
+        <td>{{ admin.id }}</td>
+        <td>{{ admin.email }}</td>
+      </tr>
+    </table>
+    </div>
+    <div  *ngIf="active === 'candidat'">
+
+    <h3>candidat</h3>
+    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Activate</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
+        <td>{{ candidat.id }}</td>
+        <td>{{ candidat.email }}</td>
+        <td>{{ candidat.enabled }}</td>
+        <td><button  class="btn" (click)="updateCandidat(candidat.id)" >Change to Admin</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+  <div  class="card" *ngIf="activeTab === 'candidats'">
+
+    <h3>Candidats</h3>
+    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Activate</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
+        <td>{{ candidat.id }}</td>
+        <td>{{ candidat.email }}</td>
+        <td>{{ candidat.enabled }}</td>
+        <td><button (click)="deleteCandidat(candidat.id)" class="btn">Delete</button></td>
+      </tr>
+    </table>
+  </div>
+  <div class="card" *ngIf="activeTab === 'offres'">
+    <h2>Offres</h2>
+    <input [(ngModel)]="searchOffreTitre" placeholder="Filtrer par titre" class="filter" />
+
+    <table>
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Contract</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let o of offres | filterByField: searchOffreTitre : 'title'">
+        <td>{{ o.title }}</td>
+        <td>{{ o.company }}</td>
+        <td>{{ o.contractype }}</td>
+        <td>{{ o.location }}</td>
+        <td><button  class="btn"(click)="deleteOffre(o.id)" >Delete</button></td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <button class="btn" (click)="showAddModal = true">Add Offer</button>
+
+    <div class="modal-backdrop" *ngIf="showAddModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Ajouter une offre</h3>
+          <button class="close-btn" (click)="showAddModal = false">✕</button>
+        </div>
+        <div class="modal-body">
+          <input [(ngModel)]="newOffre.title" placeholder="Title" />
+          <input [(ngModel)]="newOffre.contractype" placeholder="Type of contract" />
+          <input [(ngModel)]="newOffre.description" placeholder="Description" />
+          <input [(ngModel)]="newOffre.company" placeholder="Company" />
+          <input [(ngModel)]="newOffre.location" placeholder="Lieu" />
+          <input [(ngModel)]="newOffre.salary" placeholder="Salary" type="number" />
+          <input [(ngModel)]="newOffre.source" placeholder="Source" />
+          <button (click)="ajouterOffre(); showAddModal = false" class="btn">Ajouter</button>
+        </div>
       </div>
     </div>
-    <div class="main">
-      <!-- Admins -->
-      <div *ngIf="activeTab === 'admins'">
-        <h3>Admin list</h3>
-        <table>
-          <tr>
-            <th></th>
-            <th>Email</th>
-          </tr>
-          <tr *ngFor="let admin of admins">
-            <td>{{ admin.id }}</td>
-            <td>{{ admin.email }}</td>
-          </tr>
-        </table>
 
-        <h3>Add admin</h3>
-        <input [(ngModel)]="newAdmin.email" placeholder="Email" />
-        <input [(ngModel)]="newAdmin.password" type="password" placeholder="Password" />
-        <button (click)="ajouterAdmin()" class="btn">Add</button>
-      </div>
-
-      <!-- Candidats -->
-      <div *ngIf="activeTab === 'candidats'">
-        <h3>Candidats list</h3>
-
-        <input [(ngModel)]="searchEmail" placeholder="Filter by email" class="filter" />
-
-
-        <ul>
-          <li *ngFor="let candidat of candidats | filter:searchEmail">
-            {{ candidat.email }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- Offres -->
-      <div *ngIf="activeTab === 'offres'">
-        <h3>Offer list</h3>
-        <input [(ngModel)]="searchOffreTitre" placeholder="Filter by title" class="filter" />
-
-
-        <div class="offres-table-container">
-          <table>
-            <tr>
-              <th>Title</th>
-              <th>Company</th>
-              <th>Contract</th>
-              <th>Location</th>
-              <th></th>
-            </tr>
-            <tr *ngFor="let o of offres | filter:searchOffreTitre">
-              <td>{{ o.title }}</td>
-              <td>{{ o.company }}</td>
-              <td>{{ o.contractype }}</td>
-              <td>{{ o.location }}</td>
-              <td><button (click)="deleteOffre(o.id)" class="btn">Delete</button></td>
-            </tr>
-          </table>
-        </div>
-
-        <h3>Add offer</h3>
-        <input [(ngModel)]="newOffre.title" placeholder="Title" />
-        <input [(ngModel)]="newOffre.contractype" placeholder="Type of contract" />
-        <input [(ngModel)]="newOffre.description" placeholder="Description" />
-        <input [(ngModel)]="newOffre.company" placeholder="Company" />
-        <input [(ngModel)]="newOffre.location" placeholder="Lieu" />
-        <input [(ngModel)]="newOffre.salary" placeholder="Salary" type="number" />
-        <input [(ngModel)]="newOffre.source" placeholder="Source" />
-        <button (click)="ajouterOffre()" class="btn">Add</button>
-      </div>
-
-  </div>
   </div>
 </div>

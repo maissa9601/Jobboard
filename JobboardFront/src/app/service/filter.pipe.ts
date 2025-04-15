@@ -1,20 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter',
+  name: 'filterByField',
   standalone: true
 })
-export class FilterPipe implements PipeTransform {
-  transform(items: any[], searchText: string): any[] {
-    if (!items || !searchText) {
-      return items;
-    }
+export class FilterByFieldPipe implements PipeTransform {
+  transform(items: any[], searchText: string, field: string): any[] {
+    if (!items || !searchText || !field) return items;
 
     searchText = searchText.toLowerCase();
     return items.filter(item =>
-      Object.values(item).some(value =>
-        String(value).toLowerCase().includes(searchText)
-      )
+      item[field]?.toLowerCase().includes(searchText)
     );
   }
 }
+
