@@ -14,7 +14,7 @@ export class AdminService {
   }
 
   deleteCandidat(id: number) {
-    return this.http.delete(`${this.baseUrl}/candidats/${id}`);
+    return this.http.delete(`${this.baseUrl}/candidats/${id}/prormote`);
   }
 
   getCandidats() {

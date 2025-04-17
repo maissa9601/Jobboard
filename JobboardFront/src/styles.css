@@ -41,3 +41,13 @@ html, body {
   color: #fff !important;
 }
 
+
+.transparent-navbar {
+  background-color: transparent;
+}
+
+.gray-navbar {
+  background-color: #EBEBEB;
+
+}
+

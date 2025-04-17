@@ -3,11 +3,12 @@ import { AdminService } from '../../../service/admin.service';
 import { FormsModule } from '@angular/forms';
 import {FilterByFieldPipe} from '../../../service/filter.pipe';
 import { CommonModule } from '@angular/common';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilterByFieldPipe],
+  imports: [CommonModule, FormsModule, FilterByFieldPipe, RouterLink],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
