@@ -1,28 +1,28 @@
 package com.example.admin.controller;
 
-import com.example.admin.model.Admin;
-import com.example.admin.service.AdminService;
+import com.example.admin.Dto.Admin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:4200")
+public class AdminController {
 
-    public class AdminController {
-        private final AdminService adminService;
+    private final RestTemplate restTemplate;
+    private final String AUTH_SERVICE_URL = "http://localhost:8080/users";
 
-        public AdminController(AdminService adminService) {
-            this.adminService = adminService;
-        }
+    public AdminController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
-
-        @GetMapping("/admins")
-        public ResponseEntity<List<Admin>> getAllAdmins() {
-            return ResponseEntity.ok(adminService.getAllAdmins());
-        }
-
-
+    @GetMapping("/admins")
+    public List<Admin> getAllAdmins() {
+        ResponseEntity<Admin[]> response = restTemplate.getForEntity(AUTH_SERVICE_URL + "/admins", Admin[].class);
+        return Arrays.asList(response.getBody());
+    }
 }

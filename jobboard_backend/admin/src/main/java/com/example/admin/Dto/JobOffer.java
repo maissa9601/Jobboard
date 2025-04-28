@@ -1,12 +1,9 @@
 package com.example.admin.Dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
  @Data
 public class JobOffer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
     private String title;

@@ -1,45 +1,38 @@
 package com.example.admin.controller;
 
-import com.example.admin.model.Candidat;
-import com.example.admin.service.CandidatService;
+import com.example.admin.Dto.Candidat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CandidatController {
 
-    private final CandidatService candidatService;
+    private final RestTemplate restTemplate;
+    private final String AUTH_SERVICE_URL = "http://localhost:8080/users";
 
-
-    public CandidatController(CandidatService candidatService) {
-        this.candidatService = candidatService;
+    public CandidatController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
-
 
     @GetMapping("/candidats")
     public List<Candidat> getAllCandidats() {
-        return candidatService.getAllCandidats(); // Appel correct du service
+        ResponseEntity<Candidat[]> response = restTemplate.getForEntity(AUTH_SERVICE_URL + "/candidats", Candidat[].class);
+        return Arrays.asList(response.getBody());
     }
-
 
     @PostMapping("/candidats/{id}/promote")
-    public ResponseEntity<Candidat> promoteToAdmin(@PathVariable Long id) {
-        return candidatService.promoteToAdmin(id)
-                .map(updated -> ResponseEntity.ok(updated))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-    @DeleteMapping("/candidats/{id}")
-    public ResponseEntity<Void> deleteCandidat(@PathVariable Long id) {
-        Optional<Candidat> existingCandidat = CandidatService.getCandidatrById(id);
-        if (existingCandidat.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        CandidatService.deleteCandidat(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Candidat> promote(@PathVariable Long id) {
+        return restTemplate.postForEntity(AUTH_SERVICE_URL + "/candidats/" + id + "/promote", null, Candidat.class);
     }
 
+    @DeleteMapping("/candidats/{id}")
+    public void deleteCandidat(@PathVariable Long id) {
+        restTemplate.delete(AUTH_SERVICE_URL + "/candidats/" + id);
+    }
 }

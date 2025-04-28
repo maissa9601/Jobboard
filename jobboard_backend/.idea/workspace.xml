@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="64e434a6-f849-48c1-ab76-73fd6895a397" name="Changes" comment="" />
+    <list default="true" id="64e434a6-f849-48c1-ab76-73fd6895a397" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/activation/activation.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/activation/activation.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/auth-callback/auth-callback.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/auth-callback/auth-callback.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/reset/reset.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/reset/reset.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/signup/signup.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/signup/signup.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/auth/signup/signup.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/service/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/service/auth.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/service/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/service/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Security/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/src/main/java/com/example/authentication/service/AuthService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +31,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -34,10 +51,12 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.JobboardBackendApplication.executor": "Run",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/chaie/jobboard_backend/authentication",
+    "last_opened_file_path": "C:/Users/chaie/jobboard/jobboard_backend/authentication",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -103,6 +122,7 @@
       <workItem from="1740644788115" duration="18116000" />
       <workItem from="1740991447099" duration="131000" />
       <workItem from="1740991600916" duration="16000" />
+      <workItem from="1742382928446" duration="51000" />
     </task>
     <servers />
   </component>

@@ -4,7 +4,6 @@ import com.example.authentication.dto.AuthRequest;
 import com.example.authentication.dto.AuthResponse;
 import com.example.authentication.dto.ForgotPasswordRequest;
 import com.example.authentication.dto.ResetPasswordRequest;
-
 import java.io.IOException;
 import java.util.Collections;
 import com.example.authentication.service.AuthService;
@@ -42,10 +41,6 @@ public class AuthController {
                     .body(Collections.singletonMap("message", e.getMessage()));
         }
     }
-
-
-
-
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
@@ -90,6 +85,7 @@ public class AuthController {
     public ResponseEntity<String> oauth2Failure() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("fail to authenticate with google.");
     }
+
 
 
 

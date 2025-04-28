@@ -24,11 +24,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login", "/auth/confirm",
                                 "/auth/forgot-password", "/auth/reset-password",
-                                "/auth/google", "/oauth2/**", "/login/oauth2/**")
+                                "/auth/google", "/oauth2/**", "/login/oauth2/**","/users/**","/users/candidats/{id}","/candidats/{id}/promote")
                         .permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/profile/**").hasAuthority("CANDIDAT")
