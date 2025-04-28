@@ -1,15 +1,59 @@
-<div class="home-container">
+<div  class="home-container">
+  <img src="/wave.svg" class="wave-bg" alt="wave" />
+  <div class="home-content-wrapper">
 
-  <div class="content-wrapper">
-    <div class="content">
-      <h1>Bienvenue sur Jobboard</h1>
-      <p>Trouvez, gérez et publiez des offres d'emploi en toute simplicité.</p>
-      <button class="cta-btn">Commencer</button>
+    <div class="home-text">
+      <h1>Find your next opportunity</h1>
+      <p>
+
+        Discover thousands of job offers tailored to your skills and goals.
+        Start your career journey with us
+      </p>
+      <button  routerLink='/signup' class="home-btn">Get Started</button>
     </div>
 
-    <div class="illustration">
-      <img src="/work.png" alt="Illustration personnes" />
+    <div class="home-image">
+      <img src="/work.png" alt="Developer at desk" />
     </div>
   </div>
-
 </div>
+  <section id="about" class="about-section">
+    <h2>About us</h2>
+    <p>
+      Our job board platform is designed to centralize job offers from various sources including company websites, recruitment portals, and professional social networks.
+      We help candidates find the right opportunities and provide companies with efficient ways to reach talented professionals.
+      Built with modern technologies, our goal is to deliver a fast, responsive, and intelligent job search experience.
+    </p>
+  </section>
+  <section id="offers" class="highlighted-jobs">
+    <div class="view-all-container">
+    <h2>Featured Job Offers</h2>
+      <button routerLink="/offers" class="view-all-btn">
+        View All Offers
+      </button>
+    </div>
+    <div class="job-list">
+      <div *ngFor="let job of latestOffers" class="job-card">
+        <h3>{{ job.title }}</h3>
+        <p>{{ job.description | slice: 0:50 }}...</p>
+        <p><i class="fas fa-building"></i> {{ job.company }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> {{ job.location }}</p>
+        <button [routerLink]="['/offer', job.id]" class="see">See more</button>
+      </div>
+    </div>
+  </section>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <h3>Jobboard</h3>
+      <p>Empowering your career with curated job opportunities.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Jobboard. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+

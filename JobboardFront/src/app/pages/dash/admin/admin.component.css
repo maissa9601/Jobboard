@@ -8,7 +8,7 @@
 h1 {
   font-size: 2.5rem;
   color: #74417D;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .card-container {
@@ -271,7 +271,7 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .back-btn {
   background-color: transparent;

@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = 'http://localhost:8080/admin';
+  private baseUrl = 'http://localhost:8082/admin';
 
   constructor(private http: HttpClient) {}
 
   updateCandidat(id: number) {
-    return this.http.post(`${this.baseUrl}/candidats/${id}`, null); // null car pas de body
+    return this.http.post(`${this.baseUrl}/candidats/${id}`, null);
   }
 
   deleteCandidat(id: number) {

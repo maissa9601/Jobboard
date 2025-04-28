@@ -1,15 +1,12 @@
-<nav  class="navbar">
-
-<div class="navbar-logo">
+<nav class="navbar">
+  <div class="navbar-logo">
     <i class="fas fa-briefcase"></i> Jobboard
   </div>
-
   <ul class="navbar-links">
-    <li><a routerLink="/offers" routerLinkActive="active">Job Offers</a></li>
     <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+    <li><a (click)="scrollToSection('about')">About</a></li>
+    <li><a (click)="scrollToSection('offers')">Job Offers</a></li>
     <li><a routerLink="/signup" routerLinkActive="active">Sign up</a></li>
-    <button routerLink="/login" routerLinkActive="active">Login</button>
-
+    <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
   </ul>
 </nav>
