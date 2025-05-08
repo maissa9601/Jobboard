@@ -18,7 +18,7 @@ export class AuthCallbackComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
 
-      console.log("🔹 Token received:", token); // Debug
+      console.log("🔹 Token received:", token);
 
       if (token) {
         this.authService.storeToken(token);

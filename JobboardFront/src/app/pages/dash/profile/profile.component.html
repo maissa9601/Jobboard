@@ -1,0 +1,127 @@
+<nav class="navbar">
+  <i class="fas fa-briefcase logo-icon"></i>
+  <div class="navbar-logo">Jobboard Candidat</div>
+
+  <div class="buttons">
+    <button class='nav-btn' [class.activeTab]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
+      <i class="fas fa-tachometer-alt"></i> Dashboard
+    </button>
+
+    <button class='nav-btn' [class.activeTab]="activeTab === 'profile'" (click)="activeTab = 'profile'">
+      <i class="fas fa-user"></i> My Profile
+    </button>
+
+    <button class='nav-btn' [routerLink]="'/offers'">
+      <i class="fas fa-clipboard-list"></i> Job Offers
+    </button>
+
+    <button class='nav-btn' [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
+      <i class="fas fa-heart"></i> Favourites
+    </button>
+
+    <button class='nav-btn' [routerLink]="'/home'">
+      <i class="fas fa-home"></i> Home
+    </button>
+
+    <button class='nav-btn' (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
+  <h1>Dashboard</h1>
+  <div class="card-container">
+
+    <div (click)="activeTab = 'profile'" class="dashboard-card">
+      <i class="fas fa-user icon"></i>
+      <h2>Profile Management</h2>
+      <p>Update your personal information and resume</p>
+    </div>
+
+    <div (click)="activeTab = 'offres'" class="dashboard-card">
+      <i class="fas fa-clipboard-list icon"></i>
+      <h2>Job Offers</h2>
+      <p>View and manage available job offers</p>
+    </div>
+
+    <div (click)="activeTab = 'favoris'" class="dashboard-card">
+      <i class="fas fa-heart icon"></i>
+      <h2>Favourites</h2>
+      <p>View your saved job offers</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="profile-wrapper" *ngIf="activeTab === 'profile'">
+  <div class="card profile-header">
+    <div class="profile-avatar">
+      <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" class="avatar-img" />
+      <div *ngIf="!photoPreviewUrl" class="avatar-icon">👤</div>
+    </div>
+
+    <div class="profile-info">
+      <div class="editable-field">
+        <label>Full Name</label>
+        <div class="edit-container">
+          <input type="text" formControlName="fullName" [readonly]="!isEditing.fullName" />
+          <button type="button" (click)="toggleEdit('fullName')">
+            {{ isEditing.fullName ? '✔️' : '✏️' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="editable-field">
+        <label>Bio</label>
+        <div class="edit-container">
+          <textarea formControlName="bio" [readonly]="!isEditing.bio"></textarea>
+          <button type="button" (click)="toggleEdit('bio')">
+            {{ isEditing.bio ? '✔️' : '✏️' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="upload-section">
+        <label>📷 Upload Profile Photo</label>
+        <input type="file" (change)="onPhotoSelected($event)" />
+      </div>
+      <div class="form-group">
+        <label>Upload CV</label>
+        <input type="file" (change)="onCvSelected($event)" />
+        <p *ngIf="cvFileName">📄 {{ cvFileName }}</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card tag-section">
+    <div class="section-header">
+      <h3>🛠 Skills</h3>
+      <button type="button" (click)="addSkill()">+ Add Skill</button>
+    </div>
+    <div class="tag-list">
+      <div *ngFor="let skill of skills.controls; let i = index" class="tag-item">
+        <input [formControl]="asFormControl(skill)" />
+        <button type="button" (click)="removeSkill(i)">❌</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card tag-section">
+    <div class="section-header">
+      <h3>🌍 Languages</h3>
+      <button type="button" (click)="addLanguage()">+ Add Language</button>
+    </div>
+    <div class="tag-list">
+      <div *ngFor="let lang of languages.controls; let i = index" class="tag-item">
+        <input [formControl]="asFormControl(lang)" />
+        <button type="button" (click)="removeLanguage(i)">❌</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card form-actions">
+    <button type="submit" class="btn save" (click)="save()">💾 Save Profile</button>
+    <button type="button" class="btn logout" (click)="logout()">🚪 Logout</button>
+  </div>
+</div>

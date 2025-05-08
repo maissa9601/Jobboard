@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="form-section">
+      <div class="navbar-logo">
+          <i class="fas fa-briefcase"></i> Jobboard
+      </div>
+    <h1>Complete your profile</h1>
+    <p>Tell us a bit more about yourself to get started.</p>
+
+    <form [formGroup]="completeForm" (ngSubmit)="onSubmit()">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text" formControlName="fullName" placeholder="John Doe" />
+      <label for="bio">Bio</label>
+      <textarea id="bio" rows="4" formControlName="bio" placeholder="Tell us about yourself..."></textarea>
+      <button type="submit" [disabled]="completeForm.invalid">Complete Profile</button>
+    </form>
+  </div>
+    <div class="info-section">
+        <div class="step-indicator">
+            <span class="step done"><mat-icon color="primary">check_circle</mat-icon></span>
+            <span class="line"></span>
+            <span class="step current"><mat-icon color="accent">looks_two</mat-icon></span>
+            <span class="line"></span>
+            <span class="step"><mat-icon>looks_3</mat-icon></span>
+        </div>
+        <h2>Why complete your profile?</h2>
+        <ul>
+            <li><mat-icon>work_outline</mat-icon> Tailored job offers based on your skills</li>
+            <li><mat-icon>notifications_active</mat-icon> Instant alerts for matching opportunities</li>
+            <li><mat-icon>smart_toy</mat-icon> Smart recommendations powered by AI (coming soon)</li>
+            <li><mat-icon>dashboard</mat-icon> Track your applications in one dashboard</li>
+            <li><mat-icon>public</mat-icon> Access offers from multiple trusted sources</li>
+        </ul>
+    </div>
+
+</div>

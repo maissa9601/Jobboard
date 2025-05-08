@@ -11,7 +11,7 @@ html, body {
 }
 
 body::-webkit-scrollbar {
-  display: none;              /
+  display: none;
 }
 
 .toast-center-custom {
@@ -40,12 +40,16 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 .toast-success {
-  background-color: #CF95D9 !important; /* Vert */
+  background-color: #8C4E97 !important;
   color: #fff !important;
 }
 .toast-error {
-  background-color: #B16668 !important; /* Rouge */
+  background-color: #171616 !important;
   color: #fff !important;
+}
+.toast-info{
+  background-color: white !important;
+  color: #8C4E97 !important;
 }
 
 
@@ -57,4 +61,5 @@ body::-webkit-scrollbar {
   background-color: #EBEBEB;
 
 }
+
 

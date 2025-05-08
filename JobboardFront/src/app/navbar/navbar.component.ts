@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {NgClass, ViewportScroller} from '@angular/common';
+import {Component} from '@angular/core';
+import { RouterLink, RouterLinkActive} from '@angular/router';
+
 
 
 @Component({
@@ -8,8 +8,6 @@ import {NgClass, ViewportScroller} from '@angular/common';
   imports: [
     RouterLink,
     RouterLinkActive,
-
-
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -17,14 +15,16 @@ import {NgClass, ViewportScroller} from '@angular/common';
 export class NavbarComponent {
 
 
-
-  constructor(private viewportScroller: ViewportScroller) {}
+  activeLink: string = 'home';
 
   scrollToSection(sectionId: string) {
+    this.activeLink = sectionId;
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+
 
 }

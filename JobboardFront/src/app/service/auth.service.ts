@@ -20,7 +20,7 @@ export class AuthService {
   private API_URL = 'http://localhost:8080/auth';
   //suivi de role
   private roleSubject = new BehaviorSubject<string | null>(this.getRole());
-  role$ = this.roleSubject.asObservable();
+
 
   constructor(
     private oauthService: OAuthService,
@@ -41,9 +41,6 @@ export class AuthService {
       }
     },3500)}
 
-
-
-
   //register
   register(email: string, password: string): Observable<any> {
     const body = { email, password };
@@ -56,7 +53,7 @@ export class AuthService {
     return this.http.post<{ token: string, role: string }>(`${this.API_URL}/login`, { email, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('role', response.role);
+        localStorage.setItem('roles', response.role);
         this.roleSubject.next(response.role);
         this.redirectUser(response.role,);
 
@@ -69,7 +66,7 @@ export class AuthService {
   }
 
   getRole(): string | null {
-    return localStorage.getItem('role');
+    return localStorage.getItem('roles');
   }
 
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../service/auth.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ToastrService} from 'ngx-toastr';
 
@@ -23,7 +22,7 @@ export class SignupComponent {
   isLoading: boolean = false;
 
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

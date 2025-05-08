@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-
 import {AuthService} from '../../../service/auth.service';
 import {NgIf} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
@@ -37,8 +36,6 @@ export class LoginComponent {
       next: () => {
         this.toastr.success('Login successful!', 'Success');
         this.isLoading = false;
-
-
       },
       error: (err) => {
         console.error(err);
@@ -51,7 +48,6 @@ export class LoginComponent {
   public hasError(field: string, error: string): boolean {
     return this.f[field].touched && this.f[field].hasError(error);
   }
-
 
   sendResetEmail() {
     Swal.fire({
@@ -81,8 +77,6 @@ export class LoginComponent {
       }
     });
   }
-
-
   get f() {
     return this.loginForm.controls;
   }
