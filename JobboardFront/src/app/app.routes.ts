@@ -27,7 +27,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetComponent },
   { path: 'activate', component: ActivationComponent },
-  { path: 'admin', component: AdminComponent , canActivate: [AuthGuard, AdminGuard]},
+  { path: 'admin', component: AdminComponent}, /*, canActivate: [AuthGuard, AdminGuard]}*/
   { path: 'complete', component: CompleteProfileComponent },
   { path: 'dashboard', component: ProfileComponent},
   { path: 'candidat', component: CandidatComponent},

@@ -32,12 +32,17 @@ export class CandidatService {
     return this.http.post(`${this.baseUrl}/profile/create`, data, this.getAuthHeaders());
   }
 
+  uploadPhoto(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
 
-  updateCvUrl(cvUrl: string) {
-    return this.http.put(
-      `${this.baseUrl}/profile/cv/update`,
-      { cvUrl },
-      this.getAuthHeaders()
+    return this.http.post(
+      `${this.baseUrl}/profile/photo/upload`,
+      formData,
+      {
+        ...this.getAuthHeaders(),
+        responseType: 'text' // Expecting plain text URL or message
+      }
     );
   }
 
@@ -45,11 +50,13 @@ export class CandidatService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-    return this.http.post(`${this.baseUrl}/profile/cv/upload`, formData, { headers, responseType: 'text' });
+    return this.http.post(
+      `${this.baseUrl}/profile/cv/upload`,
+      formData,
+      {
+        ...this.getAuthHeaders(),
+        responseType: 'text' // Same here
+      }
+    );
   }
 }

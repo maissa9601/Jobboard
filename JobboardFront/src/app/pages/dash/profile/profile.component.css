@@ -1,6 +1,6 @@
 .dashboard-container {
   padding: 2rem;
-  font-family: Arial, sans-serif;
+  font-family:  "Roboto", sans-serif;
   background-color: #fff;
   color: #455A64;
 }
@@ -23,10 +23,14 @@ h1 {
   border-radius: 12px;
   padding: 1.5rem;
   flex: 1 1 250px;
-  min-width: 250px;
+  min-width: 300px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: transform 0.2s ease-in-out;
   cursor: pointer;
+}
+.dashboard-card i{
+  color: #74417D;
+  font-size: 2rem;
 }
 
 .dashboard-card:hover {
@@ -50,12 +54,12 @@ h1 {
   background: linear-gradient(to right, #CF95D9, #455A64);
   padding: 1rem 2rem;
   color: white;
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
 
 }
 
 .navbar-logo {
-  margin-right: 30rem;
+  margin-right: 20rem;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -94,92 +98,259 @@ nav-btn:hover {
   color: white;
 
 }
-.profile-wrapper {
+.dashboard-container {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  font-family:"Roboto", sans-serif;
+  color: #333;
+}
+
+.profile-container {
   max-width: 900px;
   margin: auto;
-  font-family: 'Segoe UI', sans-serif;
-}
-.card {
   background: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 2rem;
+}
+.profile-container p{
+  font-family: "Roboto", sans-serif;
+  color: #454545;
+}
+.profile-container h1{
+  font-family: "Roboto", sans-serif;
+  color: #74417D;
 }
 .profile-header {
   display: flex;
-  gap: 20px;
-}
-.profile-avatar .avatar-icon {
-  font-size: 50px;
-  background: #eee;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  display: flex;
+  gap: 2rem;
   align-items: center;
-  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 2rem;
 }
+
+.profile-photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid #333333;
+}
+
+.photo-upload {
+  flex-direction:row;
+  align-items: center;
+  display:flex;
+}
+.photo-upload i{
+  color: #74417D;
+  margin-bottom: 0.1rem;
+  margin-right: 0.5rem;
+}
+
+.upload-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #74417D;
+}
+
+input[type="file"] {
+  margin-bottom: 0.3rem;
+}
+
+.choose-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+
 .profile-info {
   flex: 1;
 }
-.editable-field label {
+
+.field-group {
+  margin-bottom: 1.5rem;
+  margin-left: 8rem;
+
+}
+.download-link {
+  text-decoration: none;
+  color: #8C4E97;
+  font-weight: 600;
+  border: 1px solid #8C4E97;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.download-link:hover {
+  background-color: #8C4E97;
+  color: white;
+}
+
+.field-group label {
   font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #74417D;
 }
-.edit-container {
+
+.field-editable {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 0.5rem;
 }
-.edit-container input,
-.edit-container textarea {
-  width: 100%;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-.upload-section {
-  margin-top: 10px;
-}
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.tag-list {
-  margin-top: 10px;
-}
-.tag-item {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.tag-item input {
+
+.field-editable input,
+.field-editable textarea {
   flex: 1;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  max-width: 200px;
+  transition: all 0.2s ease-in-out;
+
 }
-.btn {
-  padding: 8px 14px;
+
+.field-editable button {
+  background: #74417D;
   border: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 1.1rem;
   border-radius: 6px;
   cursor: pointer;
+  color: #fff;
 }
-.save {
-  background-color: #4caf50;
+
+.field-editable button:hover {
+  background-color: #74417D;
+}
+
+.profile-section {
+  margin-top: 2rem;
+}
+
+.profile-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #74417D;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+}
+
+.tag input {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  width: auto;
+  padding: 0.2rem;
+  outline: none;
+  color: #333;
+}
+
+
+.tag button {
+  background: none;
+  border: none;
+  color: #74417D;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.add-tag {
+  background-color: #74417D;
   color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.logout {
-  background-color: #f44336;
-  color: white;
-  margin-left: 10px;
+
+.add-tag:hover {
+  background-color: #5d3364;
 }
-.avatar-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
+
+
+.profile-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
 }
+
+.btn-save,
+.btn-logout {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #74417D;
+  color: #fff;
+}
+
+.btn-logout {
+  background: #74417D;
+  color: #fff;
+}
+
+.btn-save:hover {
+  background-color: #5d3366;
+}
+
+.btn-logout:hover {
+  background-color: #74417D;
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: #CF95D9;
+  margin-bottom: 0.5rem;
+}
+
+
+.empty-state p {
+  color: #888;
+  font-size: 0.95rem;
+}
+
+

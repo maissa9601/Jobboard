@@ -8,6 +8,7 @@ html, body {
   scroll-padding-top: 80px;  overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  font-family: "Roboto", sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -61,5 +62,6 @@ body::-webkit-scrollbar {
   background-color: #EBEBEB;
 
 }
+
 
 

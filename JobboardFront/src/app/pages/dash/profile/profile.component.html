@@ -23,6 +23,10 @@
       <i class="fas fa-home"></i> Home
     </button>
 
+    <button class='nav-btn' [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'">
+      <i class="fas fa-bell alert-icon"></i> Alerts
+    </button>
+
     <button class='nav-btn' (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
   </div>
 </nav>
@@ -49,79 +53,104 @@
       <h2>Favourites</h2>
       <p>View your saved job offers</p>
     </div>
+    <div (click)="activeTab = 'alerts'" class="dashboard-card">
+      <i  class="fas fa-bell alert-icon"></i>
+      <h2>Alerts</h2>
+      <p>View your alerts</p>
+    </div>
 
   </div>
 </div>
+<!-- DASHBOARD -->
+<div class="dashboard-container" *ngIf="activeTab === 'profile'">
+  <div class="profile-container">
+    <h1>My profile</h1>
+    <p>Complete your profile to improve your job offer recommendations</p>
 
-<div class="profile-wrapper" *ngIf="activeTab === 'profile'">
-  <div class="card profile-header">
-    <div class="profile-avatar">
-      <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" class="avatar-img" />
-      <div *ngIf="!photoPreviewUrl" class="avatar-icon">👤</div>
-    </div>
-
-    <div class="profile-info">
-      <div class="editable-field">
-        <label>Full Name</label>
-        <div class="edit-container">
-          <input type="text" formControlName="fullName" [readonly]="!isEditing.fullName" />
-          <button type="button" (click)="toggleEdit('fullName')">
-            {{ isEditing.fullName ? '✔️' : '✏️' }}
-          </button>
+    <div class="profile-header">
+      <div class="profile-photo-section">
+        <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="profile-photo" />
+        <div class="photo-upload">
+          <i class="fas fa-user"></i>
+          <p *ngIf="profileForm.get('fullName')?.value">
+            {{ profileForm.get('fullName')?.value }}
+          </p>
         </div>
-      </div>
-
-      <div class="editable-field">
-        <label>Bio</label>
-        <div class="edit-container">
-          <textarea formControlName="bio" [readonly]="!isEditing.bio"></textarea>
-          <button type="button" (click)="toggleEdit('bio')">
-            {{ isEditing.bio ? '✔️' : '✏️' }}
-          </button>
-        </div>
-      </div>
-
-      <div class="upload-section">
-        <label>📷 Upload Profile Photo</label>
         <input type="file" (change)="onPhotoSelected($event)" />
-      </div>
-      <div class="form-group">
-        <label>Upload CV</label>
-        <input type="file" (change)="onCvSelected($event)" />
-        <p *ngIf="cvFileName">📄 {{ cvFileName }}</p>
+
       </div>
 
-    </div>
-  </div>
+      <div class="profile-info">
+        <div class="field-group">
+          <label>Full name</label>
+          <div class="field-editable">
+            <input type="text" [formControl]="fullNameControl" [readonly]="!isEditing.fullName" />
+            <button (click)="toggleEdit('fullName')">{{ isEditing.fullName ? '✔' : '✎' }}</button>
+          </div>
+        </div>
 
-  <div class="card tag-section">
-    <div class="section-header">
-      <h3>🛠 Skills</h3>
-      <button type="button" (click)="addSkill()">+ Add Skill</button>
-    </div>
-    <div class="tag-list">
-      <div *ngFor="let skill of skills.controls; let i = index" class="tag-item">
-        <input [formControl]="asFormControl(skill)" />
-        <button type="button" (click)="removeSkill(i)">❌</button>
+        <div class="field-group">
+          <label>Bio</label>
+          <div class="field-editable">
+            <textarea [formControl]="bioControl" [readonly]="!isEditing.bio"></textarea>
+            <button (click)="toggleEdit('bio')">{{ isEditing.bio ? '✔' : '✎' }}</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Add CV</label>
+          <input type="file" (change)="onCvSelected($event)" />
+
+
+            <a *ngIf="cvPreviewUrl" [href]="cvPreviewUrl" download class="download-link">Download</a>
+
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card tag-section">
-    <div class="section-header">
-      <h3>🌍 Languages</h3>
-      <button type="button" (click)="addLanguage()">+ Add Language</button>
-    </div>
-    <div class="tag-list">
-      <div *ngFor="let lang of languages.controls; let i = index" class="tag-item">
-        <input [formControl]="asFormControl(lang)" />
-        <button type="button" (click)="removeLanguage(i)">❌</button>
+    <div class="profile-section">
+      <h3>Skills</h3>
+      <div class="tags">
+        <ng-container *ngIf="hasSkills; else noSkills">
+          <div *ngFor="let skill of skills.controls; let i = index" class="tag">
+            <input [formControl]="asFormControl(skill)" />
+            <button (click)="removeSkill(i)">✖</button>
+          </div>
+          <button class="add-tag" (click)="addSkill()">+ Add skill</button>
+        </ng-container>
+        <ng-template #noSkills>
+          <div class="empty-state">
+            <p>Add your skills to improve your job recommendations</p>
+            <span class="material-icons empty-icon">settings</span>
+            <p>No skills added</p>
+            <button class="add-tag" (click)="addSkill()">+ Add skill</button>
+          </div>
+        </ng-template>
       </div>
     </div>
-  </div>
 
-  <div class="card form-actions">
-    <button type="submit" class="btn save" (click)="save()">💾 Save Profile</button>
-    <button type="button" class="btn logout" (click)="logout()">🚪 Logout</button>
+    <div class="profile-section">
+      <h3>Languages</h3>
+      <div class="tags">
+        <ng-container *ngIf="hasLanguages; else noLanguages">
+          <div *ngFor="let lang of languages.controls; let i = index" class="tag">
+            <input [formControl]="asFormControl(lang)" />
+            <button (click)="removeLanguage(i)">✖</button>
+          </div>
+          <button class="add-tag" (click)="addLanguage()">+ Add languages</button>
+        </ng-container>
+        <ng-template #noLanguages>
+          <div class="empty-state">
+            <span class="material-icons empty-icon">translate</span>
+            <p>No language added</p>
+            <button class="add-tag" (click)="addLanguage()">+ Add languages</button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button (click)="save()" class="btn-save">Save</button>
+    </div>
   </div>
 </div>
