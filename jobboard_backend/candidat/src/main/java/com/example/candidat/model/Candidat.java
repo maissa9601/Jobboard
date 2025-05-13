@@ -13,13 +13,10 @@ public class Candidat {
 
     @Id
     private Long userId;
-
     private String fullName;
     private String bio;
     private String cvUrl;
     private String photoUrl;
-
-
     @ElementCollection
     private List<String> skills;
 

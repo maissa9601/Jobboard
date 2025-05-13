@@ -30,7 +30,7 @@ public class CandidatController {
         this.favoriteService = favoriteService;
     }
 
-    @PostMapping("/profile/create")
+       @PostMapping("/profile/create")
     public ResponseEntity<Candidat> createProfile(@RequestBody Candidat profile) {
         Long userId = extractUserIdFromToken();
         profile.setUserId(userId);
@@ -49,10 +49,11 @@ public class CandidatController {
     public ResponseEntity<?> updateProfile(@ModelAttribute CandidatUpdateRequest request) {
         Long userId = extractUserIdFromToken();
         candidatService.updateProfile(userId, request);
-        return ResponseEntity.ok("Profile updated successfully");
+        return ResponseEntity.ok(Map.of("message", "Profile updated successfully"));
+
     }
 
-    @PostMapping("/profile/photo")
+    @PostMapping("/profile/photo/upload")
     public ResponseEntity<String> uploadPhoto(@RequestParam("file") MultipartFile file) {
         Long userId = extractUserIdFromToken();
         String photoUrl = candidatService.uploadPhoto(userId, file);

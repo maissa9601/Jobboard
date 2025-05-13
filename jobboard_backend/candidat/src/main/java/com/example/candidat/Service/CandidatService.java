@@ -4,14 +4,9 @@ import com.example.candidat.dto.CandidatUpdateRequest;
 import com.example.candidat.model.Candidat;
 import com.example.candidat.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.annotation.PostConstruct;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,18 +62,36 @@ public class CandidatService {
         candidatProfileRepository.save(candidat);
     }
 
+
     public String uploadPhoto(Long userId, MultipartFile file) {
-        return uploadFile(file, "photos");
+        String photoUrl = uploadFile(file, "photos");
+
+        // Récupérer le candidat et mettre à jour son URL photo
+        Candidat candidat = candidatProfileRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Candidat not found"));
+
+        candidat.setPhotoUrl(photoUrl);  // Assure-toi que le champ existe dans l'entité
+        candidatProfileRepository.save(candidat);
+
+        return photoUrl;
     }
 
     public String uploadCv(Long userId, MultipartFile file) {
-        return uploadFile(file, "cvs");
+        String cvUrl = uploadFile(file, "cvs");
+
+        Candidat candidat = candidatProfileRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Candidat not found"));
+
+        candidat.setCvUrl(cvUrl);  // Assure-toi que le champ existe dans l'entité
+        candidatProfileRepository.save(candidat);
+
+        return cvUrl;
     }
 
     private String uploadFile(MultipartFile file, String subDir) {
         try {
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path uploadPath = Paths.get(uploadDir + File.separator + subDir);
+            Path uploadPath = Paths.get(uploadDir).resolve(subDir);
 
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
