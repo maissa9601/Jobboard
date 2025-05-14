@@ -59,4 +59,22 @@ export class CandidatService {
       }
     );
   }
+
+  addToFavorites(favori: {
+    userId: number;
+    offerId: number;
+    title: string;
+    offerUrl: string;
+  }) {
+    return this.http.post(`${this.baseUrl }/favorite/add`, favori);
+  }
+
+  getFavorites(userId: number) {
+    return this.http.get(`${this.baseUrl }/favorite/${userId}`);
+  }
+
+  removeFavorite(userId: number, offerId: number) {
+    return this.http.delete(`${this.baseUrl }/favorite/${userId}/${offerId}`);
+  }
+
 }

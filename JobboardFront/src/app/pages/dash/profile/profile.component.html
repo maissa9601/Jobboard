@@ -16,7 +16,7 @@
     </button>
 
     <button class='nav-btn' [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
-      <i class="fas fa-heart"></i> Favourites
+      <i class="fas fa-heart"></i> Favourite
     </button>
 
     <button class='nav-btn' [routerLink]="'/home'">
@@ -33,7 +33,7 @@
 
 <!-- DASHBOARD -->
 <div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
-  <h1>Dashboard</h1>
+  <i class="fas fa-tachometer-alt">Dashboard</i>
   <div class="card-container">
 
     <div (click)="activeTab = 'profile'" class="dashboard-card">
@@ -42,7 +42,7 @@
       <p>Update your personal information and resume</p>
     </div>
 
-    <div (click)="activeTab = 'offres'" class="dashboard-card">
+    <div (click)="activeTab = 'offres'" [routerLink]="'/offers'" class="dashboard-card">
       <i class="fas fa-clipboard-list icon"></i>
       <h2>Job Offers</h2>
       <p>View and manage available job offers</p>
@@ -61,17 +61,17 @@
 
   </div>
 </div>
-<!-- DASHBOARD -->
+<!-- profile -->
 <div class="dashboard-container" *ngIf="activeTab === 'profile'">
   <div class="profile-container">
-    <h1>My profile</h1>
+    <i class="fas fa-user"> My Profile</i>
     <p>Complete your profile to improve your job offer recommendations</p>
 
     <div class="profile-header">
       <div class="profile-photo-section">
         <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="profile-photo" />
         <div class="photo-upload">
-          <i class="fas fa-user"></i>
+
           <p *ngIf="profileForm.get('fullName')?.value">
             {{ profileForm.get('fullName')?.value }}
           </p>
@@ -154,3 +154,29 @@
     </div>
   </div>
 </div>
+  <!-- favoris -->
+  <div class="dashboard-container" *ngIf="activeTab === 'favoris'">
+<div class="favorites-container">
+  <i class="fas fa-heart"> My Favourite</i>
+
+  <div *ngIf="favorites.length === 0">
+    <p>No offer saved.</p>
+  </div>
+
+  <div class="favorites-grid">
+    <div *ngFor="let fav of favorites" class="favorite-card">
+      <h3>{{ fav.title }}</h3>
+      <a [href]="fav.offerUrl" target="_blank" class="see-offer-btn">
+        See Offer
+      </a>
+
+      <button class="delete-btn" (click)="removeFavorite(fav.offerId)">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
+  </div>
+</div>
+  </div>
+
+
+

@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrl: './candidat.component.css'
 })
 export class CandidatComponent implements OnInit {
-  hasProfile = false;
+
 
   constructor(private candidatService: CandidatService, private router: Router) {}
 

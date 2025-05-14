@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { OfferService } from '../../../service/offer.service';
+import { AuthService } from '../../../service/auth.service';
+import { CandidatService } from '../../../service/candidat.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-job-list',
@@ -16,7 +19,7 @@ export class OffersListComponent implements OnInit {
   searchKeyword: string = '';
   searchLocation: string = '';
   selectedType: string | null = null;
-  constructor(private jobService: OfferService) {}
+  constructor(private jobService: OfferService) { }
 
   ngOnInit(): void {
     this.jobService.getJobOffers().subscribe({
@@ -44,5 +47,4 @@ export class OffersListComponent implements OnInit {
       (this.searchLocation === '' || job.location.trim().toLowerCase().includes(this.searchLocation.trim().toLowerCase()))
     );
   }
-
 }

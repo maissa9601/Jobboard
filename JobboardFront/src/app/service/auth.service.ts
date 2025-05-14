@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import {tap, catchError, map} from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import {jwtDecode} from 'jwt-decode';
+
 
 const authConfig: AuthConfig = {
   issuer: 'https://accounts.google.com',
@@ -113,5 +115,25 @@ export class AuthService {
     window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
+
+  getCurrentUser(): { id: number, role: string } | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+      return {
+        id: +decodedToken.sub,
+        role: decodedToken.roles?.[0]
+      };
+    } catch (err) {
+      console.error('Invalid token:', err);
+      return null;
+    }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
 }

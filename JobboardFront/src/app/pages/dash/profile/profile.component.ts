@@ -13,6 +13,8 @@ import { RouterLink } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import {forkJoin, of} from 'rxjs';
+import {AuthService} from '../../../service/auth.service';
+import {OfferService} from '../../../service/offer.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,15 +35,18 @@ export class ProfileComponent implements OnInit {
   cvFileName: string = '';
   activeTab = 'profile';
   isEditing = { fullName: false, bio: false };
-
   photoFile: File | null = null;
   cvFile: File | null = null;
+  favorites: any[] = [];
+  userId!: number;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private profileService: CandidatService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService,
+
   ) {
     this.profileForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -101,6 +106,36 @@ export class ProfileComponent implements OnInit {
 
       this.fullNameControl.disable();
       this.bioControl.disable();
+    });
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.userId = user.id;
+      this.loadFavorites();
+    } else {
+
+      console.warn('Utilisateur non connecté');
+    }
+  }
+
+  loadFavorites(): void {
+    this.profileService.getFavorites(this.userId).subscribe({
+      next: (data: any) => {
+        this.favorites = data;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des favoris :', err);
+      }
+    });
+  }
+  removeFavorite(offerId: number): void {
+    this.profileService.removeFavorite(this.userId, offerId).subscribe({
+      next: () => {
+        // Supprimer de la liste locale
+        this.favorites = this.favorites.filter(fav => fav.offerId !== offerId);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression du favori :', err);
+      }
     });
   }
 

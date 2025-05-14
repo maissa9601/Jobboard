@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'JobboardFront';
   constructor(private router: Router) {}
 shouldShowNavbar(): boolean {
-  const excludedRoutes = ['/login', '/signup', '/admin','/reset','/dashboard','/complete','/candidat '];
+  const excludedRoutes = ['/login', '/signup', '/admin','/reset','/dashboard','/complete','/candidat ','offer/:id'];
   return !excludedRoutes.some(route => this.router.url.includes(route));
 }
 

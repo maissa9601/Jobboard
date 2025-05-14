@@ -10,6 +10,7 @@ export interface JobOffer {
   location: string;
   salary: number;
   source: string;
+  url:string;
   contractType: string;
 }
 
