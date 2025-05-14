@@ -2,28 +2,34 @@ package com.example.candidat.Service;
 
 import com.example.candidat.model.Favori;
 import com.example.candidat.repository.FavoriRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class FavoriteService {
 
-    private final FavoriRepository favoriteRepository;
+    @Autowired
+    private FavoriRepository favoriRepository;
 
-    public FavoriteService(FavoriRepository favoriteRepository) {
-        this.favoriteRepository = favoriteRepository;
+    public Favori saveFavori(Favori favori) {
+        Optional<Favori> existing = favoriRepository.findByUserIdAndOfferId(favori.getUserId(), favori.getOfferId());
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+        return favoriRepository.save(favori);
     }
 
-    public Favori addFavorite(Favori favorite) {
-        return favoriteRepository.save(favorite);
+    public List<Favori> getFavorisByUserId(Long userId) {
+        return favoriRepository.findByUserId(userId);
     }
 
-    public List<Favori> getFavorites(Long userId) {
-        return favoriteRepository.findByUserId(userId);
-    }
-
-    public void removeFavorite(Long id) {
-        favoriteRepository.deleteById(id);
+    public void deleteFavori(Long userId, Long offerId) {
+        favoriRepository.findByUserIdAndOfferId(userId, offerId)
+                .ifPresent(favoriRepository::delete);
     }
 }
+

@@ -5,15 +5,12 @@ import com.example.candidat.model.Candidat;
 import com.example.candidat.model.Favori;
 import com.example.candidat.Service.CandidatService;
 import com.example.candidat.Service.FavoriteService;
-import com.example.candidat.dto.FavoriteRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -73,27 +70,23 @@ public class CandidatController {
     }
 
 
-    @PostMapping("/favorites")
-    public ResponseEntity<Favori> addFavorite(@RequestBody FavoriteRequest favoriteRequest) {
-        Long userId = extractUserIdFromToken();
-        Favori favorite = Favori.builder()
-                .userId(userId)
-                .offerId(favoriteRequest.getOfferId())
-                .offerUrl(favoriteRequest.getOfferUrl())
-                .build();
-        return ResponseEntity.ok(favoriteService.addFavorite(favorite));
+    @PostMapping("/favorite/add")
+    public ResponseEntity<Favori> addFavori(@RequestBody Favori favori) {
+        Favori saved = favoriteService.saveFavori(favori);
+        return ResponseEntity.ok(saved);
     }
 
-    @GetMapping("/favorites")
-    public ResponseEntity<List<Favori>> getMyFavorites() {
-        Long userId = extractUserIdFromToken();
-        return ResponseEntity.ok(favoriteService.getFavorites(userId));
+    @GetMapping("/favorite/{userId}")
+    public ResponseEntity<List<Favori>> getFavoris() {
+        Long userId=extractUserIdFromToken();
+        return ResponseEntity.ok(favoriteService.getFavorisByUserId(userId));
     }
 
-    @DeleteMapping("/favorites/{favoriteId}")
-    public ResponseEntity<Void> removeFavorite(@PathVariable Long favoriteId) {
-        favoriteService.removeFavorite(favoriteId);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/favorite/{userId}/{offerId}")
+    public ResponseEntity<Void> removeFavori(@PathVariable Long offerId) {
+        Long userId=extractUserIdFromToken();
+        favoriteService.deleteFavori(userId, offerId);
+        return ResponseEntity.noContent().build();
     }
 
 

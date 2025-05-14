@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/candidat/profile/update","/candidat","/candidat/profile/me","/candidat/profile/cv/upload","/candidat/profile/photo/upload","/candidat/profile/create").hasRole("CANDIDAT")
+                        .requestMatchers("/candidat/profile/update","/candidat","/candidat/profile/me","/candidat/profile/cv/upload","/candidat/profile/photo/upload","/candidat/profile/create","/candidat/favorite/**").hasRole("CANDIDAT")
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

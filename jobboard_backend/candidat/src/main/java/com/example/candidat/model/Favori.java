@@ -15,5 +15,6 @@ public class Favori {
     private Long id;
     private Long userId;
     private Long offerId;
+    private String title;
     private String offerUrl;
 }
