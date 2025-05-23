@@ -1,22 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {NgForOf, SlicePipe} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
+//import {NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {OfferService} from '../../service/offer.service';
+import {NgForOf, SlicePipe} from '@angular/common';
 
 @Component({
   selector: 'app-home',
+
+  templateUrl: './home.component.html',
   imports: [
     RouterLink,
     SlicePipe,
     NgForOf
   ],
-  templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   latestOffers: any[] = [];
 
-  constructor(private offerService: OfferService) {}
+  constructor(private offerService: OfferService, private router: Router) {}
 
   ngOnInit(): void {
     this.offerService.getJobOffers().subscribe({
@@ -26,5 +28,7 @@ export class HomeComponent implements OnInit {
       },
       error: (err) => console.error(err)
     });
+
   }
+
 }

@@ -11,7 +11,7 @@
     gap: 10px;
   }
   .navbar-logo i {
-    color:#8C4E97;
+    color:#5468FE;
   }
   .error-text {
     color: #f40909;
@@ -21,7 +21,7 @@
   }
   .form-section {
     flex: 1;
-    background: #455A64;
+    background: #182C4D;
     color: white;
     padding: 4rem;
     display: flex;
@@ -57,7 +57,7 @@
       }
 
       button {
-        background: #8C4E97;
+        background: #5468FE;
         padding: 0.75rem;
         border: none;
         border-radius: 8px;
@@ -66,7 +66,7 @@
         cursor: pointer;
 
         &:disabled {
-          background: #AF83B6;
+          background: #8896FE;
           cursor: not-allowed;
         }
       }
@@ -75,7 +75,7 @@
 
   .info-section {
     flex: 1;
-    background: linear-gradient(to bottom right, #8C4E97, #455A64);
+    background: linear-gradient(to bottom right, #5468FE, #8896FE);
     color: white;
     padding: 4rem;
     display: flex;

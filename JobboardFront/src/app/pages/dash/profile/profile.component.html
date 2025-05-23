@@ -1,38 +1,81 @@
+
+<div class="header-container">
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="search..."
+      class="search-input"
+    />
+  </div>
+  <div class="right-section">
+  <i  class="fas fa-bell alert-icon"  [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'"></i>
+    <div class="avatar-container" (click)="toggleMenu()">
+      <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="avatar-img" />
+    </div>
+
+    <div class="profile-dropdown" *ngIf="menuOpen">
+      <ng-container *ngIf="isLoggedIn; else guestTemplate">
+        <p class="user-name">{{ userName }}</p>
+        <button  class="signup" (click)="goToProfile()">Go to Profile</button>
+        <button class="login" (click)="logout()">Logout</button>
+      </ng-container>
+
+      <ng-template #guestTemplate>
+        <button class="signup" (click)="navigateTo('/signup')">Sign up</button>
+        <button  class="login" (click)="navigateTo('/login')">Sign in</button>
+      </ng-template>
+    </div>
+
+  </div>
+</div>
+
 <nav class="navbar">
-  <i class="fas fa-briefcase logo-icon"></i>
-  <div class="navbar-logo">Jobboard Candidat</div>
+  <div class="title">
+    <i class="fas fa-briefcase logo-icon"></i>
+    <div class="navbar-logo">Jobboard Candidat</div>
+  </div>
 
   <div class="buttons">
-    <button class='nav-btn' [class.activeTab]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
-      <i class="fas fa-tachometer-alt"></i> Dashboard
-    </button>
+    <div class="nav-buttons-group">
+      <button class="nav-btn" [class.activeTab]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </button>
 
-    <button class='nav-btn' [class.activeTab]="activeTab === 'profile'" (click)="activeTab = 'profile'">
-      <i class="fas fa-user"></i> My Profile
-    </button>
+      <button class="nav-btn" [class.activeTab]="activeTab === 'profile'" (click)="activeTab = 'profile'">
+        <i class="fas fa-user"></i> My Profile
+      </button>
 
-    <button class='nav-btn' [routerLink]="'/offers'">
-      <i class="fas fa-clipboard-list"></i> Job Offers
-    </button>
+      <button class="nav-btn" [routerLink]="'/offers'">
+        <i class="fas fa-clipboard-list"></i> Job Offers
+      </button>
 
-    <button class='nav-btn' [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
-      <i class="fas fa-heart"></i> Favourite
-    </button>
+      <button class="nav-btn" [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
+        <i class="fas fa-heart heart-icon"></i> Favourite
+      </button>
 
-    <button class='nav-btn' [routerLink]="'/home'">
-      <i class="fas fa-home"></i> Home
-    </button>
+      <button class="nav-btn" [routerLink]="'/home'">
+        <i class="fas fa-home"></i> Home
+      </button>
 
-    <button class='nav-btn' [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'">
-      <i class="fas fa-bell alert-icon"></i> Alerts
-    </button>
+      <button class="nav-btn" [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'">
+        <i class="fas fa-bell alert-icon"></i> Alerts
+      </button>
+    </div>
 
-    <button class='nav-btn' (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    <div class="logout-container">
+      <button class="nav-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
   </div>
 </nav>
 
+
+
 <!-- DASHBOARD -->
+
 <div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
+
   <i class="fas fa-tachometer-alt">Dashboard</i>
   <div class="card-container">
 
@@ -96,6 +139,22 @@
             <button (click)="toggleEdit('bio')">{{ isEditing.bio ? '✔' : '✎' }}</button>
           </div>
         </div>
+        <div class="field-group">
+          <label>Preferred Location</label>
+          <div class="field-editable">
+            <input type="text" [formControl]="preferredLocationControl" [readonly]="!isEditing.preferredLocation" />
+            <button (click)="toggleEdit('preferredLocation')">{{ isEditing.preferredLocation ? '✔' : '✎' }}</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Preferred Contract Type</label>
+          <div class="field-editable">
+            <input type="text" [formControl]="preferredContractTypeControl" [readonly]="!isEditing.preferredContractType" />
+            <button (click)="toggleEdit('preferredContractType')">{{ isEditing.preferredContractType ? '✔' : '✎' }}</button>
+          </div>
+        </div>
+
+
 
         <div class="field-group">
           <label>Add CV</label>
@@ -148,6 +207,27 @@
         </ng-template>
       </div>
     </div>
+    <div class="profile-section">
+      <h3>Preferred Keywords</h3>
+      <div class="tags">
+        <ng-container *ngIf="preferredKeywords.length > 0; else noKeywords">
+          <div *ngFor="let keyword of preferredKeywords.controls; let i = index" class="tag">
+            <input [formControl]="asFormControl(keyword)" />
+            <button (click)="removeKeyword(i)">✖</button>
+          </div>
+          <button class="add-tag" (click)="addKeyword()">+ Add keyword</button>
+        </ng-container>
+        <ng-template #noKeywords>
+          <div class="empty-state">
+            <p>Add preferred keywords to improve your job recommendations</p>
+            <span class="material-icons empty-icon">search</span>
+            <p>No keywords added</p>
+            <button class="add-tag" (click)="addKeyword()">+ Add keyword</button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
 
     <div class="profile-actions">
       <button (click)="save()" class="btn-save">Save</button>
@@ -177,6 +257,31 @@
   </div>
 </div>
   </div>
+    <!-- alerts -->
+    <div class="dashboard-container" *ngIf="activeTab === 'alerts'">
+      <div class="favorites-container">
+        <div *ngFor="let alerte of alertes" class="alerte-card">
+          <h4>{{ alerte.offerTitle }}</h4>
+          <p>{{ alerte.offerDescription }}</p>
+          <a [href]="alerte.offerUrl" target="_blank">Voir l'offre</a>
+          <p>Date: {{ alerte.dateCreation | date }}</p>
+
+          <!--  non lue -->
+          <button *ngIf="!alerte.lu" (click)="marquerCommeLue(alerte.id)"  title="Marquer comme lue">
+            <i class="fas fa-eye-slash"></i>
+          </button>
+
+          <!-- lue -->
+          <span *ngIf="alerte.lu" class="text-success" title="Déjà lue">
+    <i class="fas fa-eye"></i>
+  </span>
+          <button  (click)="removeAlerte(alerte.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+
+      </div>
 
 
+</div>
 

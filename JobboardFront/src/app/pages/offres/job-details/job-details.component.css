@@ -1,154 +1,178 @@
 .job-details-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   padding: 2rem;
-  flex-wrap: wrap;
   margin-top: 5rem;
-}
-.job-main i {
-  color: #74417D;
-  margin-right: 8px;
-  font-size: 16px;
-  vertical-align: middle;
-}
-
-h1 {
-  font-size: 2.5rem;
-  color: #74417D;
-  margin-bottom: 25px;
+  justify-content: center;
 }
 
 .job-main {
   flex: 2;
-  min-height: 500px;
-  border: solid #74417D;
+  min-width: 320px;
   background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #7AA3FF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .job-sidebar {
-  border: solid #74417D;
   flex: 1;
+  min-width: 280px;
   background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  min-width: 250px;
-
-}
-
-.badge {
-  background-color: #d3bdd6;
-  padding: 5px 12px;
-  border-radius: 15px;
-  margin-right: 8px;
-  font-size: 0.9rem;
-  border: 2px solid #74417D;
-
-}
-h3{
-  color: #6e187e;
-  font-size: 1.2rem;
-}
-.job-main p{
-  font-size: 1.2rem;
-
-}
-h2{
-  color:#74417D;
-}
-.company-name {
-  font-style: italic;
-  color: #666;
-  margin-bottom: 1rem;
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #7AA3FF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .back-btn {
   background: none;
   border: none;
-  color: #333;
-  font-size: 1.2rem;
+  color: #455A64;
+  font-size: 1.5rem;
   cursor: pointer;
   margin-bottom: 1rem;
+  transition: transform 0.2s ease;
 }
-.job-sidebar h3{
-  color: #6e187e;
-}
-.job-sidebar strong{
-
-  font-weight: bold;
-    color: #6e187e;
+.back-btn:hover {
+  transform: scale(1.1);
 }
 
+h1 {
+  font-size: 2.3rem;
+  color: #0b3285;
+  margin-bottom: 20px;
+}
 
+h2 {
+  font-size: 1.7rem;
+  color: #7AA3FF;
+  margin-bottom: 10px;
+}
+
+h3 {
+  color: #0b3285;
+  font-size: 1.3rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.job-main p {
+  font-size: 1.1rem;
+  color: #444;
+}
 
 .company-name {
-  font-weight: bold;
+  font-style: italic;
+  font-weight: 500;
+  color: #455A64;
+  margin-bottom: 1rem;
 }
+
+.badge {
+  background-color: #E3EBFF;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #7AA3FF;
+  color: #0b3285;
+  font-size: 0.9rem;
+  margin-right: 8px;
+}
+
+.job-sidebar h3 {
+  font-size: 1.3rem;
+  color: #0b3285;
+  margin-bottom: 1.5rem;
+}
+
+.info-block {
+  margin-bottom: 20px;
+  align-items: center;
+  display: flex;
+}
+
 .job-sidebar i {
   color: #455A64;
   margin-right: 8px;
-  font-size: 16px;
-  vertical-align: middle;
+  font-size: 18px;
 }
+
+.job-sidebar strong {
+  font-weight: bold;
+  color: #0b3285;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.job-sidebar p {
+  color: #333;
+  font-size: 1rem;
+  margin-left: 26px;
+}
+
 .job-sidebar .buttons {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  margin-top: 2rem;
   align-items: center;
-  gap: 10px;
 }
 
-.job-sidebar .buttons .action1 {
-  width: 80%;
-  height: 35px;
-  margin-top: 15px;
-  border-radius: 7px;
-  border:2px solid #74417D;
-  color: #74417D;
+.job-sidebar .buttons button {
+  width: 100%;
+  max-width: 200px;
+  padding: 10px 16px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 2px solid #0b3285;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.job-sidebar .buttons button:first-child {
   background-color: white;
-  cursor: pointer;
-
-}
-.job-sidebar .buttons .action {
-  width: 80%;
-  height: 35px;
-  font-weight: bold;
-  margin-top: 15px;
-  border-radius: 7px;
-  border:2px solid #74417D;
-  color:white;
-  font-size: 1rem;
-  background-color: #74417D;
-  cursor: pointer;
-
-
-}
-.action1:hover{
-   transform: scale(1.05);
-}
-.action:hover{
-   transform: scale(1.05);
-}
-.info-block {
-  margin-bottom: 16px;
+  color: #0b3285;
 }
 
-.info-title {
-  font-weight: bold;
-  margin-bottom: 4px;
-  color: #455A64;
+.job-sidebar .buttons button:first-child:hover {
+  background-color: #F9F0FA;
+  transform: scale(1.05);
 }
 
-.info-content {
+.job-sidebar .buttons button:last-child {
+  background-color: #0b3285;
+  color: white;
+}
+
+.job-sidebar .buttons button:last-child:hover {
+  background-color: #7AA3FF;
+  transform: scale(1.05);
+}
+.go-to-offer {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  text-decoration: none;
+  background-color: #0b3285;
+  color: white;
+  border: 2px solid #0b3285;
+  padding: 10px 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  max-width: 200px;
+  width: 100%;
+}
+.go-to-offer:hover {
+  background-color: #0b3285;
+  transform: scale(1.05);
+
+}
+.buttons i{
+  color: #0b3285;
 }
 
-.info-content i {
-  color: #74417D;
-  font-size: 18px;   }

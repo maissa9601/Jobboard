@@ -1,7 +1,7 @@
 
 
 .container {
-  background: linear-gradient(to bottom, #CF95D9, #455A64);
+  background-color: #182C4D;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +41,7 @@
 
 .title {
   font-size: 25px;
-  color: #74417D;
+  color:#182C4D;
   font-family: 'Josefin Sans', sans-serif ;
   margin-bottom: 35px;
 
@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center;
   background: white;
-  border: 1px solid #CF95D9;
+  border: 1px solid #7AA3FF;
   padding: 10px;
   width: 90%;
   font-size: 14px;
@@ -79,7 +79,7 @@
 .or-text {
   margin: 15px 0;
   font-size: 14px;
-  color: #74417D;
+  color: #0b3285;
 }
 
 .formulaire {
@@ -100,7 +100,7 @@
 .btn {
   width: 90%;
   padding: 12px;
-  background: #B16668;
+  background: #455A64;
   color: white;
   font-size: 16px;
   border: 2px solid white;
@@ -111,7 +111,7 @@
 }
 
 .btn:hover {
-  background: #74417D;
+  background: #0b3285;
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
@@ -130,7 +130,7 @@
 }
 
 .switch {
-  color: #74417D;
+  color: #0b3285;
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;

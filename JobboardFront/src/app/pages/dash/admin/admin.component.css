@@ -7,7 +7,7 @@
 
 h1 {
   font-size: 2.5rem;
-  color: #74417D;
+  color: #182C4D;
   margin-bottom: 10px;
 }
 
@@ -19,7 +19,7 @@ h1 {
 
 .dashboard-card {
   background-color: white;
-  border: 2px solid #74417D;
+  border: 2px solid #182C4D;
   border-radius: 12px;
   padding: 1.5rem;
   flex: 1 1 250px;
@@ -36,7 +36,7 @@ h1 {
 .dashboard-card h2 {
   margin: 0 0 0.5rem;
   font-size: 1.3rem;
-  color: #74417D;
+  color: #182C4D;
 }
 
 .dashboard-card p {
@@ -47,7 +47,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to right, #CF95D9, #455A64);
+  background-color: #182C4D;
   padding: 1rem 2rem;
   color: white;
   font-family: sans-serif;
@@ -78,12 +78,12 @@ h1 {
 
 activeTab:hover {
   transform: translateY(-5px);
-  color: #CF95D9;
+  color: #5468FE;
 }
 
 .dashboard-card .icon {
   font-size: 40px;
-  color: #8C4E97;
+  color: #182C4D;
   margin-bottom: 10px;
 }
 .navbar .icon{
@@ -109,7 +109,7 @@ activeTab:hover {
 
 .modal {
   background-color: #F9F7FC;
-  border: 2px solid #CF95D9;
+  border: 2px solid #5468FE;
   border-radius: 20px;
   padding: 2rem;
   width: 90%;
@@ -127,7 +127,7 @@ activeTab:hover {
 
 .modal-header h3 {
   font-size: 1.4rem;
-  color: #8C4E97;
+  color: #5468FE;
   margin: 0;
 }
 
@@ -135,7 +135,7 @@ activeTab:hover {
   background-color: transparent;
   border: none;
   font-size: 1.3rem;
-  color: #B16668;
+  color: #5468FE;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -152,7 +152,7 @@ activeTab:hover {
 
 .modal-body input {
   padding: 10px 12px;
-  border: 1px solid #CF95D9;
+  border: 1px solid #8896FE;
   border-radius: 10px;
   background-color: #fff;
   font-size: 0.95rem;
@@ -161,22 +161,22 @@ activeTab:hover {
 
 .modal-body input:focus {
   outline: none;
-  border-color: #CF95D9;
+  border-color: #8896FE;
 }
 
 .btn {
   margin-top: 10px;
   padding: 10px;
   background-color: white;
-  color: #8C4E97;
-  border-color: #8C4E97;
+  color: #5468FE;
+  border-color: #5468FE;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 .btn-offer{
-  background-color:  #8C4E97;
+  background-color:  #5468FE;
   color: white;
   border: none;
   border-radius: 10px;
@@ -190,12 +190,12 @@ activeTab:hover {
 
 .btn-offer:hover {
 
-  background-color: #CF95D9;
+  background-color: #8896FE;
 
 }
 
 h3{
-  color:#8C4E97;
+  color:#5468FE;
 
 
 }
@@ -237,7 +237,7 @@ table {
 
 
 thead {
-  background-color: #8C4E97;
+  background-color: #5468FE;
   font-weight: bold;
   text-align: left;
   color: white;
@@ -278,11 +278,11 @@ tbody tr:hover {
   border: none;
   font-size: 1.3rem;
   cursor: pointer;
-  color: #8C4E97;
+  color: #5468FE;
   margin-right: 5px;
   transition: color 0.3s ease;
 }
 
 .back-btn:hover {
-  color:  #CF95D9;
+  color:  #8896FE;
 }

@@ -1,11 +1,15 @@
 export interface Candidat {
-  //alerts: string[];
+
 
   userId: number;
   fullName: string;
+  email: string;
   bio: string;
   cvUrl: string;
   photoUrl: string;
+  preferredLocation: string;
+  preferredContractType:string;
+  preferredKeywords: string[];
   skills: string[];
   languages: string[];
 }

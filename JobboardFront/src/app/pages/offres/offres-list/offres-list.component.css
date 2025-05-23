@@ -44,7 +44,7 @@
   gap: 10px;
   width: 48%;
   .search {
-    background-color: #CF95D9;
+    background-color: #182C4D;
     width: 100px;
     height: 30px;
     color: white;
@@ -55,7 +55,7 @@
 
 
     &:hover {
-      background-color: #CF95D9;
+      background-color: #5468FE;
     }
   }
 }
@@ -69,17 +69,17 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   position: relative;
-  border: 2px solid #CF95D9;
+  border: 2px solid #182C4D;
   h3 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #8C4E97;
+    color: #182C4D;
   }
 
   ul {
     list-style: none;
     padding: 0;
-    color: #8C4E97;
+    color: #182C4D;
 
     li {
       cursor: pointer;
@@ -88,12 +88,12 @@
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: #8C4E97;
+        background-color: #182C4D;
         color: white;
       }
 
       &.selected {
-        background-color: #CF95D9;
+        background-color: #182C4D;
         color: white;
       }
     }
@@ -110,7 +110,7 @@
   align-items: stretch;
 
   h3{
-    color: #8C4E97;
+    color: #5468FE;
   }
   i{
     color: #455A64;
@@ -128,17 +128,17 @@
   min-width: 250px;
   max-height: 200px;
   transition: border 0.3s ease-in-out;
-  border: 2px solid #CF95D9;
+  border: 2px solid #182C4D;
   margin-bottom: 20px;
   flex-shrink: 0;
 
 
   &:hover {
-    border-color: #8C4E97;
+    border-color: #5468FE;
   }
 }
 .see {
-  background-color:#8C4E97;
+  background-color:#182C4D;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -150,7 +150,7 @@
   bottom: 10px;
 
   &:hover {
-    background-color: #CF95D9;
+    background-color: #5468FE;
   }
 }
 .input-icon {
@@ -170,7 +170,7 @@
 .input-icon input {
   width: 100%;
   padding: 8px 8px 8px 35px;
-  border: 1px solid #CF95D9;
+  border: 1px solid #182C4D;
   border-radius: 5px;
   font-size: 16px;
 }

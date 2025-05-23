@@ -41,9 +41,13 @@
     </div>
 
     <div class="buttons">
-      <button (click)="saveToFavorites(job)"> Save</button>
-
-      <button class="action">Go to offer</button>
+      <button (click)="saveToFavorites(job)">
+        <i class="fas fa-heart"></i> Save
+      </button>
+      <a class="go-to-offer" [href]="job.offerUrl" target="_blank">
+         Go to offer
+      </a>
     </div>
+
   </div>
 </div>

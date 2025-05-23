@@ -23,7 +23,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path: 'callback', component: AuthCallbackComponent },
   {path: 'offers', component: OffersListComponent },
-  { path: 'offer/:id', component: JobDetailsComponent },
+  { path: 'offers/:id', component: JobDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetComponent },
   { path: 'activate', component: ActivationComponent },
