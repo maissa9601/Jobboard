@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class CandidatUpdateRequest {
     private String fullName;
+    private String email;
     private String bio;
     private MultipartFile photo;
     private MultipartFile cv;

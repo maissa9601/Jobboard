@@ -1,7 +1,9 @@
 package com.example.candidat.Service;
 
 import com.example.candidat.dto.CandidatUpdateRequest;
+import com.example.candidat.model.Alerte;
 import com.example.candidat.model.Candidat;
+import com.example.candidat.repository.AlerteRepository;
 import com.example.candidat.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,9 +26,11 @@ public class CandidatService {
     private String uploadDir;
 
     private final CandidateRepository candidatProfileRepository;
+    private final AlerteRepository alerRepository;
 
-    public CandidatService(CandidateRepository candidatProfileRepository) {
+    public CandidatService(CandidateRepository candidatProfileRepository, AlerteRepository favoriProfileRepository) {
         this.candidatProfileRepository = candidatProfileRepository;
+        this.alerRepository = favoriProfileRepository;
     }
 
     @PostConstruct
@@ -45,6 +51,7 @@ public class CandidatService {
                 .orElseThrow(() -> new RuntimeException("Candidat not found"));
 
         candidat.setFullName(request.getFullName());
+        candidat.setEmail(request.getEmail());
         candidat.setBio(request.getBio());
         candidat.setSkills(request.getSkills());
         candidat.setLanguages(request.getLanguages());
@@ -61,6 +68,18 @@ public class CandidatService {
 
         candidatProfileRepository.save(candidat);
     }
+    public void marquerCommeLue(Long id) {
+        Alerte alerte = alerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Alerte non trouvée"));
+        alerte.setLu(true);
+        alerRepository.save(alerte);
+    }
+    public void deleteAlerte(Long userId, Long alerteId) {
+        alerRepository.findByCandidatIdAndId(userId, alerteId)
+                .ifPresent(alerRepository::delete);
+    }
+
+
 
 
     public String uploadPhoto(Long userId, MultipartFile file) {
@@ -106,4 +125,12 @@ public class CandidatService {
             throw new RuntimeException("Failed to upload file", e);
         }
     }
+    public List<Alerte> getAlertesByUserId(Long userId) {
+        return alerRepository.findByCandidatId(userId);
+    }
+
+
+
+
+
 }

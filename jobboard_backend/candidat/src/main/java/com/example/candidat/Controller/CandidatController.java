@@ -1,6 +1,7 @@
 package com.example.candidat.Controller;
 
 import com.example.candidat.dto.CandidatUpdateRequest;
+import com.example.candidat.dto.UserPrincipal;
 import com.example.candidat.model.Candidat;
 import com.example.candidat.model.Favori;
 import com.example.candidat.Service.CandidatService;
@@ -11,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +25,19 @@ public class CandidatController {
     private final CandidatService candidatService;
     private final FavoriteService favoriteService;
 
+
     public CandidatController(CandidatService candidatService, FavoriteService favoriteService) {
         this.candidatService = candidatService;
         this.favoriteService = favoriteService;
+
     }
 
-       @PostMapping("/profile/create")
+    @PostMapping("/profile/create")
     public ResponseEntity<Candidat> createProfile(@RequestBody Candidat profile) {
         Long userId = extractUserIdFromToken();
         profile.setUserId(userId);
+        String email=extractEmailFromToken();
+        profile.setEmail(email);
         return ResponseEntity.ok(candidatService.createProfile(profile));
     }
 
@@ -60,14 +67,27 @@ public class CandidatController {
     @PostMapping("/profile/cv/upload")
     public ResponseEntity<String> uploadCv(@RequestParam("file") MultipartFile file) {
         Long userId = extractUserIdFromToken();
+
         String cvUrl = candidatService.uploadCv(userId, file);
         return ResponseEntity.ok(cvUrl);
     }
 
     private Long extractUserIdFromToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return Long.parseLong(authentication.getName());
+        if (authentication != null && authentication.getPrincipal() instanceof UserPrincipal user) {
+            return user.getUserId();
+        }
+        return null;
     }
+
+    private String extractEmailFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserPrincipal user) {
+            return user.getEmail();
+        }
+        return null;
+    }
+
 
 
     @PostMapping("/favorite/add")
@@ -88,6 +108,11 @@ public class CandidatController {
         favoriteService.deleteFavori(userId, offerId);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
+
 
 
 

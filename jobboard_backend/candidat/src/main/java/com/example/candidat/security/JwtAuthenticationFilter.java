@@ -1,5 +1,6 @@
 package com.example.candidat.security;
 
+import com.example.candidat.dto.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -31,9 +32,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -57,6 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .getBody();
 
             Long userId = Long.valueOf(claims.getSubject());
+            String email = (String) claims.get("email");
 
             List<String> roles = claims.get("roles", List.class);
 
@@ -70,8 +69,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                     .toList();
 
+            UserPrincipal principal = new UserPrincipal(userId, email);
+
             UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(userId, null, authorities);
+                    new UsernamePasswordAuthenticationToken(principal, null, authorities);
+
 
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
