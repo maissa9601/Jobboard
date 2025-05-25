@@ -15,8 +15,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-
-
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -157,7 +155,8 @@ public class AuthService {
         }
         // générer un token JWT
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
-        String token = jwtUtil.generateToken(user.getEmail(), authorities);
+        String token = jwtUtil.generateToken(user, authorities);
+
 
         //token velide ou non
         if (jwtUtil.isTokenValid(token)) {
@@ -254,7 +253,8 @@ public class AuthService {
 
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
 
-         return "http://localhost:4200/callback?token=" + jwtUtil.generateToken(email, authorities);
+         return "http://localhost:4200/callback?token=" + jwtUtil.generateToken(user, authorities);
+
     }
 
 }

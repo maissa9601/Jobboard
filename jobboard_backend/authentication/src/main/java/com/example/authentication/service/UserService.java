@@ -1,12 +1,14 @@
 package com.example.authentication.service;
 
 
+import com.example.authentication.dto.Candidat;
 import com.example.authentication.model.Role;
 import com.example.authentication.model.User;
 import com.example.authentication.repository.AdminRepository;
 import com.example.authentication.repository.CandidatRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,4 +49,17 @@ public class UserService {
         candidat.setRole(Role.valueOf("ADMIN"));
         return Optional.of(candidatRepository.save(candidat));
     }
+    public long countCandidats() {
+        return candidatRepository.count();
+    }
+
+    public long countAdmins() {
+        return adminRepository.count();
+    }
+
+    public List<Candidat> getRecentCandidats() {
+        LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
+        return candidatRepository.findRecentLogins(lastWeek);
+    }
+
 }

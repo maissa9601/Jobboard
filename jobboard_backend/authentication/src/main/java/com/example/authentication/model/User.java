@@ -5,6 +5,7 @@ package com.example.authentication.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -31,6 +32,9 @@ public class User {
 
     @Column(nullable = false)
     private boolean enabled = false;
+
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
 
 
 }

@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.*;
 
 @EnableWebSecurity
@@ -27,11 +26,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login", "/auth/confirm",
                                 "/auth/forgot-password", "/auth/reset-password",
-                                "/auth/google", "/oauth2/**", "/login/oauth2/**","/users/**","/users/candidats/{id}","/candidats/{id}/promote")
+                                "/auth/google", "/oauth2/**", "/login/oauth2/**","/users/**")
                         .permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/profile/**").hasAuthority("CANDIDAT")
-                        .anyRequest().authenticated()
+
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .oauth2Login(oauth2 -> oauth2
