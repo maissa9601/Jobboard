@@ -28,5 +28,14 @@ public class Offer {
     private Date published;
     private Date expires;
     private String url;
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    private int views = 0;
+
+
+    public void incrementViews() {
+        this.views++;
+    }
+
+
 
 }

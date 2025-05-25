@@ -12,11 +12,11 @@ import java.util.Optional;
 
 @Service
     public class JobOfferService {
+    @Autowired
+    private JobOfferRepository jobOfferRepository;
 
-        @Autowired
-        private JobOfferRepository jobOfferRepository;
 
-        public List<Offer> getAllJobOffers() {
+    public List<Offer> getAllJobOffers() {
             return jobOfferRepository.findAll();
         }
 
@@ -54,5 +54,11 @@ import java.util.Optional;
         jobOfferRepository.deleteById(id);
         return true;
     }
+    public long countoffers() {
+        return jobOfferRepository.count();
+    }
+
+
+
 
 }
