@@ -1,39 +1,33 @@
 <div class="container">
-  <div class="box">
-    <div class="left">
-      <img src="/work.gif" alt="Job Hunt Animation" class="job"/>
-      <p class="attribution">
-        <a href="https://storyset.com/job" target="_blank" rel="noopener noreferrer">
-        </a>
-      </p>
-    </div>
-    <div class="right">
-      <div class="title">
-        A link has been sent to your email. Please check it and set a new password!
+  <div class="container-login">
+    <header class="header">
+      <div class="logo">Job<span>Board</span></div>
+      <div class="nav-links">
+        <a routerLink="/login" class="login-link">Login</a>
+        <a routerLink="/signup" class="nav-link">Sign Up</a>
       </div>
-      <form class="formulaire" [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+    </header>
 
-        <input type="password" formControlName="password" placeholder="Password" class="input-field">
-        <small *ngIf="hasError('password', 'minlength')" class="error-text">
-          Password must be at least 6 characters
-        </small>
+    <div class="login-content">
+      <section class="login-form">
+        <p class="login-subtitle"> A link has been sent to your email. Please check it and set a new password!</p>
 
-        <input type="password" formControlName="confirmPassword" placeholder="Confirm your Password" class="input-field">
-        <small *ngIf="hasError('password', 'required')" class="error-text">
-          Password is required
-        </small>
+        <form [formGroup]="resetForm" (ngSubmit)="onSubmit()" novalidate>
+          <input type="password" formControlName="password" placeholder="Password" aria-label="Password" class="input-field" />
+          <div class="error-text" *ngIf="hasError('password', 'required')">Password is required</div>
 
-        <button type="submit" class="btn" [disabled]="resetForm.invalid || isLoading">
-          <ng-container *ngIf="!isLoading; else loading">
-            Login
-          </ng-container>
-          <ng-template #loading>
-            <span class="spinner"></span> Login...
-          </ng-template>
-        </button>
-      </form>
+          <button type="submit" [disabled]="resetForm.invalid || isLoading" class="btn-submit" >
+            <ng-container *ngIf="!isLoading; else loading">Login</ng-container>
+            <ng-template #loading><span class="spinner"></span> Logging in...</ng-template>
+          </button>
+        </form>
 
+      </section>
 
+      <!-- Illustration Section -->
+      <aside class="login-image">
+        <img src="/signup.png" alt="Person logging in illustration" />
+      </aside>
     </div>
   </div>
 </div>

@@ -29,5 +29,16 @@ export class OfferService {
   getJobById(id: string) {
     return this.http.get<any>(`${this.apiUrl}offer/${id}`);
   }
+  incrementViews(id: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}offers/${id}/increment`, {});
+  }
+
+  getMostViewedOffers(): Observable<JobOffer[]> {
+    return this.http.get<JobOffer[]>(`${this.apiUrl}offers/most-viewed`);
+  }
+
+  getStats(): Observable<any> {
+    return this.http.get(`${this.apiUrl}stats`);
+  }
 
 }

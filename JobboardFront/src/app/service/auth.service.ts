@@ -20,6 +20,7 @@ const authConfig: AuthConfig = {
 })
 export class AuthService {
   private API_URL = 'http://localhost:8080/auth';
+  private BASE_URL = 'http://localhost:8080/users';
   //suivi de role
   private roleSubject = new BehaviorSubject<string | null>(this.getRole());
 
@@ -134,6 +135,13 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+  getStats(): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/stats`);
+  }
+
+  getRecentCandidats(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/candidats/recent`);
   }
 
 }

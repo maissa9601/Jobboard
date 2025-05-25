@@ -1,183 +1,268 @@
-<nav class="navbar" xmlns="http://www.w3.org/1999/html">
-  <i class="fas fa-briefcase logo-icon"></i>
-  <div class="navbar-logo">Jobboard Admin</div>
+<div class="dash-container">
 
-  <div class="buttons">
-    <button class="activeTab" (click)="activeTab = 'dashboard'">
-      <i class="fas fa-chart-line"></i> Dashboard
-    </button>
-
-    <button class="activeTab" (click)="activeTab = 'admins'">
-      <i class="fas fa-user-shield"></i> Admins
-    </button>
-
-    <button class="activeTab" (click)="activeTab = 'candidats'">
-      <i class="fas fa-users"></i> Candidats
-    </button>
-
-    <button class="activeTab" (click)="activeTab = 'offres'">
-      <i class="fas fa-briefcase"></i> Job Offers
-    </button>
-    <button class="activeTab" [routerLink]="'/home'">
-      <i class="fas fa-home"></i> Home
-    </button>
-
-    <button class="activeTab"><i class="fas fa-sign-out-alt"></i> Logout</button>
-  </div>
-</nav>
-<div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
-  <h1>Dashboard</h1>
-  <div class="card-container">
-    <div (click)="activeTab = 'admins'"  class="dashboard-card">
-      <i class="fas fa-user-shield icon"></i>
-      <h2>Admin Management</h2>
-      <p  >Manage administrators and promote candidates to admin role</p>
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <i class="ri-briefcase-line logo-icon"></i>
+      <span class="logo-text">Jobboard<strong> Admin</strong></span>
     </div>
-    <div (click)="activeTab = 'candidats'" class="dashboard-card">
-      <i class="fas fa-users icon"></i>
-      <h2>Candidate Management</h2>
-      <p  >View and manage candidate profiles and applications</p>
+
+    <ul class="nav-links">
+      <li [class.active]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
+        <i class="ri-bar-chart-line"></i> Dashboard
+      </li>
+      <li [class.active]="activeTab === 'admins'" (click)="activeTab = 'admins'">
+        <i class="ri-shield-user-line"></i> Admins
+      </li>
+      <li [class.active]="activeTab === 'candidats'" (click)="activeTab = 'candidats'">
+        <i class="ri-group-line"></i> Candidates
+      </li>
+      <li [class.active]="activeTab === 'offres'" (click)="activeTab = 'offres'">
+        <i class="ri-briefcase-line"></i> Job Offers
+      </li>
+      <li [routerLink]="'/home'">
+        <i class="ri-home-2-line"></i> Home
+      </li>
+    </ul>
+
+    <div class="logout">
+      <i class="ri-logout-box-r-line"></i> Logout
     </div>
-    <div  (click)="activeTab = 'offres'" class="dashboard-card">
-      <i class="fas fa-briefcase icon"></i>
-      <h2>Job Offers</h2>
-      <p  >Create, view, update and delete job offers</p>
-    </div>
-  </div>
-</div>
+  </nav>
 
-<div class="main">
 
-  <div   *ngIf="activeTab === 'admins'">
-    <div class="title">
-      <button class="back-btn" (click)="activeTab = 'dashboard'">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-   <h1>Admin managment</h1>
-    </div>
-    <div class="buttons">
+  <div class="main-content">
 
-      <button class="btn" (click)="active = 'admin'">Admins</button>
-      <button class="btn" (click)="active = 'candidat'">Candidats</button>
+    <div class="dashboard-header">
+      <div class="input-search">
+        <i class="ri-search-line"></i>
+        <input type="text" placeholder="Search" class="search-bar" />
+      </div>
 
-    </div>
-    <div  *ngIf="active === 'admin'">
-
-    <h3>Admin users</h3>
-    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
-      <div class="table-wrapper">
-    <table>
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Email</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let admin of admins | filterByField: searchEmail : 'email'">
-        <td>{{ admin.id }}</td>
-        <td>{{ admin.email }}</td>
-      </tr>
-      </tbody>
-    </table>
+      <div class="header-icons">
+        <img src="/default-avatar.png" alt="Admin Profile" class="profile-pic" />
+       <button> <i class="ri-notification-3-line icon"></i></button>
+       <button> <i class="ri-moon-line icon"></i></button>
       </div>
     </div>
-    <div  *ngIf="active === 'candidat'">
-
-    <h3>Candidat users</h3>
-    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
-      <div class="table-wrapper">
-    <table>
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Email</th>
-        <th>Activate</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
-        <td>{{ candidat.id }}</td>
-        <td>{{ candidat.email }}</td>
-        <td>{{ candidat.enabled }}</td>
-        <td><button  class="btn" (click)="updateCandidat(candidat.id)" >Change to Admin</button></td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="dashboard-body">
+    <h1>Dashboard</h1>
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <div (click)="activeTab = 'admins'"  class="icon-wrapper"><i class="ri-admin-line"></i></div>
+        <h3>Admin Management</h3>
+        <p>Manage administrators and promote candidates</p>
       </div>
-  </div>
-</div>
-  <div  *ngIf="activeTab === 'candidats'">
-    <div class="title">
-      <button class="back-btn" (click)="activeTab = 'dashboard'">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-    <h1>Candidat Managment</h1>
+
+      <div class="dashboard-card">
+        <div (click)="activeTab = 'candidats'"  class="icon-wrapper"><i class="ri-user-3-line"></i></div>
+        <h3>Candidate Management</h3>
+        <p>View and manage candidate profiles</p>
+      </div>
+
+      <div class="dashboard-card">
+        <div (click)="activeTab = 'offres'" class="icon-wrapper"><i class="ri-briefcase-line"></i></div>
+        <h3>Job Offers</h3>
+        <p>Create, preview, and view job offers</p>
+      </div>
     </div>
-    <input [(ngModel)]="searchEmail" placeholder="Filtrer par email" class="filter" />
-    <h3>Candidat users</h3>
+    </div>
+
+    <div  *ngIf="activeTab === 'dashboard'">
+
+      <div class="dashboard-horizontal">
+
+        <div class="card chart-card">
+          <h4>Signups evolution this month</h4>
+          <div class="chart-container">
+            <canvas baseChart
+                    [data]="signupChartData"
+                    [options]="signupChartOptions"
+                    [type]="'line'">
+            </canvas>
+          </div>
+        </div>
+
+
+        <div class="card">
+          <h4 class="card-title"><i class="ri-user-shared-line"></i> Recent Logged Candidates</h4>
+          <ul class="list">
+            <li *ngFor="let c of recentCandidats">
+              <i class="ri-user-line"></i> {{ c.email }}
+            </li>
+          </ul>
+        </div>
+
+
+        <div class="totals-column">
+          <div class="card mini">
+            <h5 class="metric-title">Admins</h5>
+            <p class="metric-value">{{ totalAdmins }}</p>
+          </div>
+          <div class="card mini">
+            <h5 class="metric-title">Candidates</h5>
+            <p class="metric-value">{{ totalCandidats }}</p>
+          </div>
+          <div class="card mini">
+            <h5 class="metric-title">Offers</h5>
+            <p class="metric-value">{{ offres.length }}</p>
+          </div>
+        </div>
+
+
+        <div class="card">
+          <h4 class="card-title"><i class="ri-fire-line"></i> Top Viewed Offers</h4>
+          <ul class="list">
+            <li *ngFor="let offer of topViewedOffers">
+              <i class="ri-briefcase-line"></i> {{ offer.title }}
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+    <div *ngIf="activeTab === 'admins'" class="admin-management">
+
+      <div class="tab-buttons">
+        <button [class.active]="active === 'admin'" (click)="active = 'admin'">Admins</button>
+        <button [class.active]="active === 'candidat'" (click)="active = 'candidat'">Candidats</button>
+
+      </div>
+
+
+      <div *ngIf="active === 'admin'" class="table-section">
+        <div class="filter-bar">
+          <h3>Admin Users</h3>
+          <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
+
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let admin of admins | filterByField: searchEmail : 'email'">
+              <td>{{ admin.id }}</td>
+              <td>{{ admin.email }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="active === 'candidat'" class="table-section">
+        <div class="filter-bar">
+          <h3>Candidat Users</h3>
+          <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
+
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Promote</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
+              <td>{{ candidat.id }}</td>
+              <td>{{ candidat.email }}</td>
+              <td>
+                <span class="status" [class.active]="candidat.enabled">{{ candidat.enabled ? 'Active' : 'Inactive' }}</span>
+              </td>
+              <td>
+                <button class="btn promote" (click)="updateCandidat(candidat.id)">Make Admin</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'candidats'" class="admin-management">
+        <div class="table-section">
+          <div class="filter-bar">
+            <h3>Candidat Users</h3>
+            <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Promote</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
+                <td>{{ candidat.id }}</td>
+                <td>{{ candidat.email }}</td>
+                <td>
+                <span class="status" [class.active]="candidat.enabled">
+                  {{ candidat.enabled ? 'Active' : 'Inactive' }}
+                </span>
+                </td>
+                <td>
+                  <button class="btn promote" (click)="updateCandidat(candidat.id)">
+                    Make Admin
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+  <div *ngIf="activeTab === 'offres'">
+
+    <div class="table-section">
+    <div class="filter-bar">
+
+      <input [(ngModel)]="searchOffreTitre" placeholder="Filtrer par titre" class="filter" />
+      <button class="btn-offer" (click)="showAddModal = true">+ Add Offer</button>
+
+    </div>
+
+
+
     <div class="table-wrapper">
-    <table>
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Email</th>
-        <th>Activate</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr  class="list" *ngFor="let candidat of candidats | filterByField: searchEmail : 'email'">
-        <td>{{ candidat.id }}</td>
-        <td>{{ candidat.email }}</td>
-        <td>{{ candidat.enabled }}</td>
-        <td><button (click)="deleteCandidat(candidat.id)" class="btn"><i class="fas fa-trash"></i>
-        </button></td>
-      </tr>
-      </tbody>
-    </table>
+      <table>
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Company</th>
+          <th>Contract</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of offres | filterByField: searchOffreTitre : 'title'">
+          <td>{{ o.title }}</td>
+          <td>{{ o.company }}</td>
+          <td>{{ o.contractype }}</td>
+          <td>{{ o.location }}</td>
+          <td>
+            <button class="btn" (click)="deleteOffre(o.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <div  *ngIf="activeTab === 'offres'">
-    <div class="title">
-      <button class="back-btn" (click)="activeTab = 'dashboard'">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <h1>Job Offers Managment</h1>
     </div>
-    <input [(ngModel)]="searchOffreTitre" placeholder="Filtrer par titre" class="filter" />
-    <button class="btn-offer" (click)="showAddModal = true">+ Add Offer</button>
-    <h3> Job Offers</h3>
-   <div class="table-wrapper">
-    <table>
-      <thead>
-      <tr>
-        <th>Title</th>
-        <th>Company</th>
-        <th>Contract</th>
-        <th>Location</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-
-
-      <tr   *ngFor="let o of offres | filterByField: searchOffreTitre : 'title'">
-        <td>{{ o.title }}</td>
-        <td>{{ o.company }}</td>
-        <td>{{ o.contractype }}</td>
-        <td>{{ o.location }}</td>
-        <td><button  class="btn"(click)="deleteOffre(o.id)">
-          <i class="fas fa-trash"></i>
-
-        </button></td>
-      </tr>
-
-      </tbody>
-    </table>
-    </div>
-
 
 
     <div class="modal-backdrop" *ngIf="showAddModal">
@@ -198,6 +283,14 @@
         </div>
       </div>
     </div>
+  </div>
 
   </div>
 </div>
+
+
+
+
+
+
+

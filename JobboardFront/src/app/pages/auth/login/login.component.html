@@ -1,43 +1,42 @@
 <div class="container">
-  <div class="box">
-    <div class="left">
-      <img src="/work.gif" alt="Job Hunt Animation" class="job"/>
-      <p>
-        <a href="https://storyset.com/job" target="_blank" rel="noopener noreferrer">
-        </a>
-      </p>
-    </div>
-  <div class="right">
-    <div class="title">Welcome again to Jobboard!</div>
+  <div class="container-login">
+    <header class="header">
+      <div class="logo">Job<span>Board</span></div>
+      <div class="nav-links">
+        <a routerLink="/login" class="login-link">Login</a>
+        <a routerLink="/signup" class="nav-link">Sign Up</a>
+      </div>
+    </header>
 
-    <form  class="formulaire" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <input type="email" formControlName="email" placeholder="Email" class="input-field">
-      <small *ngIf="hasError('email', 'required')" class="error-text">
-        Email is required
-      </small>
-      <small *ngIf="hasError('email', 'email')" class="error-text">
-        Invalid email format
-      </small>
-      <input type="password" formControlName="password" placeholder="Password" class="input-field">
-      <small *ngIf="hasError('password', 'required')" class="error-text">
-        Password is required
-      </small>
+  <div class="login-content">
+    <section class="login-form">
+      <h2>
+        <i class="fas fa-user-circle" style="color: #1a73e8; margin-right: 8px;"></i>
+        Welcome back
+      </h2>
+      <p  class="login-subtitle">Please sign in to your account</p>
 
-      <button type="submit" class="btn" [disabled]="loginForm.invalid || isLoading">
-        <ng-container *ngIf="!isLoading; else loading">
-          Login
-        </ng-container>
-        <ng-template #loading>
-          <span class="spinner"></span>Login...
-        </ng-template>
-      </button>
-    </form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <input type="email" formControlName="email" placeholder="Email" aria-label="Email" class="input-field" />
+        <div class="error-text" *ngIf="hasError('email', 'required')">Email is required</div>
+        <div class="error-text" *ngIf="hasError('email', 'email')">Invalid email format</div>
 
-    <p class="little-text">
-      Forgot your password?
-      <a (click)="sendResetEmail()" class="switch">Click here</a>
-    </p>
+        <input type="password" formControlName="password" placeholder="Password" aria-label="Password" class="input-field" />
+        <div class="error-text" *ngIf="hasError('password', 'required')">Password is required</div>
 
+        <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn-submit" >
+          <ng-container *ngIf="!isLoading; else loading">Login</ng-container>
+          <ng-template #loading><span class="spinner"></span> Logging in...</ng-template>
+        </button>
+      </form>
+
+      <p class="switch-text">Don't have an account? <a routerLink="/signup">Sign up</a></p>
+    </section>
+
+    <!-- Illustration Section -->
+    <aside class="login-image">
+      <img src="/signup.png" alt="Person logging in illustration" />
+    </aside>
   </div>
-    </div>
-  </div>
+</div>
+</div>

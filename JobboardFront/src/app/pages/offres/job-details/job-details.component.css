@@ -1,178 +1,151 @@
-.job-details-container {
+.job-details-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  margin-top: 5rem;
   justify-content: center;
+  align-items: flex-start;
+  padding: 150px 20px;
+  background-color: #f7f9fc;
+  min-height: 100vh;
 }
+
+.box {
+  background-color: #fff;
+  padding: 15px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
 
 .job-main {
   flex: 2;
-  min-width: 320px;
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid #7AA3FF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding-left:20px;
 }
 
-.job-sidebar {
-  flex: 1;
-  min-width: 280px;
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid #7AA3FF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.back-btn {
-  background: none;
-  border: none;
-  color: #455A64;
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  transition: transform 0.2s ease;
-}
-.back-btn:hover {
-  transform: scale(1.1);
-}
-
-h1 {
-  font-size: 2.3rem;
-  color: #0b3285;
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: #374151;
+  font-weight: 500;
   margin-bottom: 20px;
+  text-decoration: none;
 }
 
-h2 {
-  font-size: 1.7rem;
-  color: #7AA3FF;
-  margin-bottom: 10px;
+.tags {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
 }
 
-h3 {
-  color: #0b3285;
-  font-size: 1.3rem;
-  margin-top: 20px;
-  margin-bottom: 10px;
+.tag {
+  background-color: #e5e7eb;
+  color: #393838;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.job-main p {
-  font-size: 1.1rem;
-  color: #444;
+.job-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #111827;
 }
 
 .company-name {
-  font-style: italic;
+  margin: 10px 0;
   font-weight: 500;
-  color: #455A64;
-  margin-bottom: 1rem;
+  color: #6b7280;
 }
 
-.badge {
-  background-color: #E3EBFF;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid #7AA3FF;
-  color: #0b3285;
-  font-size: 0.9rem;
-  margin-right: 8px;
+.description {
+  line-height: 1.6;
+  margin-top: 15px;
+  color: #374151;
+}
+
+.job-sidebar {
+  flex: 1.5;
+  background-color: whitesmoke;
+  padding: 20px;
+  width: 100%;
+ min-width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #e5e7eb;
+
 }
 
 .job-sidebar h3 {
-  font-size: 1.3rem;
-  color: #0b3285;
-  margin-bottom: 1.5rem;
-}
-
-.info-block {
   margin-bottom: 20px;
-  align-items: center;
-  display: flex;
-}
-
-.job-sidebar i {
-  color: #455A64;
-  margin-right: 8px;
   font-size: 18px;
+  color: #111827;
 }
 
-.job-sidebar strong {
-  font-weight: bold;
-  color: #0b3285;
-  display: block;
-  margin-bottom: 4px;
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: #393838;
 }
 
-.job-sidebar p {
-  color: #333;
-  font-size: 1rem;
-  margin-left: 26px;
+.info strong {
+  font-size: 14px;
 }
 
-.job-sidebar .buttons {
+.info p {
+  margin: 2px 0 0;
+  font-size: 14px;
+}
+ i{
+  color: #182C4D;
+  font-size: 20px;
+}
+
+.sidebar-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 2rem;
-  align-items: center;
-}
-
-.job-sidebar .buttons button {
-  width: 100%;
-  max-width: 200px;
-  padding: 10px 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
-  border: 2px solid #0b3285;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.job-sidebar .buttons button:first-child {
-  background-color: white;
-  color: #0b3285;
-}
-
-.job-sidebar .buttons button:first-child:hover {
-  background-color: #F9F0FA;
-  transform: scale(1.05);
-}
-
-.job-sidebar .buttons button:last-child {
-  background-color: #0b3285;
-  color: white;
-}
-
-.job-sidebar .buttons button:last-child:hover {
-  background-color: #7AA3FF;
-  transform: scale(1.05);
-}
-.go-to-offer {
-  display: flex;
-  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
   justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-  background-color: #0b3285;
+  align-items: center;
+}
+
+.save-btn,
+.go-btn {
+  padding: 10px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  width: 200px;
+}
+
+.save-btn {
+  background-color: #134283;
   color: white;
-  border: 2px solid #0b3285;
-  padding: 10px 16px;
-  font-weight: 600;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  max-width: 200px;
-  width: 100%;
-}
-.go-to-offer:hover {
-  background-color: #0b3285;
-  transform: scale(1.05);
-
-}
-.buttons i{
-  color: #0b3285;
 }
 
+.save-btn:hover {
+  background-color: #374151;
+}
+
+.go-btn {
+  background-color: white;
+  color: #134283;
+  border: 1px solid #134283;
+  text-decoration: none;
+}
+
+.go-btn:hover {
+  background-color: #f3f4f6;
+}
+.sidebar-buttons i {
+  color: white;
+}

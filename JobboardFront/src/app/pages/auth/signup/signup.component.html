@@ -1,61 +1,63 @@
 <div class="container">
-  <div class="box">
-    <div class="left">
-      <img src="/work.gif" alt="Job Hunt Animation" class="job"/>
-      <p class="attribution">
-        <a href="https://storyset.com/job" target="_blank" rel="noopener noreferrer">
-        </a>
-      </p>
+<div class="container-signup">
+  <header class="header">
+    <div class="logo">Job<span>Board</span></div>
+    <div class="nav-links">
+      <a routerLink="/login" class="nav-link">Login</a>
+      <a routerLink="/signup" class="signup-link">Sign Up</a>
     </div>
-    <div class="right">
-      <div class="title">Sign up with Jobboard!</div>
+  </header>
 
-      <div class="social-login">
-        <button class="google-button" (click)="signInWithGoogle()">
-          <img src="/google-icon.jpg" alt="Google" class="google-icon"> Connect with Google
-        </button>
-      </div>
+  <div class="signup-content">
+    <div class="signup-form">
+      <h2 class="signup-title">Create your account</h2>
+      <p class="signup-subtitle">Find the right job, fast and easy!</p>
 
-      <p class="or-text">or</p>
+      <button class="google-btn" (click)="signInWithGoogle()">
+        <img src="/google-icon.jpg" alt="Google" class="google-icon" />
+        Sign up with Google
+      </button>
 
-      <form class="formulaire" [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
-        <input id="email" type="email" formControlName="email" placeholder="Email" class="input-field" >
-        <div class="error-text " *ngIf="hasError('email', 'required')">
+      <p class="divider">or use your email</p>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+        <input type="email" formControlName="email" placeholder="Email" class="input-field" />
+        <div class="error-text" *ngIf="hasError('email', 'required')">
           <i class="fas fa-exclamation-circle"></i> Email is required
         </div>
-
-        <small *ngIf="hasError('email', 'email')" class="error-text">
+        <div class="error-text" *ngIf="hasError('email', 'email')">
           <i class="fas fa-exclamation-circle"></i> Invalid email format
-        </small>
+        </div>
 
-        <input id="password" type="password" formControlName="password" placeholder="Password" class="input-field" >
-        <small *ngIf="hasError('password', 'required')" class="error-text">
+        <input type="password" formControlName="password" placeholder="Password" class="input-field" />
+        <div class="error-text" *ngIf="hasError('password', 'required')">
           <i class="fas fa-exclamation-circle"></i> Password is required
-        </small>
-        <small *ngIf="hasError('password', 'minlength')" class="error-text">
+        </div>
+        <div class="error-text" *ngIf="hasError('password', 'minlength')">
           <i class="fas fa-exclamation-circle"></i> Password must be at least 6 characters
-        </small>
+        </div>
 
-        <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Confirm your Password" class="input-field" >
-
-        <small *ngIf="hasError('confirmPassword', 'required')" class="error-text">
+        <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" class="input-field" />
+        <div class="error-text" *ngIf="hasError('confirmPassword', 'required')">
           <i class="fas fa-exclamation-circle"></i> Confirm Password is required
-        </small>
-        <small *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched" class="error-text">
-          <i class="fas fa-exclamation-circle"></i> Password do not match
-        </small>
+        </div>
+        <div class="error-text" *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched">
+          <i class="fas fa-exclamation-circle"></i> Passwords do not match
+        </div>
 
-        <button type="submit" class="btn" [disabled]="signupForm.invalid || isLoading">
-          <ng-container *ngIf="!isLoading; else loading">
-            Sign Up
-          </ng-container>
+        <button type="submit" class="btn-submit" [disabled]="signupForm.invalid || isLoading">
+          <ng-container *ngIf="!isLoading; else loading">Sign Up</ng-container>
           <ng-template #loading>
-            <span class="spinner"></span>Signing up...
+            <span class="spinner"></span> Signing up...
           </ng-template>
         </button>
       </form>
 
-      <p class="little-text">Already have an account? <a routerLink="/login" class="switch">Sign in</a></p>
+      <p class="switch-text">Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
+    <div class="signup-image">
+      <img src="/signup.png" alt="Working on laptop" />
     </div>
   </div>
+</div>
 </div>

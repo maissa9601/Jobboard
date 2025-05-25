@@ -1,151 +1,155 @@
-
-
 .container {
-  background-color: #182C4D;
+  background-color: whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-
 }
-.box {
+
+.container-login {
+  max-width: 1000px;
+  margin: auto;
   background-color: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 1000px;
-  height: 500px;
-  max-width: 90%;
-  text-align: center;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+}
+
+.header {
   display: flex;
-}
-.job{
-  margin-top: 35px;
-  margin-bottom: 45px;
-  height: 450px;
-  width: 450px;
-
+  justify-content: space-between;
+  align-items: center;
 }
 
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a73e8;
+}
 
-.right {
-  margin-top: 80px;
-  margin-left: 50px;
-  width: 400px;
-  padding: 20px;
-  border-radius: 10px;
+.logo span {
+  color: #000;
+}
 
-  text-align: center;
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color:black;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.login-link {
+  border: 2px solid #0065F2;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #0065F2;
+  text-decoration: none;
+  font-weight: 540;
+}
+
+
+.login-content {
+  display: flex;
+  margin-top: 1.5rem;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-form {
+  flex: 1;
+
+}
+
+.login-image {
+  flex: 1;
+}
+
+.login-image img {
+  width: 100%;
+  margin-top: 2rem;
+  border-radius: 50px;
+  object-fit: cover;
+  max-width: 600px;
 }
 
 .title {
-  font-size: 25px;
-  color:#182C4D;
-  font-family: 'Josefin Sans', sans-serif ;
-  margin-bottom: 35px;
-
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
-.social-login {
-  display: flex;
-  justify-content: center;
+.subtitle {
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+.login-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
 }
 
-.google-button {
-  display: flex;
-  color: #455A64;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border: 1px solid #7AA3FF;
-  padding: 10px;
-  width: 90%;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.login-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
 }
-.google-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-.google-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.or-text {
-  margin: 15px 0;
-  font-size: 14px;
-  color: #0b3285;
-}
-
-.formulaire {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .input-field {
+  display: block;
   width: 90%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #455A64;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 9px 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.btn {
+.btn-submit {
+  background-color: #1a73e8;
+  color: white;
   width: 90%;
   padding: 12px;
-  background: #455A64;
-  color: white;
-  font-size: 16px;
-  border: 2px solid white;
-  border-radius: 5px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  margin: 1rem 1rem;
   cursor: pointer;
-  margin-top: 15px;
-  box-shadow: 0 2px 4px rgba(9, 9, 9, 0.1);
+  transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-  background: #0b3285;
-  transform: scale(1.1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
+.btn-submit:hover {
+  background-color: #155dc1;
 }
-.btn:disabled {
+
+.switch-text {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.switch-text a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+.btn-submit:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   opacity: 0.7;
-}
-
-
-.little-text {
-  margin-top: 25px;
-  font-size: 14px;
-  color: #455A64;
-}
-
-.switch {
-  color: #0b3285;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  margin-left: 10px;
-  transition: transform 0.2s ease, color 0.2s ease;
-
-}
-.switch:hover {
-  font-size: 24px;
-}
-.error-text {
-  color: #f40909;
-  font-size: 15px;
-  margin-top: 5px;
-  display: block;
 }
 .spinner {
   width: 16px;
@@ -164,7 +168,3 @@
     transform: rotate(360deg);
   }
 }
-
-
-
-

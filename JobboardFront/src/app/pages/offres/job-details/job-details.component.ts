@@ -4,11 +4,14 @@ import {OfferService} from '../../../service/offer.service';
 import {AuthService} from '../../../service/auth.service';
 import {CandidatService} from '../../../service/candidat.service';
 import {ToastrService} from 'ngx-toastr';
+import {CurrencyPipe, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-job-details',
   imports: [
-    RouterLink
+    RouterLink,
+    CurrencyPipe,
+    NgIf
   ],
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.css']

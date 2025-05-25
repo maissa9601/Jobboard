@@ -11,6 +11,8 @@ import {provideToastr} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {FilterByFieldPipe} from './service/filter.pipe';
 import {MatIconModule} from '@angular/material/icon';
+
+let NgChartsModule;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -28,6 +30,7 @@ export const appConfig: ApplicationConfig = {
       progressBar: true,
 
     }),
+
     provideAnimations()
 
   ]

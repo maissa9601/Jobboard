@@ -1,53 +1,90 @@
-<div class="job-details-container">
+<div class="job-details-wrapper">
+  <div class="box">
   <div class="job-main">
-    <button class="back-btn"  routerLink="/offers">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <h1>Job offer details</h1>
-    <div class="job-header">
-      <span class="badge">{{ job.contractype }}</span>
-      <span class="badge">{{ job.location }}</span>
+    <a routerLink="/offers" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    <div class="tags">
+      <span class="tag">{{ job.contractype }}</span>
+      <span class="tag">{{ job.location }}</span>
     </div>
-    <h2>{{ job.title }}</h2>
+
+    <h2 class="job-title">{{ job.title }}</h2>
     <p class="company-name"><i class="fas fa-building"></i> {{ job.company }}</p>
+
     <h3>Description</h3>
-    <p>{{ job.description }}</p>
+    <p class="description">{{ job.description }}</p>
   </div>
 
   <div class="job-sidebar">
-    <h3>Offer information </h3>
-    <div class="info-block">
+
+
+    <div class="info">
       <i class="fas fa-map-marker-alt"></i>
-      <strong>Location</strong>
-      <p>{{ job.location }}</p>
+      <div>
+        <strong>Location</strong>
+        <p>{{ job.location }}</p>
+      </div>
     </div>
 
-    <div class="info-block">
+    <div class="info">
       <i class="fas fa-briefcase"></i>
-      <strong>Type</strong>
-      <p>{{ job.contractype }}</p>
+      <div>
+        <strong>Type</strong>
+        <p>{{ job.contractype }}</p>
+      </div>
     </div>
 
-    <div class="info-block">
+
+
+    <div class="info">
+      <i class="fas fa-globe"></i>
+      <div>
+        <strong>Source</strong>
+        <p>{{ job.source }}</p>
+      </div>
+    </div>
+
+    <div class="info">
+      <i class="fas fa-user-tie"></i>
+      <div>
+        <strong>Experience</strong>
+        <p>{{ job.experience }}</p>
+      </div>
+    </div>
+
+    <div class="info">
+      <i class="fas fa-euro-sign"></i>
+      <div>
+        <strong>Salary</strong>
+        <p *ngIf="job.salary > 0">{{ job.salary | currency:'EUR' }}</p>
+        <p *ngIf="!job.salary || job.salary === 0">Not specified</p>
+      </div>
+    </div>
+
+    <div class="info">
       <i class="fas fa-calendar-alt"></i>
-      <strong>Publication date</strong>
-      <p>{{ job.publishedAt }}</p>
+      <div>
+        <strong>Published</strong>
+        <p>{{ job.publishedAt }}</p>
+      </div>
     </div>
 
-    <div class="info-block">
+    <div class="info">
       <i class="fas fa-calendar-times"></i>
-      <strong>Deadline</strong>
-      <p>{{ job.deadline }}</p>
+      <div>
+        <strong>Deadline</strong>
+        <p>{{ job.deadline }}</p>
+      </div>
     </div>
 
-    <div class="buttons">
-      <button (click)="saveToFavorites(job)">
+    <div class="sidebar-buttons">
+      <button (click)="saveToFavorites(job)" class="save-btn">
         <i class="fas fa-heart"></i> Save
       </button>
-      <a class="go-to-offer" [href]="job.offerUrl" target="_blank">
-         Go to offer
-      </a>
+      <a class="go-btn" [href]="job.offerUrl" target="_blank">Go to offer</a>
     </div>
-
+  </div>
   </div>
 </div>

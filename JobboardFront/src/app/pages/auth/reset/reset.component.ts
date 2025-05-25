@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../service/auth.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -11,10 +11,11 @@ import {ToastrService} from 'ngx-toastr';
   standalone: true,
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.css'],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink
+    ]
 })
 export class ResetComponent {
   resetForm: FormGroup;

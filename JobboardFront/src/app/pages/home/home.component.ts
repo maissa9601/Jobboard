@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-//import {NgForOf, NgIf, SlicePipe} from '@angular/common';
 import {OfferService} from '../../service/offer.service';
 import {NgForOf, SlicePipe} from '@angular/common';
 
@@ -30,5 +29,6 @@ export class HomeComponent implements OnInit {
     });
 
   }
+
 
 }

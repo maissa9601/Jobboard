@@ -31,7 +31,7 @@ export class NavbarComponent {
   }
   constructor(public router: Router) {}
 
-  getNavbarClass(): string {
+  /*getNavbarClass(): string {
     if (this.router.url.startsWith('/offers')) {
       return 'navbar white-navbar';
     } else {
@@ -65,7 +65,7 @@ export class NavbarComponent {
     this.menuOpen = false;
     this.router.navigate(['/home']);
   }
-
+*/
 
 
   @HostListener('document:click', ['$event'])
