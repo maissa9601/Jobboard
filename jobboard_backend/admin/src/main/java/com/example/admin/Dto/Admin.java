@@ -1,6 +1,6 @@
 package com.example.admin.Dto;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 @Data
 public class Admin {

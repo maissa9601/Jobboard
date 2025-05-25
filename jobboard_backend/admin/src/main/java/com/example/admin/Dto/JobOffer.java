@@ -2,7 +2,9 @@ package com.example.admin.Dto;
 
 import lombok.Data;
 
- @Data
+import java.util.Date;
+
+@Data
 public class JobOffer {
 
     private Long id;
@@ -13,5 +15,9 @@ public class JobOffer {
     private String location;
     private Double salary;
     private String source;
+    private String experience;
+    private Date published;
+    private Date expires;
+    private String url;
 
 }
