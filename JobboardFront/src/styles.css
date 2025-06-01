@@ -3,11 +3,7 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow:auto;
   font-family: "Roboto", sans-serif;
 }
 
@@ -62,7 +58,114 @@ body::-webkit-scrollbar {
   background-color: #EBEBEB;
 
 }
+/* DARK MODE STYLES */
+.dark-mode .dashboard-header,
+.dark-mode .dash-container,
+.dark-mode .card,
+.dark-mode .dashboard-card,
+.dark-mode .tab-buttons button,
+.dark-mode .modal,
+.dark-mode .search-bar,
+.dark-mode .table-wrapper,
+.dark-mode table thead,
+.dark-mode .profile-dropdown{
+  background-color: #1f2937 !important;
+  color: #f3f4f6 !important;
+  border-color: #374151 !important;
+}
 
+.dark-mode .dashboard-body h1,
+.dark-mode .dashboard-card h3,
+.dark-mode .dashboard-card p,
+.dark-mode .profile-dropdown p,
+.dark-mode .card-title,
+.dark-mode .metric-title,
+.dark-mode .metric-value,
+.dark-mode th,
+.dark-mode td,
+.dark-mode .list li,
+.dark-mode .table-section h3 {
+  color: #f3f4f6 !important;
+}
+
+.dark-mode .nav-links li,
+.dark-mode .logout,
+.dark-mode .tab-buttons button {
+  background-color: transparent;
+  color: #e5e7eb;
+
+}
+
+.dark-mode .nav-links li:hover,
+.dark-mode .nav-links li.active {
+  background-color: #374151;
+}
+.dark-mode .dashboard-card,
+.dark-mode  .chart-card,
+.dark-mode .card{
+  border:1px solid white;
+}
+
+
+.dark-mode .status {
+  background-color: #4b5563;
+  color: white;
+}
+
+.dark-mode .status.active {
+  background-color: #10b981;
+}
+
+.dark-mode .btn,
+.dark-mode .btn-offer {
+  background-color: transparent;
+  color: #f3f4f6;
+  border: 1px solid #f3f4f6;
+}
+
+.dark-mode .btn-offer:hover {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.dark-mode .input-search i,
+.dark-mode .logo-text,
+.dark-mode .logo-icon,
+.dark-mode .nav-links i,
+.dark-mode .card i,
+.dark-mode .close-btn
+ {
+  color: #f3f4f6;
+}
+
+.dark-mode .modal-body input {
+  background-color: #111827;
+  color: #f3f4f6;
+  border: 1px solid #374151;
+}
+
+.dark-mode .modal-body input:focus {
+  border-color: #6366f1;
+}
+
+.dark-mode .header-icons .icon {
+  color: #f3f4f6;
+}
+
+.dark-mode .profile-pic {
+  border-color: #4b5563;
+}
+
+.dark-mode .dashboard-cards .dashboard-card,
+.dark-mode .chart-card
+{
+  background-color: #1f2937;
+  box-shadow: none;
+}
+
+.dark-mode .icon-wrapper {
+  background-color: #4f46e5;
+}
 
 
 

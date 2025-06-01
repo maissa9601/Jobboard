@@ -75,7 +75,7 @@
 
   .info-section {
     flex: 1;
-    background: linear-gradient(to bottom right, #5468FE, #8896FE);
+    background: linear-gradient(to bottom right, #0065f2, #8896FE);
     color: white;
     padding: 4rem;
     display: flex;

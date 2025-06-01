@@ -11,6 +11,7 @@
     </div>
   </div>
   <div class="content">
+
     <div class="filters">
       <h3>Filters</h3>
 
@@ -57,7 +58,8 @@
         <p *ngIf="!job.showMore">{{ job.description | slice: 0:100 }}...</p>
         <p><i class="fas fa-building"></i> {{ job.company }}</p>
         <p><i class="fas fa-map-marker-alt"></i> {{ job.location }}</p>
-        <button   (click)="seeMore(job.id)"  class="see">see more</button>
+        <button   (click)="seeMore(job.id)"  class="see" >
+          see more</button>
       </div>
     </div>
   </div>

@@ -19,7 +19,9 @@ const authConfig: AuthConfig = {
   providedIn: 'root'
 })
 export class AuthService {
+  //all users
   private API_URL = 'http://localhost:8080/auth';
+  //admin only
   private BASE_URL = 'http://localhost:8080/users';
   //suivi de role
   private roleSubject = new BehaviorSubject<string | null>(this.getRole());
@@ -82,10 +84,6 @@ export class AuthService {
     return this.http.post<{ message: string }>(`${this.API_URL}/reset-password`, { token, newPassword });
   }
 
-  //connecté?
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
-  }
 
   //confirmation
   confirmAccount(token: string): Observable<boolean> {
@@ -113,7 +111,16 @@ export class AuthService {
   }
   //login avec google
   googleLogin() {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+
+      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+
+
+  }
+  logout(): void {
+
+    localStorage.removeItem('token');
+
+    this.router.navigate(['/login']);
   }
 
 
@@ -136,12 +143,6 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
-  getStats(): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/stats`);
-  }
 
-  getRecentCandidats(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.BASE_URL}/candidats/recent`);
-  }
 
 }

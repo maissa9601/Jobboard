@@ -74,13 +74,7 @@
   cursor: pointer;
   color: #374151;
 }
-.profile-pic {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #d1d5db;
-}
+
 
 .sidebar-header {
   display: flex;
@@ -213,7 +207,6 @@
 }
 
 .card {
-
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -331,7 +324,7 @@ h1 {
   max-width: 100px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  margin-left:820px;
+  margin-left:900px;
 }
 
 .table-section h3 {
@@ -341,8 +334,10 @@ h1 {
 }
 
 .table-wrapper {
-  overflow-y:scroll;
-  height: 350px;
+  overflow-y:auto;
+  height: 300px;
+  width: 100%;
+  max-width: 95%;
 
 }
 
@@ -352,6 +347,7 @@ table {
   border-collapse: collapse;
   margin-top: 15px;
   margin-left: 10px;
+
 }
 
 table thead {
@@ -499,4 +495,104 @@ h3{
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+.profile-avatar {
+  position: relative;
+  cursor: pointer;
+}
+
+.avatar-image {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-top: 0px;
+  object-fit: cover;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  margin-right: 100px;
+  margin-top: 10px;
+  background: whitesmoke;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
+  width: 180px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+.profile-dropdown p{
+  font-weight: bold;
+  color: #182C4D;
+
+}
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3B64B2;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.icon-btn i {
+  pointer-events: none;
+}
+.reclamations-panel {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+
+
+.reclamations-panel h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+}
+
+
+.reclamations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reclamations-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  background-color: #f9fafb;
+  transition: background-color 0.3s ease;
 }

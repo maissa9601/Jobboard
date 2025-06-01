@@ -43,7 +43,7 @@
   gap: 12px;
 }
 
-.btn-outline {
+.outline {
   padding: 8px 16px;
   border: 2px solid #0065F2;
   color: #0065F2;
@@ -52,8 +52,8 @@
   font-weight: 500;
   transition: transform 0.3s ease;
 }
-.btn-primary {
-  padding: 8px 16px;
+.primary {
+  padding: 10px 16px;
   border: 2px solid white;
   color: white;
   background: #0065F2;

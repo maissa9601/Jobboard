@@ -8,9 +8,6 @@ export class CandidatService {
   private baseUrl = 'http://localhost:8083/candidat';
 
   constructor(private http: HttpClient) {}
-
-
-
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
     return {
@@ -19,16 +16,11 @@ export class CandidatService {
       })
     };
   }
-  removeAlerte(userId: number, id: number) {
-    return this.http.delete(`${this.baseUrl}/alertes/${userId}/${id}`, this.getAuthHeaders());
-  }
 
-
+  //gestion profile candidat
   getProfile(): Observable<Candidat> {
     return this.http.get<Candidat>(`${this.baseUrl}/profile/me`, this.getAuthHeaders());
   }
-
-
   updateProfile(data: any) {
     return this.http.put(`${this.baseUrl}/profile/update`, data, this.getAuthHeaders());
   }
@@ -63,7 +55,7 @@ export class CandidatService {
       }
     );
   }
-
+//gestion favorits
   addToFavorites(favori: {
     userId: number;
     offerId: number;
@@ -80,13 +72,16 @@ export class CandidatService {
   removeFavorite(userId: number, offerId: number) {
     return this.http.delete(`${this.baseUrl }/favorite/${userId}/${offerId}`,this.getAuthHeaders());
   }
+  //gestion d'alerts
+  removeAlerte(userId: number, id: number) {
+    return this.http.delete(`${this.baseUrl}/alertes/${userId}/${id}`, this.getAuthHeaders());
+  }
   getAlertes(userId: number) {
     return this.http.get(`${this.baseUrl }/alertes/${userId}`,this.getAuthHeaders());
   }
   marquerAlerteCommeLue(id: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/alertes/${id}/lu`, {}, this.getAuthHeaders());
   }
-
 
 
 }

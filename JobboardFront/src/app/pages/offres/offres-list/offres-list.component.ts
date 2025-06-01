@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { OfferService } from '../../../service/offer.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {Router, RouterLink} from "@angular/router";
+import {Router} from "@angular/router";
+import {CandidatService} from '../../../service/candidat.service';
 
 
 @Component({
@@ -28,8 +29,8 @@ export class OffersListComponent implements OnInit {
   experiences: string[] = [];
   sources: string[] = [];
 
-  constructor(private jobService: OfferService,private router
-  : Router) {}
+  constructor(private jobService: OfferService,private router :Router,private candidatService : CandidatService) { }
+
 
   ngOnInit(): void {
     this.jobService.getJobOffers().subscribe({
@@ -104,8 +105,8 @@ export class OffersListComponent implements OnInit {
     }
   }
   seeMore(offreId: number) {
-    this.jobService. incrementViews(offreId).subscribe(offre => {
-      this.router.navigate(['/offers',offreId]);
+    this.jobService.incrementViews(offreId).subscribe(offre => {
+      this.router.navigate(['/offer',offreId]);
     });
   }
 

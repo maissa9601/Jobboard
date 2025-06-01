@@ -1,287 +1,307 @@
 
-<div class="header-container">
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="search..."
-      class="search-input"
-    />
-  </div>
-  <div class="right-section">
-  <i  class="fas fa-bell alert-icon"  [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'"></i>
-    <div class="avatar-container" (click)="toggleMenu()">
-      <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="avatar-img" />
+<div class="dash-container">
+ <!--sidebar-->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <i class="ri-briefcase-line logo-icon"></i>
+      <span class="logo-text">Jobboard<strong> Candidat</strong></span>
     </div>
 
-    <div class="profile-dropdown" *ngIf="menuOpen">
-      <ng-container *ngIf="isLoggedIn; else guestTemplate">
-        <p class="user-name">{{ userName }}</p>
-        <button  class="signup" (click)="goToProfile()">Go to Profile</button>
-        <button class="login" (click)="logout()">Logout</button>
-      </ng-container>
+    <ul class="nav-links">
+      <li [class.activeTab]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </li>
 
-      <ng-template #guestTemplate>
-        <button class="signup" (click)="navigateTo('/signup')">Sign up</button>
-        <button  class="login" (click)="navigateTo('/login')">Sign in</button>
-      </ng-template>
+      <li [class.activeTab]="activeTab === 'profile'" (click)="activeTab = 'profile'">
+        <i class="ri-user-line"></i> My Profile
+      </li>
+
+      <li [routerLink]="'/offers'">
+        <i class="ri-briefcase-line"></i> Job Offers
+      </li>
+
+      <li [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
+        <i class="ri-heart-line"></i> Favourite
+      </li>
+
+      <li [routerLink]="'/home'">
+        <i class="ri-home-3-line"></i> Home
+      </li>
+
+      <li [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'">
+        <i class="ri-notification-line"></i> Alerts
+      </li>
+    </ul>
+
+    <div class="logout">
+      <i class="ri-logout-box-r-line" (click)="logout()"></i> Logout
     </div>
+  </nav>
 
-  </div>
-</div>
 
-<nav class="navbar">
-  <div class="title">
-    <i class="fas fa-briefcase logo-icon"></i>
-    <div class="navbar-logo">Jobboard Candidat</div>
-  </div>
 
-  <div class="buttons">
-    <div class="nav-buttons-group">
-      <button class="nav-btn" [class.activeTab]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-      </button>
+    <!--header + contenu-->
+  <div class="main-content">
+    <div class="dashboard-header">
+      <div class="input-search">
+        <i class="ri-search-line"></i>
+        <input type="text" placeholder="Search" class="search-bar" />
+      </div>
 
-      <button class="nav-btn" [class.activeTab]="activeTab === 'profile'" (click)="activeTab = 'profile'">
-        <i class="fas fa-user"></i> My Profile
-      </button>
+      <div class="header-icons">
+        <!-- Avatar cliquable -->
+        <div class="profile-avatar" (click)="toggleProfileDropdown()">
+          <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Admin Avatar" class="avatar-image" />
+        </div>
+        <!-- Dropdown Profil -->
+        <div class="profile-dropdown" *ngIf="showProfileDropdown">
+          <p>{{ profileForm.get('fullName')?.value }}</p>
 
-      <button class="nav-btn" [routerLink]="'/offers'">
-        <i class="fas fa-clipboard-list"></i> Job Offers
-      </button>
+          <div class="profile-actions">
+            <button class="icon-btn" (click)="logout()" title="Déconnexion">
+              <i class="ri-logout-box-r-line"></i>
+            </button>
+          </div>
 
-      <button class="nav-btn" [class.activeTab]="activeTab === 'favoris'" (click)="activeTab = 'favoris'">
-        <i class="fas fa-heart heart-icon"></i> Favourite
-      </button>
+        </div>
 
-      <button class="nav-btn" [routerLink]="'/home'">
-        <i class="fas fa-home"></i> Home
-      </button>
+        <button (click)="activeTab = 'alerts'">
+          <i class="ri-notification-3-line icon"></i>
+        </button>
+        <button (click)="toggleDarkMode()">
+          <i [ngClass]="isDarkMode ? 'ri-sun-line' : 'ri-moon-line'" class="icon"></i>
+        </button>
 
-      <button class="nav-btn" [class.activeTab]="activeTab === 'alerts'" (click)="activeTab = 'alerts'">
-        <i class="fas fa-bell alert-icon"></i> Alerts
-      </button>
+      </div>
     </div>
-
-    <div class="logout-container">
-      <button class="nav-btn" (click)="logout()">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
-    </div>
-  </div>
-</nav>
-
-
 
 <!-- DASHBOARD -->
 
-<div class="dashboard-container" *ngIf="activeTab === 'dashboard'">
+<div class="dashboard-body" *ngIf="activeTab === 'dashboard'">
 
-  <i class="fas fa-tachometer-alt">Dashboard</i>
-  <div class="card-container">
-
-    <div (click)="activeTab = 'profile'" class="dashboard-card">
-      <i class="fas fa-user icon"></i>
-      <h2>Profile Management</h2>
+  <h1>Dashboard</h1>
+  <div class="dashboard-cards">
+    <div class="dashboard-card">
+      <div (click)="activeTab = 'profile'"  class="icon-wrapper"><i class="fas fa-user icon"></i></div>
+      <h3>Profile Management</h3>
       <p>Update your personal information and resume</p>
     </div>
-
-    <div (click)="activeTab = 'offres'" [routerLink]="'/offers'" class="dashboard-card">
-      <i class="fas fa-clipboard-list icon"></i>
-      <h2>Job Offers</h2>
-      <p>View and manage available job offers</p>
-    </div>
-
-    <div (click)="activeTab = 'favoris'" class="dashboard-card">
-      <i class="fas fa-heart icon"></i>
-      <h2>Favourites</h2>
+    <div class="dashboard-card">
+      <div (click)="activeTab = 'favoris'"  class="icon-wrapper"><i  class="fas fa-heart icon"></i></div>
+      <h3>Favourites</h3>
       <p>View your saved job offers</p>
     </div>
-    <div (click)="activeTab = 'alerts'" class="dashboard-card">
-      <i  class="fas fa-bell alert-icon"></i>
-      <h2>Alerts</h2>
+    <div class="dashboard-card">
+      <div (click)="activeTab = 'alerts'"  class="icon-wrapper"><i class="fas fa-bell alert-icon"></i></div>
+      <h3>Alerts</h3>
       <p>View your alerts</p>
     </div>
 
   </div>
 </div>
 <!-- profile -->
-<div class="dashboard-container" *ngIf="activeTab === 'profile'">
-  <div class="profile-container">
-    <i class="fas fa-user"> My Profile</i>
-    <p>Complete your profile to improve your job offer recommendations</p>
-
-    <div class="profile-header">
-      <div class="profile-photo-section">
-        <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="profile-photo" />
-        <div class="photo-upload">
-
-          <p *ngIf="profileForm.get('fullName')?.value">
-            {{ profileForm.get('fullName')?.value }}
-          </p>
-        </div>
-        <input type="file" (change)="onPhotoSelected($event)" />
-
+    <div class="dashboard-container" *ngIf="activeTab === 'profile'">
+      <div class="hello">
+      <h2>My Profile</h2>
+      <p>Complete your profile to improve your job offer recommendations</p>
       </div>
+      <div class="profile-container">
 
-      <div class="profile-info">
-        <div class="field-group">
-          <label>Full name</label>
-          <div class="field-editable">
-            <input type="text" [formControl]="fullNameControl" [readonly]="!isEditing.fullName" />
-            <button (click)="toggleEdit('fullName')">{{ isEditing.fullName ? '✔' : '✎' }}</button>
+        <div class="profile-header">
+          <div class="profile-photo-section">
+            <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Profile Photo" class="profile-photo" />
+            <div class="photo-upload">
+              <p *ngIf="profileForm.get('fullName')?.value">
+                {{ profileForm.get('fullName')?.value }}
+              </p>
+            </div>
+            <label class="change-photo-btn">
+              Change
+              <input type="file" (change)="onPhotoSelected($event)" hidden>
+            </label>
+
+          </div>
+
+          <div class="profile-info">
+            <div class="field-group">
+              <label>Full name</label>
+              <div class="field-editable">
+                <input type="text" [formControl]="fullNameControl" [readonly]="!isEditing.fullName" />
+                <button (click)="toggleEdit('fullName')">
+                  <i [ngClass]="isEditing.fullName ? 'ri-check-line' : 'ri-edit-line'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Bio</label>
+              <div class="field-editable">
+                <textarea [formControl]="bioControl" [readonly]="!isEditing.bio"></textarea>
+                <button (click)="toggleEdit('bio')">
+                  <i [ngClass]="isEditing.bio ? 'ri-check-line' : 'ri-edit-line'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Preferred Location</label>
+              <div class="field-editable">
+                <input type="text" [formControl]="preferredLocationControl" [readonly]="!isEditing.preferredLocation" />
+                <button (click)="toggleEdit('preferredLocation')">
+                  <i [ngClass]="isEditing.preferredLocation ? 'ri-check-line' : 'ri-edit-line'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>Preferred Contract Type</label>
+              <div class="field-editable">
+                <input type="text" [formControl]="preferredContractTypeControl" [readonly]="!isEditing.preferredContractType" />
+                <button (click)="toggleEdit('preferredContractType')">
+                  <i [ngClass]="isEditing.preferredContractType ? 'ri-check-line' : 'ri-edit-line'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="change-photo-btn">
+                 CV
+                <input type="file" (change)="onCvSelected($event)" hidden>
+              </label>
+
+              <a *ngIf="cvPreviewUrl" [href]="cvPreviewUrl" download class="download-link">
+                <i class="ri-download-2-line"></i> Download
+              </a>
+            </div>
           </div>
         </div>
 
-        <div class="field-group">
-          <label>Bio</label>
-          <div class="field-editable">
-            <textarea [formControl]="bioControl" [readonly]="!isEditing.bio"></textarea>
-            <button (click)="toggleEdit('bio')">{{ isEditing.bio ? '✔' : '✎' }}</button>
+        <!-- Skills -->
+        <div class="profile-section">
+          <h3> Skills</h3>
+          <div class="tags">
+            <ng-container *ngIf="hasSkills; else noSkills">
+              <div *ngFor="let skill of skills.controls; let i = index" class="tag">
+                <input [formControl]="asFormControl(skill)" />
+                <button (click)="removeSkill(i)">
+                  <i class="ri-close-line"></i>
+                </button>
+              </div>
+              <button class="add-tag" (click)="addSkill()"><i class="ri-add-line"></i> Add skill</button>
+            </ng-container>
+            <ng-template #noSkills>
+              <div class="empty-state">
+                <p>Add your skills to improve your job recommendations</p>
+                <i class="ri-settings-3-line empty-icon"></i>
+                <p>No skills added</p>
+                <button class="add-tag" (click)="addSkill()"><i class="ri-add-line"></i> Add skill</button>
+              </div>
+            </ng-template>
           </div>
         </div>
-        <div class="field-group">
-          <label>Preferred Location</label>
-          <div class="field-editable">
-            <input type="text" [formControl]="preferredLocationControl" [readonly]="!isEditing.preferredLocation" />
-            <button (click)="toggleEdit('preferredLocation')">{{ isEditing.preferredLocation ? '✔' : '✎' }}</button>
+
+        <!-- Languages -->
+        <div class="profile-section">
+          <h3> Languages</h3>
+          <div class="tags">
+            <ng-container *ngIf="hasLanguages; else noLanguages">
+              <div *ngFor="let lang of languages.controls; let i = index" class="tag">
+                <input [formControl]="asFormControl(lang)" />
+                <button (click)="removeLanguage(i)">
+                  <i class="ri-close-line"></i>
+                </button>
+              </div>
+              <button class="add-tag" (click)="addLanguage()"><i class="ri-add-line"></i> Add language</button>
+            </ng-container>
+            <ng-template #noLanguages>
+              <div class="empty-state">
+                <i class="ri-translate-2 empty-icon"></i>
+                <p>No language added</p>
+                <button class="add-tag" (click)="addLanguage()"><i class="ri-add-line"></i> Add language</button>
+              </div>
+            </ng-template>
           </div>
         </div>
-        <div class="field-group">
-          <label>Preferred Contract Type</label>
-          <div class="field-editable">
-            <input type="text" [formControl]="preferredContractTypeControl" [readonly]="!isEditing.preferredContractType" />
-            <button (click)="toggleEdit('preferredContractType')">{{ isEditing.preferredContractType ? '✔' : '✎' }}</button>
+
+        <!-- Keywords -->
+        <div class="profile-section">
+          <h3> Preferred Keywords</h3>
+          <div class="tags">
+            <ng-container *ngIf="preferredKeywords.length > 0; else noKeywords">
+              <div *ngFor="let keyword of preferredKeywords.controls; let i = index" class="tag">
+                <input [formControl]="asFormControl(keyword)" />
+                <button (click)="removeKeyword(i)">
+                  <i class="ri-close-line"></i>
+                </button>
+              </div>
+              <button class="add-tag" (click)="addKeyword()"><i class="ri-add-line"></i> Add keyword</button>
+            </ng-container>
+            <ng-template #noKeywords>
+              <div class="empty-state">
+                <p>Add preferred keywords to improve your job recommendations</p>
+                <i class="ri-search-line empty-icon"></i>
+                <p>No keywords added</p>
+                <button class="add-tag" (click)="addKeyword()"><i class="ri-add-line"></i> Add keyword</button>
+              </div>
+            </ng-template>
           </div>
         </div>
 
-
-
-        <div class="field-group">
-          <label>Add CV</label>
-          <input type="file" (change)="onCvSelected($event)" />
-
-
-            <a *ngIf="cvPreviewUrl" [href]="cvPreviewUrl" download class="download-link">Download</a>
-
+        <!-- Save button -->
+        <div class="profile-actions">
+          <button (click)="save()" class="btn-save">
+           Save
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="profile-section">
-      <h3>Skills</h3>
-      <div class="tags">
-        <ng-container *ngIf="hasSkills; else noSkills">
-          <div *ngFor="let skill of skills.controls; let i = index" class="tag">
-            <input [formControl]="asFormControl(skill)" />
-            <button (click)="removeSkill(i)">✖</button>
-          </div>
-          <button class="add-tag" (click)="addSkill()">+ Add skill</button>
-        </ng-container>
-        <ng-template #noSkills>
-          <div class="empty-state">
-            <p>Add your skills to improve your job recommendations</p>
-            <span class="material-icons empty-icon">settings</span>
-            <p>No skills added</p>
-            <button class="add-tag" (click)="addSkill()">+ Add skill</button>
-          </div>
-        </ng-template>
-      </div>
+<!-- favoris -->
+<div class="dashboard-container" *ngIf="activeTab === 'favoris'">
+  <div class="favorites-container">
+
+    <div *ngIf="favorites.length === 0">
+      <p>No offer saved.</p>
     </div>
 
-    <div class="profile-section">
-      <h3>Languages</h3>
-      <div class="tags">
-        <ng-container *ngIf="hasLanguages; else noLanguages">
-          <div *ngFor="let lang of languages.controls; let i = index" class="tag">
-            <input [formControl]="asFormControl(lang)" />
-            <button (click)="removeLanguage(i)">✖</button>
-          </div>
-          <button class="add-tag" (click)="addLanguage()">+ Add languages</button>
-        </ng-container>
-        <ng-template #noLanguages>
-          <div class="empty-state">
-            <span class="material-icons empty-icon">translate</span>
-            <p>No language added</p>
-            <button class="add-tag" (click)="addLanguage()">+ Add languages</button>
-          </div>
-        </ng-template>
-      </div>
-    </div>
-    <div class="profile-section">
-      <h3>Preferred Keywords</h3>
-      <div class="tags">
-        <ng-container *ngIf="preferredKeywords.length > 0; else noKeywords">
-          <div *ngFor="let keyword of preferredKeywords.controls; let i = index" class="tag">
-            <input [formControl]="asFormControl(keyword)" />
-            <button (click)="removeKeyword(i)">✖</button>
-          </div>
-          <button class="add-tag" (click)="addKeyword()">+ Add keyword</button>
-        </ng-container>
-        <ng-template #noKeywords>
-          <div class="empty-state">
-            <p>Add preferred keywords to improve your job recommendations</p>
-            <span class="material-icons empty-icon">search</span>
-            <p>No keywords added</p>
-            <button class="add-tag" (click)="addKeyword()">+ Add keyword</button>
-          </div>
-        </ng-template>
-      </div>
-    </div>
+    <div class="favorites-grid">
+      <div *ngFor="let fav of favorites" class="favorite-card">
+        <h3>{{ fav.title }}</h3>
+        <a [href]="fav.offerUrl" target="_blank" class="see-offer-btn">
+          See Offer
+        </a>
 
-
-    <div class="profile-actions">
-      <button (click)="save()" class="btn-save">Save</button>
+        <button class="delete-btn" (click)="removeFavorite(fav.offerId)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
-  <!-- favoris -->
-  <div class="dashboard-container" *ngIf="activeTab === 'favoris'">
-<div class="favorites-container">
-  <i class="fas fa-heart"> My Favourite</i>
+<!-- alerts -->
+<div class="dashboard-container" *ngIf="activeTab === 'alerts'">
+  <div class="favorites-container">
+    <div *ngFor="let alerte of alertes" class="alerte-card">
+      <h4>{{ alerte.offerTitle }}</h4>
+      <p>{{ alerte.offerDescription }}</p>
+      <a [href]="alerte.offerUrl" target="_blank">Voir l'offre</a>
+      <p>Date: {{ alerte.dateCreation | date }}</p>
 
-  <div *ngIf="favorites.length === 0">
-    <p>No offer saved.</p>
-  </div>
+      <!--  non lue -->
+      <button *ngIf="!alerte.lu" (click)="marquerCommeLue(alerte.id)"  title="Marquer comme lue">
+        <i class="fas fa-eye-slash"></i>
+      </button>
 
-  <div class="favorites-grid">
-    <div *ngFor="let fav of favorites" class="favorite-card">
-      <h3>{{ fav.title }}</h3>
-      <a [href]="fav.offerUrl" target="_blank" class="see-offer-btn">
-        See Offer
-      </a>
-
-      <button class="delete-btn" (click)="removeFavorite(fav.offerId)">
+      <!-- lue -->
+      <span *ngIf="alerte.lu" class="text-success" title="Déjà lue">
+    <i class="fas fa-eye"></i>
+  </span>
+      <button  (click)="removeAlerte(alerte.id)">
         <i class="fas fa-trash-alt"></i>
       </button>
     </div>
+
   </div>
 </div>
-  </div>
-    <!-- alerts -->
-    <div class="dashboard-container" *ngIf="activeTab === 'alerts'">
-      <div class="favorites-container">
-        <div *ngFor="let alerte of alertes" class="alerte-card">
-          <h4>{{ alerte.offerTitle }}</h4>
-          <p>{{ alerte.offerDescription }}</p>
-          <a [href]="alerte.offerUrl" target="_blank">Voir l'offre</a>
-          <p>Date: {{ alerte.dateCreation | date }}</p>
-
-          <!--  non lue -->
-          <button *ngIf="!alerte.lu" (click)="marquerCommeLue(alerte.id)"  title="Marquer comme lue">
-            <i class="fas fa-eye-slash"></i>
-          </button>
-
-          <!-- lue -->
-          <span *ngIf="alerte.lu" class="text-success" title="Déjà lue">
-    <i class="fas fa-eye"></i>
-  </span>
-          <button  (click)="removeAlerte(alerte.id)">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-
-      </div>
-
-
 </div>
-
+</div>

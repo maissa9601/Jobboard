@@ -25,13 +25,12 @@
     </ul>
 
     <div class="logout">
-      <i class="ri-logout-box-r-line"></i> Logout
+      <i class="ri-logout-box-r-line" (click)="logout()"></i> Logout
     </div>
   </nav>
 
 
   <div class="main-content">
-
     <div class="dashboard-header">
       <div class="input-search">
         <i class="ri-search-line"></i>
@@ -39,11 +38,37 @@
       </div>
 
       <div class="header-icons">
-        <img src="/default-avatar.png" alt="Admin Profile" class="profile-pic" />
-       <button> <i class="ri-notification-3-line icon"></i></button>
-       <button> <i class="ri-moon-line icon"></i></button>
+        <!-- Avatar cliquable -->
+        <div class="profile-avatar" (click)="toggleProfileDropdown()">
+          <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Admin Avatar" class="avatar-image" />
+        </div>
+        <!-- Dropdown Profil -->
+        <div class="profile-dropdown" *ngIf="showProfileDropdown">
+          <p>{{ admin.email }}</p>
+
+          <div class="profile-actions">
+            <label class="icon-btn" title="Changer la photo">
+              <i class="ri-image-edit-line"></i>
+              <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+            </label>
+
+            <button class="icon-btn" (click)="logout()" title="Déconnexion">
+              <i class="ri-logout-box-r-line"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <button (click)="activeTab = 'reclamations'">
+          <i class="ri-notification-3-line icon"></i>
+        </button>
+        <button (click)="toggleDarkMode()">
+          <i [ngClass]="isDarkMode ? 'ri-sun-line' : 'ri-moon-line'" class="icon"></i>
+        </button>
+
       </div>
     </div>
+
     <div class="dashboard-body">
     <h1>Dashboard</h1>
     <div class="dashboard-cards">
@@ -121,6 +146,24 @@
       </div>
 
     </div>
+    <!-- Reclamations -->
+    <div *ngIf="activeTab === 'reclamations'" class="reclamations-panel">
+      <h3><i class="ri-alert-line"></i> Reclamations</h3>
+      <ul class="reclamations-list">
+        <li *ngFor="let reclamation of reclamations">
+          <strong>{{ reclamation.senderEmail }}</strong> : {{ reclamation.content }}
+          <button (click)="deleteReclamation(reclamation.id)" class="btn-icon" aria-label="Supprimer notification">
+            <i class="ri-delete-bin-line"></i>
+          </button>
+        </li>
+      </ul>
+
+      <ng-template #noReclamations>
+        <p>Aucune réclamation pour le moment.</p>
+      </ng-template>
+    </div>
+
+
     <div *ngIf="activeTab === 'admins'" class="admin-management">
 
       <div class="tab-buttons">
@@ -132,7 +175,6 @@
 
       <div *ngIf="active === 'admin'" class="table-section">
         <div class="filter-bar">
-          <h3>Admin Users</h3>
           <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
 
         </div>
@@ -156,7 +198,6 @@
 
       <div *ngIf="active === 'candidat'" class="table-section">
         <div class="filter-bar">
-          <h3>Candidat Users</h3>
           <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
 
         </div>
@@ -189,7 +230,6 @@
     <div *ngIf="activeTab === 'candidats'" class="admin-management">
         <div class="table-section">
           <div class="filter-bar">
-            <h3>Candidat Users</h3>
             <input [(ngModel)]="searchEmail" placeholder=" Search by email..." />
           </div>
           <div class="table-wrapper">
@@ -199,7 +239,7 @@
                 <th>ID</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Promote</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
@@ -212,9 +252,10 @@
                 </span>
                 </td>
                 <td>
-                  <button class="btn promote" (click)="updateCandidat(candidat.id)">
-                    Make Admin
+                  <button class="btn" (click)="deleteCandidat(candidat.id)">
+                    <i class="fas fa-trash"></i>
                   </button>
+
                 </td>
               </tr>
               </tbody>

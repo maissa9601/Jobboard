@@ -1,13 +1,14 @@
 .job-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   padding-top: 89px;
   background-color: whitesmoke;
+  height: 100vh;
+
 }
 .search-bar {
-  display: flex;
-
+ display: flex;
   position: fixed;
   justify-content: center;
   align-items: center;
@@ -15,7 +16,7 @@
   gap: 20px;
   width: 100%;
   background-color: whitesmoke;
-  z-index: 10;
+ /* z-index: 10;*/
 }
 
 .input-icon {
@@ -44,16 +45,17 @@
 
 .content {
   display: flex;
+  position: fixed;
+  flex:1;
   margin-top: 50px;
-  height: calc(100vh - 90px); /* 90px compensent la navbar */
+  height: calc(100vh - 90px);
   overflow-y: hidden;
 }
 
 .filters {
   width: 250px;
-  min-width: 200px;
+  position: sticky;
   max-width: 20%;
-  height: 100%;
   max-height: 500px;
   overflow:hidden;
   padding: 15px;
@@ -63,8 +65,11 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
-  position: sticky;
-  top: 10px;
+  top: 30px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  min-width: 250px;
+
 
 }
 
@@ -141,7 +146,10 @@
   flex-wrap: wrap;
   gap: 20px;
   align-content: flex-start;
-  overflow-y: scroll;
+  overflow-y: auto;
+  height: 100%;
+  max-height: 85%;
+  z-index: 0;
 
 }
 

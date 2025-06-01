@@ -1,6 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { Admin } from '../models/Admin';
+import {JobOffer} from './offer.service';
+import {Reclamation} from '../models/Reclamation';
 
 @Injectable({
   providedIn: 'root'
@@ -10,34 +14,94 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  updateCandidat(id: number) {
-    return this.http.post(`${this.baseUrl}/candidats/${id}`, null);
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      })
+    };
   }
 
-  deleteCandidat(id: number) {
-    return this.http.delete(`${this.baseUrl}/candidats/${id}/prormote`);
+  // CRUD Candidats
+  getCandidats(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/candidats`, this.getAuthHeaders());
   }
 
-  getCandidats() {
-    return this.http.get<any[]>(`${this.baseUrl}/candidats`);
+  updateCandidat(id: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/candidats/${id}/promote`, {}, this.getAuthHeaders());
   }
 
-  getOffres() {
-    return this.http.get<any[]>(`${this.baseUrl}/offers`);
+  deleteCandidat(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/candidats/${id}`, this.getAuthHeaders());
   }
 
-  addOffre(offre: any) {
-    return this.http.post(`${this.baseUrl}/offer`, offre);
+  // CRUD Offres
+  getOffres(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/offers`, this.getAuthHeaders());
   }
 
-  deleteOffre(id: number) {
-    return this.http.delete(`${this.baseUrl}/offers/${id}`);
+  addOffre(offre: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/offer/add`, offre, this.getAuthHeaders());
   }
 
-  getAdmins() {
-    return this.http.get<any[]>(`${this.baseUrl}/admins`);
-
+  deleteOffre(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/offers/${id}`, this.getAuthHeaders());
   }
+
+  // Admins ne9sa promote to admin
+  getAdmins(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/admins`, this.getAuthHeaders());
+  }
+//stats de users
+  getStats(): Observable<any> {
+ return this.http.get(`${this.baseUrl}/stats`, this.getAuthHeaders());
+}
+
+getRecentCandidats(): Observable<any[]> {
+ return this.http.get<any[]>(`${this.baseUrl}/candidats/recent`, this.getAuthHeaders());
+}
+
+  // Admin Profile
+  getProfile(): Observable<Admin> {
+    return this.http.get<Admin>(`${this.baseUrl}/profile/me`, this.getAuthHeaders());
+  }
+
+  createProfile(): Observable<Admin> {
+    return this.http.post<Admin>(`${this.baseUrl}/profile/create`, {}, this.getAuthHeaders());
+  }
+
+
+
+  updateProfile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(
+      `${this.baseUrl}/profile/photo/upload`,
+      formData,
+      {
+        ...this.getAuthHeaders(),
+        responseType: 'text'
+      }
+    );
+  }
+  //stats de offers
+  getMostViewedOffers(): Observable<JobOffer[]> {
+    return this.http.get<JobOffer[]>(`${this.baseUrl}/offers/most-viewed`, this.getAuthHeaders());
+  }
+
+  getStat(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/stats`, this.getAuthHeaders());
+  }
+  //reclamations
+  getReclamations(): Observable<Reclamation[]> {
+    return this.http.get<Reclamation[]>(`${this.baseUrl}/reclamations`, this.getAuthHeaders());
+  }
+  deleteReclamation(id: number) {
+    return this.http.delete(`${this.baseUrl}/delete/${id}`);
+  }
+
 
 
 }

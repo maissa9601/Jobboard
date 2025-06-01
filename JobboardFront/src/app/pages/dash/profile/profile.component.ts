@@ -26,6 +26,7 @@ import { AuthService } from '../../../service/auth.service';
     NgForOf,
     NgIf,
     DatePipe,
+    NgClass,
 
   ]
 })
@@ -41,8 +42,7 @@ export class ProfileComponent implements OnInit {
   alertes: any[] = [];
   userId!: number;
   menuOpen = false;
-  isLoggedIn = false;
-  userName = '';
+  showProfileDropdown: boolean = false;
 
   isEditing = {
     fullName: false,
@@ -111,7 +111,9 @@ export class ProfileComponent implements OnInit {
   get hasLanguages(): boolean {
     return this.languages.length > 0;
   }
-
+  toggleProfileDropdown(): void {
+    this.showProfileDropdown = !this.showProfileDropdown;
+  }
   ngOnInit(): void {
     this.profileService.getProfile().subscribe(profile => {
       this.profileForm.patchValue({
@@ -321,5 +323,9 @@ export class ProfileComponent implements OnInit {
   navigateTo(path: string): void {
     this.menuOpen = false;
     this.router.navigate([path]);
+  }
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark-mode', this.isDarkMode);
   }
 }

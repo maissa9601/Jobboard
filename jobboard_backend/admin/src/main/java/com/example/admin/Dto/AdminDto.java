@@ -3,7 +3,7 @@ package com.example.admin.Dto;
 
 import lombok.*;
 @Data
-public class Admin {
+public class AdminDto {
 
     private Long id;
     private String email;
