@@ -1,6 +1,6 @@
 package com.example.authentication.Controller;
 
-import com.example.authentication.dto.Candidat;
+
 import com.example.authentication.model.User;
 import com.example.authentication.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -22,22 +22,21 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    //crud admin
     @GetMapping("/admins")
     public ResponseEntity<List<User> >getAllAdmins() {
         return ResponseEntity.ok(userService.getAllAdmins());
     }
-
-    @GetMapping("/candidats")
-    public ResponseEntity<List<User>> getAllCandidats() {
-        return ResponseEntity.ok(userService.getAllCandidats());
-    }
-
     @PostMapping("/candidats/{id}/promote")
     public ResponseEntity<User> promoteToAdmin(@PathVariable Long id) {
         return userService.promoteToAdmin(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    //crud candidat
+    @GetMapping("/candidats")
+    public ResponseEntity<List<User>> getAllCandidats() {
+        return ResponseEntity.ok(userService.getAllCandidats());
     }
 
     @DeleteMapping("/candidats/{id}")
@@ -53,6 +52,8 @@ public class UserController {
     public Optional<User> getCandidatById(@PathVariable Long id) {
        return  userService.getCandidatById(id);
     }
+
+    //stats
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Long>> getStats() {
         Map<String, Long> stats = new HashMap<>();
@@ -61,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(stats);
     }
     @GetMapping("/candidats/recent")
-    public ResponseEntity<List<Candidat>> getRecentCandidats() {
+    public ResponseEntity<List<User>> getRecentCandidats() {
         return ResponseEntity.ok(userService.getRecentCandidats());
     }
 

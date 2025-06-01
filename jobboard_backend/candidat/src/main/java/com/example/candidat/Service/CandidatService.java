@@ -1,9 +1,7 @@
 package com.example.candidat.Service;
 
 import com.example.candidat.dto.CandidatUpdateRequest;
-import com.example.candidat.model.Alerte;
 import com.example.candidat.model.Candidat;
-import com.example.candidat.repository.AlerteRepository;
 import com.example.candidat.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,18 +22,18 @@ public class CandidatService {
     private String uploadDir;
 
     private final CandidateRepository candidatProfileRepository;
-    private final AlerteRepository alerRepository;
 
-    public CandidatService(CandidateRepository candidatProfileRepository, AlerteRepository favoriProfileRepository) {
+
+    public CandidatService(CandidateRepository candidatProfileRepository) {
         this.candidatProfileRepository = candidatProfileRepository;
-        this.alerRepository = favoriProfileRepository;
+
     }
 
     @PostConstruct
     public void init() throws IOException {
         Files.createDirectories(Path.of(uploadDir));
     }
-
+    //gestion de profile
     public Candidat createProfile(Candidat profile) {
         return candidatProfileRepository.save(profile);
     }
@@ -68,20 +64,6 @@ public class CandidatService {
 
         candidatProfileRepository.save(candidat);
     }
-    public void marquerCommeLue(Long id) {
-        Alerte alerte = alerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alerte non trouvée"));
-        alerte.setLu(true);
-        alerRepository.save(alerte);
-    }
-    public void deleteAlerte(Long userId, Long alerteId) {
-        alerRepository.findByCandidatIdAndId(userId, alerteId)
-                .ifPresent(alerRepository::delete);
-    }
-
-
-
-
     public String uploadPhoto(Long userId, MultipartFile file) {
         String photoUrl = uploadFile(file, "photos");
 
@@ -89,7 +71,7 @@ public class CandidatService {
         Candidat candidat = candidatProfileRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Candidat not found"));
 
-        candidat.setPhotoUrl(photoUrl);  // Assure-toi que le champ existe dans l'entité
+        candidat.setPhotoUrl(photoUrl);
         candidatProfileRepository.save(candidat);
 
         return photoUrl;
@@ -125,11 +107,6 @@ public class CandidatService {
             throw new RuntimeException("Failed to upload file", e);
         }
     }
-    public List<Alerte> getAlertesByUserId(Long userId) {
-        return alerRepository.findByCandidatId(userId);
-    }
-
-
 
 
 

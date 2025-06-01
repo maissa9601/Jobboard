@@ -1,48 +1,60 @@
 package com.example.admin.controller;
 
-
+import com.example.admin.Dto.JobOffer;
+import com.example.admin.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.admin.Dto.JobOffer;
-import org.springframework.web.client.RestTemplate;
-import java.util.Arrays;
+
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:4200")
 public class JobController {
 
-    private final RestTemplate restTemplate;
-    private final String OFFER_SERVICE_URL = "http://localhost:8081";
+    private final JobService jobService;
 
-    public JobController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    @Autowired
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
     }
 
     @GetMapping("/offers")
-    public List<JobOffer> getAllOffers() {
-        ResponseEntity<JobOffer[]> response = restTemplate.getForEntity(OFFER_SERVICE_URL + "/offers", JobOffer[].class);
-        return Arrays.asList(response.getBody());
+    public ResponseEntity<List<JobOffer>> getAllOffers() {
+        return ResponseEntity.ok(jobService.getAllOffers());
     }
 
-    @PostMapping("/offer")
-    public JobOffer createJobOffer(@RequestBody JobOffer jobOffer) {
-        return restTemplate.postForObject(OFFER_SERVICE_URL + "/offer", jobOffer, JobOffer.class);
+    @GetMapping("/offer/{id}")
+    public ResponseEntity<JobOffer> getOfferById(@PathVariable Long id) {
+        return ResponseEntity.ok(jobService.getOfferById(id));
     }
 
-    @GetMapping("/offers/{id}")
-    public JobOffer getOfferById(@PathVariable Long id) {
-        return restTemplate.getForObject(OFFER_SERVICE_URL + "/offer/" + id, JobOffer.class);
+    @PostMapping("/offer/add")
+    public ResponseEntity<JobOffer> createJobOffer(@RequestBody JobOffer jobOffer) {
+        return ResponseEntity.ok(jobService.createJobOffer(jobOffer));
     }
 
     @PutMapping("/offer/{id}")
-    public void updateOffer(@PathVariable Long id, @RequestBody JobOffer offer) {
-        restTemplate.put(OFFER_SERVICE_URL + "/offer/" + id, offer);
+    public ResponseEntity<Void> updateOffer(@PathVariable Long id, @RequestBody JobOffer offer) {
+        jobService.updateOffer(id, offer);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/offer/{id}")
-    public void deleteOffer(@PathVariable Long id) {
-        restTemplate.delete(OFFER_SERVICE_URL + "/offer/" + id);
+    public ResponseEntity<Void> deleteOffer(@PathVariable Long id) {
+        jobService.deleteOffer(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/offers/most-viewed")
+    public ResponseEntity<List<JobOffer>> mostViewedOffers() {
+        return ResponseEntity.ok(jobService.getMostViewedOffers());
+    }
+
+    @GetMapping("/offers/stats")
+    public ResponseEntity<Map<String, Long>> getOfferStats() {
+        return ResponseEntity.ok(jobService.getOfferStats());
     }
 }

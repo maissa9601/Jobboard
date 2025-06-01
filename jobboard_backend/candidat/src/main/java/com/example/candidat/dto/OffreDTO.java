@@ -16,8 +16,7 @@ public class OffreDTO {
         private String location;
         private String contractType;
         private String offerUrl;
-
-
+        private int views;
 }
 
 

@@ -1,11 +1,9 @@
 package com.example.authentication.service;
 
 
-import com.example.authentication.dto.Candidat;
 import com.example.authentication.model.Role;
 import com.example.authentication.model.User;
-import com.example.authentication.repository.AdminRepository;
-import com.example.authentication.repository.CandidatRepository;
+import com.example.authentication.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,51 +13,52 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final AdminRepository adminRepository;
-    private final CandidatRepository candidatRepository;
 
-    public UserService(AdminRepository adminRepository, CandidatRepository candidatRepository) {
-        this.adminRepository = adminRepository;
-        this.candidatRepository = candidatRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+  
+        this.userRepository= userRepository;
     }
 
     public List<User> getAllAdmins() {
-        return adminRepository.findAllAdmins();
+        return userRepository.findAllAdmins();
     }
 
     public List<User> getAllCandidats() {
-        return candidatRepository.findAllCandidats();
+        return userRepository.findAllCandidats();
     }
 
     public Optional<User> getCandidatById(Long id) {
-        return candidatRepository.findById(id);
+        return userRepository.findById(id);
     }
 
     public void deleteCandidat(Long id) {
-        candidatRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     public Optional<User> promoteToAdmin(Long id) {
-        Optional<User> candidatOpt = candidatRepository.findById(id);
+        Optional<User> candidatOpt = userRepository.findById(id);
         if (candidatOpt.isEmpty()) {
             return Optional.empty();
         }
 
         User candidat = candidatOpt.get();
         candidat.setRole(Role.valueOf("ADMIN"));
-        return Optional.of(candidatRepository.save(candidat));
+        return Optional.of(userRepository.save(candidat));
     }
-    public long countCandidats() {
-        return candidatRepository.count();
-    }
-
     public long countAdmins() {
-        return adminRepository.count();
+        return userRepository.countByRole(Role.valueOf("ADMIN"));
     }
 
-    public List<Candidat> getRecentCandidats() {
-        LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
-        return candidatRepository.findRecentLogins(lastWeek);
+    public long countCandidats() {
+        return userRepository.countByRole(Role.valueOf("CANDIDAT"));
     }
+
+    public List<User> getRecentCandidats() {
+        LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
+        return userRepository.findRecentLogins(lastWeek);
+    }
+
 
 }

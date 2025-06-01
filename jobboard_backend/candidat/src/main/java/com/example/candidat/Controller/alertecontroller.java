@@ -1,6 +1,7 @@
 package com.example.candidat.Controller;
 
 import com.example.candidat.dto.CandidatMatchDto;
+import com.example.candidat.dto.NotificationDto;
 import com.example.candidat.dto.OffreDTO;
 import com.example.candidat.Service.AlerteService;
 import com.example.candidat.dto.ReclamationEvent;
@@ -25,9 +26,15 @@ public class alertecontroller {
     }
 
     @PostMapping("/reclamation")
-    public ResponseEntity<String> envoyerReclamation(@RequestBody ReclamationEvent event) {
-        alerteService.envoyerReclamation(event);
-        return ResponseEntity.ok("Reclamation envoyée avec succès.");
+    public ResponseEntity<String> sendReclamation(@RequestBody ReclamationEvent event) {
+        alerteService.sendReclamation(event);
+        return ResponseEntity.ok("Reclamation sent to Kafka");
     }
+
+    @GetMapping("/job-alerts/{userId}")
+    public ResponseEntity<List<NotificationDto>> getJobAlerts(@PathVariable String id) {
+        return ResponseEntity.ok(alerteService.getJobAlerts(id));
+    }
+
 
 }
