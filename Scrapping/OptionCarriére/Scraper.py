@@ -1,24 +1,24 @@
 import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
 import re
-from DrissionPage import ChromiumPage
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+session = requests.Session()  # Session persistante pour optimiser les requêtes
 
 
-# Chargement de la page avec DrissionPage
 def load_page(url):
-    page = ChromiumPage()
     try:
-        page.get(url)
-        html = page.html
+        response = session.get(url, timeout=10)
+        response.raise_for_status()
         print(f"success : {url}")
-        return html
-    except Exception as e:
+        return response.text
+    except requests.RequestException as e:
         print(f"error while scraping {url} : {e}")
         return None
-    finally:
-        page.close()
+
+
 
 
 def extract_experience(soup):
@@ -37,7 +37,6 @@ def extract_experience(soup):
             text = sibling.strip()
             if text:
                 return text
-
     return None
 
 
@@ -122,7 +121,7 @@ def extract_contract_type(soup):
     return None
 
 
-# Scraper les détails d'une offre
+# Fonction modifiée pour scrapper détails en multi-thread (appelée par thread)
 def scrape_offer_details(offer_url):
     html = load_page(offer_url)
     if not html:
@@ -147,25 +146,25 @@ def scrape_offer_details(offer_url):
     }
 
 
-# Scraper la liste des offres
 def scrape_jobs(url):
     html = load_page(url)
     if not html:
         print("error loading principale page ")
         return []
 
-    soup = BeautifulSoup(html, 'html.parser')
-    jobs = []
+    soup = BeautifulSoup(html, 'lxml')
     articles = soup.find_all('article', class_='job clicky')
 
+    jobs = []
+
+    # Préparer la liste des urls des offres
+    offer_urls = []
     for article in articles:
         try:
             title_tag = article.find('h2').find('a')
             title = title_tag.get_text(strip=True)
             relative_url = title_tag['href']
             full_url = f"https://www.optioncarriere.tn{relative_url}"
-
-            print(f"\n Scraping: {title} - {full_url}")
 
             company_tag = article.find('p', class_='company')
             if company_tag:
@@ -177,35 +176,45 @@ def scrape_jobs(url):
             location_tag = article.find('ul', class_='location')
             location = location_tag.find('li').get_text(strip=True) if location_tag else None
 
-            details = scrape_offer_details(full_url)
-
-            jobs.append({
-                "title": title,
-                "contractype": details["contractype"],
-                "description": details["description"],
-                "company": company,
-                "location": location,
-                "salary": details["salary"],
-                "source": "OptionCarriere",
-                "experience": details["experience"],
-                "published": details["published"],
-                "expires": details["expires"],
-                "url": full_url
-            })
-
-            time.sleep(1)  # Pause 
+            offer_urls.append((title, full_url, company, location))
 
         except Exception as e:
-            print(f"error while scraping offer{e}")
+            print(f"error while parsing article: {e}")
             continue
 
+    # ThreadPool pour scrapper les détails des offres en parallèle
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_offer = {executor.submit(scrape_offer_details, offer[1]): offer for offer in offer_urls}
+
+        for future in as_completed(future_to_offer):
+            title, full_url, company, location = future_to_offer[future]
+            try:
+                details = future.result()
+                jobs.append({
+                    "title": title,
+                    "contractype": details["contractype"],
+                    "description": details["description"],
+                    "company": company,
+                    "location": location,
+                    "salary": details["salary"],
+                    "source": "OptionCarriere",
+                    "experience": details["experience"],
+                    "published": details["published"],
+                    "expires": details["expires"],
+                    "url": full_url
+                })
+            except Exception as exc:
+                print(f"error fetching details for {full_url}: {exc}")
+
     return jobs
-def scrape_all_pages(base_url, max_pages=5):
+
+
+def scrape_all_pages(base_url, max_pages=10):
     all_jobs = []
     for i in range(max_pages):
         start = i * 10
         paginated_url = f"{base_url}&start={start}" if "?" in base_url else f"{base_url}?start={start}"
-        print(f"\n Scraping page {i+1}: {paginated_url}")
+        print(f"\n Scraping page {i + 1}: {paginated_url}")
         jobs = scrape_jobs(paginated_url)
         if not jobs:
             print("No offer.")
@@ -213,16 +222,15 @@ def scrape_all_pages(base_url, max_pages=5):
         all_jobs.extend(jobs)
         time.sleep(1)  # pause
     return all_jobs
-    
-
 
 
 if __name__ == "__main__":
     base_url = "https://www.optioncarriere.tn/emploi?s=&l=tunisie"
-    job_data = scrape_all_pages(base_url, max_pages=10)  
+    start_time = time.time()
+    job_data = scrape_all_pages(base_url, max_pages=10)
 
     with open("optioncarriere.json", "w", encoding="utf-8") as f:
         json.dump(job_data, f, ensure_ascii=False, indent=4)
 
-    print(f"\n {len(job_data)} data saved")
-
+    print(f"\n{len(job_data)} offres sauvegardées")
+    print(f"Temps total: {time.time() - start_time:.2f} secondes")
