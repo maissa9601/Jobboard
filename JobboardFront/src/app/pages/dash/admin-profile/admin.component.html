@@ -1,5 +1,5 @@
 <div class="dash-container">
-
+<!--sidebar-->
   <nav class="sidebar">
     <div class="sidebar-header">
       <i class="ri-briefcase-line logo-icon"></i>
@@ -29,7 +29,7 @@
     </div>
   </nav>
 
-
+<!--contenu-->
   <div class="main-content">
     <div class="dashboard-header">
       <div class="input-search">
@@ -38,11 +38,9 @@
       </div>
 
       <div class="header-icons">
-        <!-- Avatar cliquable -->
         <div class="profile-avatar" (click)="toggleProfileDropdown()">
           <img [src]="photoPreviewUrl || '/default-avatar.png'" alt="Admin Avatar" class="avatar-image" />
         </div>
-        <!-- Dropdown Profil -->
         <div class="profile-dropdown" *ngIf="showProfileDropdown">
           <p>{{ admin.email }}</p>
 
@@ -68,7 +66,7 @@
 
       </div>
     </div>
-
+    <!--cards-->
     <div class="dashboard-body">
     <h1>Dashboard</h1>
     <div class="dashboard-cards">
@@ -142,22 +140,19 @@
             </li>
           </ul>
         </div>
-
       </div>
-
     </div>
     <!-- Reclamations -->
     <div *ngIf="activeTab === 'reclamations'" class="reclamations-panel">
       <h3><i class="ri-alert-line"></i> Reclamations</h3>
       <ul class="reclamations-list">
         <li *ngFor="let reclamation of reclamations">
-          <strong>{{ reclamation.senderEmail }}</strong> : {{ reclamation.content }}
+          <strong>{{ reclamation.senderEmail }}</strong> {{ reclamation.subject }} {{ reclamation.content }}
           <button (click)="deleteReclamation(reclamation.id)" class="btn-icon" aria-label="Supprimer notification">
             <i class="ri-delete-bin-line"></i>
           </button>
         </li>
       </ul>
-
       <ng-template #noReclamations>
         <p>Aucune réclamation pour le moment.</p>
       </ng-template>
@@ -253,7 +248,7 @@
                 </td>
                 <td>
                   <button class="btn" (click)="deleteCandidat(candidat.id)">
-                    <i class="fas fa-trash"></i>
+                    <i class="ri-delete-bin-line"></i>
                   </button>
 
                 </td>
@@ -274,9 +269,6 @@
       <button class="btn-offer" (click)="showAddModal = true">+ Add Offer</button>
 
     </div>
-
-
-
     <div class="table-wrapper">
       <table>
         <thead>
@@ -296,7 +288,7 @@
           <td>{{ o.location }}</td>
           <td>
             <button class="btn" (click)="deleteOffre(o.id)">
-              <i class="fas fa-trash"></i>
+              <i class="ri-delete-bin-line"></i>
             </button>
           </td>
         </tr>
@@ -304,7 +296,6 @@
       </table>
     </div>
     </div>
-
 
     <div class="modal-backdrop" *ngIf="showAddModal">
       <div class="modal">
@@ -325,7 +316,6 @@
       </div>
     </div>
   </div>
-
   </div>
 </div>
 

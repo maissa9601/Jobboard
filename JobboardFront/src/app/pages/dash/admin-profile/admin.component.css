@@ -459,13 +459,17 @@ th, td {
 .btn {
   margin-top: 10px;
   padding: 10px;
-  background-color: white;
+  background-color: transparent;
+  border: none;
   color: #3B64B2;
-  border-color: #3B64B2;
   border-radius: 10px;
   font-weight: 600;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.btn:hover {
+  transform: scale(1.2);
 }
 .btn-offer{
   background-color:  #3B64B2;
@@ -560,14 +564,8 @@ h3{
   pointer-events: none;
 }
 .reclamations-panel {
-  background-color: #ffffff;
   padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease;
 }
-
-
 .reclamations-panel h3 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -575,10 +573,8 @@ h3{
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  color: #0f172a;
+  color: #182C4D;
 }
-
-
 .reclamations-list {
   list-style: none;
   padding: 0;
@@ -595,4 +591,16 @@ h3{
   margin-bottom: 0.75rem;
   background-color: #f9fafb;
   transition: background-color 0.3s ease;
+}
+
+
+.reclamations-list button {
+ color: #022559;
+  background-color: transparent;
+  border:none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.reclamations-list button:hover {
+  transform: scale(1.2);
 }

@@ -37,16 +37,16 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 .toast-success {
-  background-color: #8C4E97 !important;
+  background-color: green !important;
   color: #fff !important;
 }
 .toast-error {
-  background-color: #171616 !important;
+  background-color: red !important;
   color: #fff !important;
 }
 .toast-info{
   background-color: white !important;
-  color: #8C4E97 !important;
+  color: #0065f2 !important;
 }
 
 
@@ -119,7 +119,7 @@ body::-webkit-scrollbar {
 .dark-mode .btn,
 .dark-mode .btn-offer {
   background-color: transparent;
-  color: #f3f4f6;
+  color: #f3f4f6 !important;
   border: 1px solid #f3f4f6;
 }
 
@@ -168,9 +168,23 @@ body::-webkit-scrollbar {
 }
 
 
+.dark-mode .reclamations-panel {
+  background-color: #1f2937 !important;
 
+}
 
+.dark-mode .reclamations-panel h3 {
+  color: #f1f5f9 !important;
+}
 
+.dark-mode .reclamations-list li {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+}
+
+.dark-mode .reclamations-list button {
+  color: #f3f4f6 !important;
+}
 
 
 

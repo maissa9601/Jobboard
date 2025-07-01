@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   photoPreviewUrl: string | ArrayBuffer | null = null;
   cvPreviewUrl: string | null = null;
   cvFileName: string = '';
-  activeTab = 'profile';
+  activeTab = 'dashboard';
   photoFile: File | null = null;
   cvFile: File | null = null;
   favorites: any[] = [];

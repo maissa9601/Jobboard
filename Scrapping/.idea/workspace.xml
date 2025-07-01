@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5cab21e5-6886-40a5-b14d-1355e24889dc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OptionCarriére/OptionCarriére.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wevioo/wevioo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/admin-profile/admin.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/admin-profile/admin.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/admin-profile/admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/admin-profile/admin.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../JobboardFront/src/app/pages/dash/profile/profile.component.ts" afterDir="false" />
@@ -16,14 +14,6 @@
       <change beforePath="$PROJECT_DIR$/../Scrap/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Scrap/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Scrap/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OptionCarriére/Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/OptionCarriére/ScrapeOption.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tanit/ScrapTanit.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tanit/ScrapTanit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tanit/Tanit.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tanit/Tanit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TanitCloudflare" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wevioo/Scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/wevioo/ScrapWevioo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wevioo/wevioo.json" beforeDir="false" afterPath="$PROJECT_DIR$/wevioo/wevioo.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jobboard_backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../jobboard_backend/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +134,7 @@
       <workItem from="1750695030750" duration="513000" />
       <workItem from="1750782347597" duration="10949000" />
       <workItem from="1750862570772" duration="9351000" />
-      <workItem from="1751189317184" duration="15467000" />
+      <workItem from="1751189317184" duration="16213000" />
     </task>
     <servers />
   </component>
