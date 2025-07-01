@@ -1,13 +1,10 @@
-import time
 import logging
+import json
 import os
 import sys
-from CloudflareBypasser import CloudflareBypasser
 from DrissionPage import ChromiumPage, ChromiumOptions
-from ScrapTanit import scrape_all_pages
-import json
+from ScrapIndeed import scrape_all_cities
 
-# Configuration du logger
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -17,7 +14,6 @@ logging.basicConfig(
     ]
 )
 
-# les options de Chromium
 def get_chromium_options(browser_path: str, arguments: list) -> ChromiumOptions:
     options = ChromiumOptions().auto_port()
     options.set_paths(browser_path=browser_path)
@@ -25,10 +21,15 @@ def get_chromium_options(browser_path: str, arguments: list) -> ChromiumOptions:
         options.set_argument(argument)
     return options
 
-# Fonction principale
 def main():
     isHeadless = os.getenv('HEADLESS', 'false').lower() == 'true'
     browser_path = os.getenv('CHROME_PATH', r"C:/Program Files/Google/Chrome/Application/chrome.exe")
+
+    LIEUX = [
+        "Paris", "Lyon", "Marseille", "Toulouse", "Nice", "Nantes", "Strasbourg",
+        "Montpellier", "Bordeaux", "Lille", "Rennes", "Reims", "Le Havre",
+        "Saint-Étienne", "Toulon"
+    ]
 
     if not os.path.exists(browser_path):
         logging.error(f"Chrome path not found: {browser_path}")
@@ -38,22 +39,13 @@ def main():
     logging.info(f"Chrome utilisé : {browser_path}")
 
     arguments = [
-        "--no-first-run",
-        "--force-color-profile=srgb",
-        "--metrics-recording-only",
-        "--password-store=basic",
-        "--use-mock-keychain",
-        "--export-tagged-pdf",
-        "--no-default-browser-check",
-        "--disable-background-mode",
+        "--no-first-run", "--force-color-profile=srgb", "--metrics-recording-only",
+        "--password-store=basic", "--use-mock-keychain", "--export-tagged-pdf",
+        "--no-default-browser-check", "--disable-background-mode",
         "--enable-features=NetworkService,NetworkServiceInProcess,LoadCryptoTokenExtension,PermuteTLSExtensions",
         "--disable-features=FlashDeprecationWarning,EnablePasswordsAccountStorage",
-        "--deny-permission-prompts",
-        "--disable-gpu",
-        "--accept-lang=en-US",
-        #"--headless",
+        "--deny-permission-prompts", "--disable-gpu", "--accept-lang=en-US",
     ]
-
     if isHeadless:
         arguments.append('--headless=new')
 
@@ -61,32 +53,22 @@ def main():
     driver = ChromiumPage(addr_or_opts=options)
 
     try:
-        logging.info('loading TanitJobs...')
-        driver.get('https://www.tanitjobs.com/')
+        logging.info('loading Indeed...')
+        driver.get("https://fr.indeed.com")
 
-        logging.info('Bypassing Cloudflare protection...')
-        cf_bypasser = CloudflareBypasser(driver)
-        cf_bypasser.bypass()
+        all_jobs = scrape_all_cities(driver, LIEUX, max_pages=1)
 
-        logging.info("accessible content !")
-        logging.info("page title : %s", driver.title)
+        filename = "indeed.json"
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(all_jobs, f, ensure_ascii=False, indent=4)
 
-        time.sleep(3)
-
-        jobs = scrape_all_pages(driver, pages=5)
-        logging.info(f"total offer scraped {len(jobs)}")
-
-        # Sauvegarde
-        with open("tanitjobs.json", "w", encoding="utf-8") as f:
-            json.dump(jobs, f, ensure_ascii=False, indent=4)
-        logging.info("data saved")
+        logging.info(f"Data saved {filename}")
 
     except Exception as e:
-        logging.error( str(e))
+        logging.error({e})
+
     finally:
         driver.quit()
-        logging.info("Session closed")
-
 
 
 if __name__ == '__main__':

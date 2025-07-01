@@ -15,7 +15,7 @@ def random_delay(min_delay=3, max_delay=7):
 
 
 def scrap_detail_page(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
+    soup = BeautifulSoup(html_content, 'lxml')
 
     def get_dd(label):
         dt = soup.find('dt', text=lambda x: x and label in x)
@@ -81,8 +81,6 @@ def process_job(driver, article):
             time.sleep(1)
         else:
             logging.warning(f"no element  : {url}")
-            with open('debug_failed_page.html', 'w', encoding='utf-8') as f:
-                f.write(tab.html)
             tab.close()
             return None
 
@@ -108,17 +106,18 @@ def process_job(driver, article):
         return job
 
     except Exception as e:
-        logging.error(f"Erreur dans un thread: {e}")
+        logging.error(f"Error thread: {e}")
         return None
 
 def scrape_jobs(driver, limit=None):
     logging.info("Scraping listing page...")
     articles = driver.eles('css:article.listing-item')
-    logging.info(f"Nombre d'articles trouvés: {len(articles)}")
+    logging.info(f"total article: {len(articles)}")
 
     jobs = []
 
-    with ThreadPoolExecutor(max_workers=20) as executor:  # 5 threads
+    #execution multi-thread
+    with ThreadPoolExecutor(max_workers=20) as executor:
         futures = [executor.submit(process_job, driver, article) for article in articles[:limit]]
 
         for future in as_completed(futures):

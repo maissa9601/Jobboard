@@ -1,18 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
-import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 base_url = "https://www.wevioo.com"
 listing_url = f"{base_url}/fr/offres-d-emploi"
 
-# Chargement de la page principale
 def load_page(url):
     try:
-        response = requests.get(url,verify=False)
+        response = requests.get(url, verify=False)
         response.raise_for_status()
         print(f"success : {url}")
         return response.text
@@ -36,7 +35,6 @@ def extract_experience(soup):
                     return match.group(0)
     return ""
 
-# Scraper les détails (appelé par chaque thread)
 def scrape_single_job(job):
     print(f"Scraping: {job['title']} ...")
     job_html = load_page(job["url"])
@@ -81,25 +79,19 @@ def scrape_offers_list(html):
             offers.append({"title": title, "url": full_url})
     return offers
 
-# === Main execution ===
-if __name__ == "__main__":
+def scrape_wevioo_jobs():
     html = load_page(listing_url)
     if not html:
         print("fail loading.")
-        exit(1)
+        return []
 
     offers = scrape_offers_list(html)
     full_data = []
 
-    # Exécution multithreadée
     with ThreadPoolExecutor(max_workers=10) as executor:
         futures = [executor.submit(scrape_single_job, job) for job in offers]
         for future in as_completed(futures):
             result = future.result()
             if result:
                 full_data.append(result)
-
-    with open("wevioo.json", "w", encoding="utf-8") as f:
-        json.dump(full_data, f, ensure_ascii=False, indent=4)
-
-    print(f"\n{len(full_data)} offres enregistrées.")
+    return full_data
